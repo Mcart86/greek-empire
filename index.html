@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Greek Empire — Apparel for the Best Years of Your Life</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=Lora:ital,wght@0,400;0,600;1,400;1,600&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  /* Interstate = Barlow Condensed (closest Google Fonts match) */
+  /* Lost in South = Lora italic (serif, editorial — closest available) */
+
+  :root {
+    --bg:         #0a0a0a;
+    --bg-mid:     #111111;
+    --bg-light:   #161616;
+    --bg-card:    #0f0f0f;
+    --gold:       #C9A84C;
+    --gold-light: #E8C97A;
+    --gold-dim:   rgba(201,168,76,0.55);
+    --white:      #FFFFFF;
+    --white-dim:  rgba(255,255,255,0.6);
+    --white-mute: rgba(255,255,255,0.28);
+    --border:     rgba(201,168,76,0.15);
+    --border-mid: rgba(201,168,76,0.3);
+
+    /* Font stacks */
+    --font-head: 'Barlow Condensed', 'Arial Narrow', 'Impact', sans-serif;
+    --font-body: 'Lora', Georgia, serif;
+    --font-ui:   'Barlow', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--white);
+    font-family: var(--font-ui);
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+    background: rgba(10,10,10,0.97);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 3rem; height: 64px;
+  }
+  .nav-logo {
+    font-family: var(--font-head);
+    font-size: 1.35rem; font-weight: 800;
+    letter-spacing: 0.25em; color: var(--gold);
+    text-transform: uppercase; text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 2rem; align-items: center; }
+  .nav-links a {
+    font-family: var(--font-ui);
+    font-size: 0.7rem; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--white-dim);
+    text-decoration: none; font-weight: 500; transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-btn {
+    font-family: var(--font-head);
+    font-size: 0.85rem; letter-spacing: 0.2em;
+    text-transform: uppercase; font-weight: 700;
+    background: var(--gold); color: var(--bg);
+    border: none; padding: 0.55rem 1.4rem;
+    cursor: pointer; transition: background 0.2s; text-decoration: none;
+  }
+  .nav-btn:hover { background: var(--gold-light); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center;
+    padding: 8rem 2rem 5rem;
+    position: relative; overflow: hidden;
+    background: #000;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 65% 50% at 50% 35%, rgba(201,168,76,0.09) 0%, transparent 68%),
+      radial-gradient(ellipse 100% 40% at 50% 100%, rgba(0,0,0,0.8) 0%, transparent 100%);
+    pointer-events: none;
+  }
+  .hero-eyebrow {
+    font-family: var(--font-ui);
+    font-size: 0.62rem; letter-spacing: 0.5em;
+    color: var(--gold); text-transform: uppercase; font-weight: 500;
+    margin-bottom: 2.25rem;
+    opacity: 0; animation: fadeUp 0.7s ease 0.2s forwards;
+  }
+  .hero-logo {
+    width: min(270px, 54vw); margin-bottom: 2.75rem;
+    opacity: 0; animation: fadeUp 0.8s ease 0.35s forwards;
+    filter: drop-shadow(0 0 40px rgba(201,168,76,0.22));
+  }
+  .hero-headline {
+    font-family: var(--font-head);
+    font-size: clamp(3rem, 7vw, 7rem);
+    font-weight: 900; line-height: 0.95;
+    letter-spacing: 0.04em;
+    color: var(--white); text-transform: uppercase;
+    margin-bottom: 1.25rem;
+    opacity: 0; animation: fadeUp 0.8s ease 0.5s forwards;
+  }
+  .hero-headline em {
+    font-style: normal; color: var(--gold);
+    display: block;
+  }
+  .hero-sub {
+    font-family: var(--font-body);
+    font-size: clamp(1rem, 2.2vw, 1.35rem);
+    font-style: italic;
+    color: var(--white-dim); letter-spacing: 0.04em;
+    margin-bottom: 3.5rem; line-height: 1.65;
+    opacity: 0; animation: fadeUp 0.8s ease 0.65s forwards;
+  }
+
+  /* ── FORMS ── */
+  .form-wrap { width: min(500px, 92vw); opacity: 0; animation: fadeUp 0.8s ease 0.8s forwards; }
+  .form-eyebrow {
+    font-family: var(--font-ui);
+    font-size: 0.58rem; letter-spacing: 0.32em;
+    color: var(--gold); text-transform: uppercase; font-weight: 500;
+    margin-bottom: 0.9rem; display: block;
+  }
+  .form-row {
+    display: flex;
+    border: 1px solid var(--border-mid);
+    background: rgba(255,255,255,0.03);
+    transition: border-color 0.2s;
+  }
+  .form-row:focus-within { border-color: var(--gold); }
+  .form-input {
+    flex: 1; background: transparent; border: none; outline: none;
+    padding: 1rem 1.2rem;
+    font-family: var(--font-ui); font-size: 0.8rem;
+    letter-spacing: 0.04em; color: var(--white);
+  }
+  .form-input::placeholder { color: var(--white-mute); }
+  .form-btn {
+    background: var(--gold); border: none;
+    padding: 1rem 1.6rem;
+    font-family: var(--font-head); font-size: 0.85rem;
+    font-weight: 700; letter-spacing: 0.18em;
+    text-transform: uppercase; color: #000;
+    cursor: pointer; transition: background 0.2s; white-space: nowrap;
+  }
+  .form-btn:hover { background: var(--gold-light); }
+  .form-note {
+    font-size: 0.6rem; color: var(--white-mute);
+    letter-spacing: 0.08em; margin-top: 0.8rem; text-align: center;
+  }
+  .success-msg {
+    display: none;
+    font-family: var(--font-body);
+    font-size: 1.05rem; font-style: italic; color: var(--gold-light);
+    text-align: center; padding: 1rem;
+    border: 1px solid var(--border-mid);
+  }
+
+  /* ── DIVIDER ── */
+  .divider { display: flex; align-items: center; gap: 1.5rem; padding: 0 3rem; }
+  .divider-line { flex: 1; height: 1px; background: var(--border); }
+  .divider-diamond { width: 6px; height: 6px; background: var(--gold); transform: rotate(45deg); opacity: 0.5; }
+
+  /* ── CATEGORY STRIP ── */
+  .cat-strip {
+    background: var(--bg-mid);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 2rem 3rem;
+    display: flex; justify-content: center; flex-wrap: wrap;
+  }
+  .cat-item {
+    display: flex; flex-direction: column; align-items: center;
+    padding: 0.5rem 2.5rem; gap: 0.55rem;
+    border-right: 1px solid var(--border);
+    cursor: default; transition: background 0.2s;
+  }
+  .cat-item:last-child { border-right: none; }
+  .cat-item:hover { background: rgba(201,168,76,0.05); }
+  .cat-icon { font-size: 1.3rem; }
+  .cat-name {
+    font-family: var(--font-ui);
+    font-size: 0.6rem; letter-spacing: 0.25em;
+    text-transform: uppercase; color: var(--white-dim); font-weight: 600;
+  }
+
+  /* ── SECTION LABELS & HEADINGS ── */
+  .section-label {
+    font-family: var(--font-ui);
+    font-size: 0.6rem; letter-spacing: 0.42em;
+    color: var(--gold); text-transform: uppercase;
+    font-weight: 500; margin-bottom: 1.25rem;
+  }
+  .section-heading {
+    font-family: var(--font-head);
+    font-size: clamp(2rem, 4vw, 3.4rem);
+    font-weight: 800; line-height: 1.05;
+    letter-spacing: 0.03em; text-transform: uppercase;
+    color: var(--white); margin-bottom: 1.4rem;
+  }
+  .section-body {
+    font-family: var(--font-body);
+    font-size: 1.05rem; line-height: 1.85;
+    color: var(--white-dim);
+  }
+
+  /* ── CULTURE ── */
+  .culture {
+    max-width: 1100px; margin: 0 auto;
+    padding: 7rem 3rem;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 6rem; align-items: center;
+  }
+  .pillars { display: flex; flex-direction: column; gap: 1.5rem; }
+  .pillar { border-left: 2px solid var(--gold); padding-left: 1.4rem; }
+  .pillar-title {
+    font-family: var(--font-head);
+    font-size: 0.9rem; letter-spacing: 0.2em;
+    text-transform: uppercase; font-weight: 700;
+    color: var(--gold); margin-bottom: 0.4rem;
+  }
+  .pillar-text {
+    font-family: var(--font-body);
+    font-style: italic;
+    font-size: 1rem; color: var(--white-mute); line-height: 1.65;
+  }
+
+  /* ── APPAREL STRIP ── */
+  .apparel-strip {
+    background: var(--bg-mid);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 4rem 3rem; text-align: center;
+  }
+  .apparel-items {
+    display: flex; justify-content: center;
+    flex-wrap: wrap; gap: 0.75rem 2rem; margin-top: 2rem;
+  }
+  .apparel-item {
+    font-family: var(--font-body);
+    font-size: 1.25rem; font-style: italic;
+    color: rgba(255,255,255,0.35); transition: color 0.2s; cursor: default;
+  }
+  .apparel-item:hover { color: var(--gold-light); }
+  .apparel-sep { color: var(--border); align-self: center; }
+
+  /* ── AMBASSADOR RECRUIT ── */
+  .amb-recruit { max-width: 1100px; margin: 0 auto; padding: 7rem 3rem; text-align: center; }
+  .amb-headline {
+    font-family: var(--font-head);
+    font-size: clamp(2.5rem, 5vw, 5rem);
+    font-weight: 900; line-height: 0.95;
+    letter-spacing: 0.03em; text-transform: uppercase;
+    color: var(--white); margin-bottom: 1.2rem;
+  }
+  .amb-headline em { font-style: normal; color: var(--gold); }
+  .amb-sub {
+    font-family: var(--font-body);
+    font-size: 1.1rem; font-style: italic;
+    color: var(--white-dim);
+    max-width: 560px; margin: 0 auto 4rem; line-height: 1.8;
+  }
+  .amb-perks {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 1px; background: var(--border);
+    border: 1px solid var(--border); margin-bottom: 4rem;
+  }
+  .amb-perk { background: var(--bg-card); padding: 2.25rem 1.75rem; text-align: left; transition: background 0.2s; }
+  .amb-perk:hover { background: var(--bg-light); }
+  .amb-perk-num {
+    font-family: var(--font-head);
+    font-size: 3rem; font-weight: 900;
+    color: rgba(201,168,76,0.1); line-height: 1; margin-bottom: 0.75rem;
+    letter-spacing: 0.05em;
+  }
+  .amb-perk-title {
+    font-family: var(--font-head);
+    font-size: 1rem; letter-spacing: 0.2em;
+    text-transform: uppercase; font-weight: 700;
+    color: var(--gold); margin-bottom: 0.5rem;
+  }
+  .amb-perk-text {
+    font-family: var(--font-body);
+    font-style: italic;
+    font-size: 0.98rem; color: var(--white-mute); line-height: 1.65;
+  }
+  .outline-btn {
+    display: inline-block; background: transparent;
+    border: 1px solid var(--gold); color: var(--gold);
+    font-family: var(--font-head); font-size: 1rem;
+    font-weight: 700; letter-spacing: 0.25em;
+    text-transform: uppercase; padding: 1rem 2.75rem;
+    cursor: pointer; text-decoration: none; transition: background 0.2s, color 0.2s;
+  }
+  .outline-btn:hover { background: var(--gold); color: #000; }
+
+  /* ── APPLICATION ── */
+  .amb-apply {
+    background: var(--bg-mid);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 7rem 2rem;
+  }
+  .apply-inner { max-width: 600px; margin: 0 auto; text-align: center; }
+  .apply-headline {
+    font-family: var(--font-head);
+    font-size: clamp(2rem, 4vw, 3.4rem);
+    font-weight: 800; text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--white); margin-bottom: 0.9rem;
+  }
+  .apply-sub {
+    font-family: var(--font-body);
+    font-size: 1.05rem; font-style: italic;
+    color: var(--white-dim); margin-bottom: 2.75rem; line-height: 1.75;
+  }
+  .apply-form { display: flex; flex-direction: column; gap: 0.85rem; }
+  .apply-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem; }
+  .apply-input {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border); outline: none;
+    padding: 0.9rem 1.1rem;
+    font-family: var(--font-ui); font-size: 0.8rem;
+    letter-spacing: 0.04em; color: var(--white); width: 100%;
+    transition: border-color 0.2s;
+  }
+  .apply-input:focus { border-color: var(--gold); }
+  .apply-input::placeholder { color: var(--white-mute); }
+  .apply-select {
+    background: #0a0a0a; border: 1px solid var(--border); outline: none;
+    padding: 0.9rem 1.1rem;
+    font-family: var(--font-ui); font-size: 0.8rem;
+    color: rgba(255,255,255,0.35); width: 100%;
+    cursor: pointer; transition: border-color 0.2s; appearance: none;
+  }
+  .apply-select:focus { border-color: var(--gold); }
+  .apply-submit {
+    background: var(--gold); border: none; padding: 1rem;
+    font-family: var(--font-head); font-size: 1rem;
+    font-weight: 700; letter-spacing: 0.25em;
+    text-transform: uppercase; color: #000;
+    cursor: pointer; transition: background 0.2s; width: 100%; margin-top: 0.4rem;
+  }
+  .apply-submit:hover { background: var(--gold-light); }
+  .apply-success {
+    display: none;
+    font-family: var(--font-body);
+    font-size: 1.15rem; font-style: italic; color: var(--gold-light);
+    padding: 2rem; border: 1px solid var(--border); line-height: 1.75;
+  }
+
+  /* ── BOTTOM CTA ── */
+  .bottom-cta { padding: 8rem 2rem; text-align: center; position: relative; background: #000; }
+  .bottom-cta::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse 55% 55% at 50% 50%, rgba(201,168,76,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .bottom-headline {
+    font-family: var(--font-head);
+    font-size: clamp(2.5rem, 6vw, 6rem);
+    font-weight: 900; line-height: 0.95;
+    letter-spacing: 0.04em; text-transform: uppercase;
+    color: var(--white); margin-bottom: 1rem;
+  }
+  .bottom-sub {
+    font-family: var(--font-body);
+    font-size: 1.2rem; font-style: italic;
+    color: var(--white-mute); margin-bottom: 3rem;
+  }
+  .bottom-form { width: min(460px, 92vw); margin: 0 auto; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #000;
+    border-top: 1px solid var(--border);
+    padding: 3rem;
+    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 2rem; align-items: start;
+  }
+  .footer-logo {
+    font-family: var(--font-head);
+    font-size: 1.35rem; font-weight: 800;
+    letter-spacing: 0.25em; color: var(--gold);
+    text-transform: uppercase; display: block; margin-bottom: 0.5rem;
+  }
+  .footer-tagline {
+    font-family: var(--font-body);
+    font-size: 0.9rem; font-style: italic;
+    color: var(--white-mute); display: block; margin-bottom: 0.75rem;
+  }
+  .footer-address {
+    font-size: 0.62rem; letter-spacing: 0.04em;
+    color: rgba(255,255,255,0.18); line-height: 1.9;
+  }
+  .footer-col-title {
+    font-family: var(--font-head);
+    font-size: 0.85rem; letter-spacing: 0.28em;
+    text-transform: uppercase; color: var(--gold);
+    margin-bottom: 1rem; font-weight: 700;
+  }
+  .footer-links { display: flex; flex-direction: column; gap: 0.6rem; }
+  .footer-links a {
+    font-size: 0.75rem; color: var(--white-mute);
+    text-decoration: none; transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--gold-light); }
+  .footer-bottom {
+    grid-column: 1 / -1;
+    border-top: 1px solid var(--border);
+    padding-top: 1.5rem; margin-top: 0.5rem;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .footer-copy { font-size: 0.6rem; letter-spacing: 0.08em; color: rgba(255,255,255,0.15); }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+  @media (max-width: 768px) {
+    nav { padding: 0 1.5rem; }
+    .hide-mob { display: none; }
+    .culture { grid-template-columns: 1fr; gap: 3rem; padding: 5rem 1.5rem; }
+    .amb-recruit { padding: 5rem 1.5rem; }
+    .amb-apply { padding: 5rem 1.5rem; }
+    .apply-row { grid-template-columns: 1fr; }
+    .cat-strip { padding: 1.5rem 1rem; }
+    .cat-item { padding: 0.5rem 1.25rem; }
+    footer { grid-template-columns: 1fr; padding: 2rem 1.5rem; }
+    .footer-bottom { flex-direction: column; gap: 0.75rem; text-align: center; }
+    .divider { padding: 0 1.5rem; }
+    .apparel-strip { padding: 3rem 1.5rem; }
+    .bottom-cta { padding: 5rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-logo">Greek Empire</a>
+  <div class="nav-links">
+    <a href="#culture" class="hide-mob">About</a>
+    <a href="#ambassadors">Ambassadors</a>
+    <a href="https://greekempire.swagflo.com/apparel" target="_blank" class="hide-mob">Shop</a>
+    <a href="#apply" class="nav-btn">Apply Now</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <p class="hero-eyebrow">Est. 334 BC &nbsp;·&nbsp; Greek Life Apparel</p>
+  <img src="Untitled_design_png.png" alt="Greek Empire" class="hero-logo" onerror="this.style.display='none'" />
+  <h1 class="hero-headline">Apparel for the<br /><em>Best Years</em><br />of Your Life.</h1>
+  <p class="hero-sub">The culture. The chapters. The moments that define it all.</p>
+  <div class="form-wrap">
+    <span class="form-eyebrow">Join the waitlist — be first to know</span>
+    <div class="form-row" id="hero-form-row">
+      <input type="email" class="form-input" placeholder="Your email address" id="hero-email" />
+      <button class="form-btn" onclick="submitEmail('hero-email','hero-success','hero-form-row')">Join Now</button>
+    </div>
+    <div class="success-msg" id="hero-success">Welcome to Greek Empire. We'll be in touch.</div>
+    <p class="form-note">No spam. Just Greek Empire.</p>
+  </div>
+</section>
+
+<div class="cat-strip">
+  <div class="cat-item"><span class="cat-icon">👕</span><span class="cat-name">Apparel</span></div>
+  <div class="cat-item"><span class="cat-icon">🧢</span><span class="cat-name">Headwear</span></div>
+  <div class="cat-item"><span class="cat-icon">🎒</span><span class="cat-name">Bags</span></div>
+  <div class="cat-item"><span class="cat-icon">🥤</span><span class="cat-name">Drinkware</span></div>
+  <div class="cat-item"><span class="cat-icon">✦</span><span class="cat-name">Chapter Merch</span></div>
+</div>
+
+<div class="divider"><div class="divider-line"></div><div class="divider-diamond"></div><div class="divider-line"></div></div>
+
+<section class="culture" id="culture">
+  <div>
+    <p class="section-label">More Than Merch</p>
+    <h2 class="section-heading">We're not selling into Greek life. We're part of it.</h2>
+    <p class="section-body">Greek Empire was built for the students who live it — the tailgates, the bid days, the formals, the philanthropy events, and every moment in between. This is a brand that represents who you are, not just what you wear.</p>
+  </div>
+  <div class="pillars">
+    <div class="pillar"><p class="pillar-title">Culture First</p><p class="pillar-text">Every chapter has a story. Greek Empire is the brand that helps you wear it.</p></div>
+    <div class="pillar"><p class="pillar-title">Community Driven</p><p class="pillar-text">From charity walks to chapter philanthropy — built for brothers and sisters who show up.</p></div>
+    <div class="pillar"><p class="pillar-title">Built to Last</p><p class="pillar-text">The hats you wear long after graduation. The gear that outlives the best years.</p></div>
+  </div>
+</section>
+
+<div class="divider"><div class="divider-line"></div><div class="divider-diamond"></div><div class="divider-line"></div></div>
+
+<section class="apparel-strip">
+  <p class="section-label">What We Make</p>
+  <div class="apparel-items">
+    <span class="apparel-item">Rush Shirts</span><span class="apparel-sep">·</span>
+    <span class="apparel-item">Bid Day Drops</span><span class="apparel-sep">·</span>
+    <span class="apparel-item">Hoodies</span><span class="apparel-sep">·</span>
+    <span class="apparel-item">Hats</span><span class="apparel-sep">·</span>
+    <span class="apparel-item">Event Apparel</span><span class="apparel-sep">·</span>
+    <span class="apparel-item">Chapter Merch</span><span class="apparel-sep">·</span>
+    <span class="apparel-item">Drinkware</span>
+  </div>
+</section>
+
+<div class="divider"><div class="divider-line"></div><div class="divider-diamond"></div><div class="divider-line"></div></div>
+
+<section class="amb-recruit" id="ambassadors">
+  <p class="section-label">Ambassador Program</p>
+  <h2 class="amb-headline">Represent the <em>Empire</em><br />on Your Campus.</h2>
+  <p class="amb-sub">Greek Empire ambassadors aren't brand reps — they're the students already inside the culture. If that's you, we want you on the team.</p>
+  <div class="amb-perks">
+    <div class="amb-perk"><div class="amb-perk-num">01</div><p class="amb-perk-title">Free Gear</p><p class="amb-perk-text">Greek Empire apparel and product drops sent directly to you — wear what you represent.</p></div>
+    <div class="amb-perk"><div class="amb-perk-num">02</div><p class="amb-perk-title">Commission</p><p class="amb-perk-text">Earn on every chapter order you bring in. The more your campus orders, the more you make.</p></div>
+    <div class="amb-perk"><div class="amb-perk-num">03</div><p class="amb-perk-title">Early Access</p><p class="amb-perk-text">First look at new drops, limited releases, and exclusive ambassador-only product before anyone else.</p></div>
+    <div class="amb-perk"><div class="amb-perk-num">04</div><p class="amb-perk-title">Build Your Résumé</p><p class="amb-perk-text">Real brand experience — marketing, sales, campus strategy — that looks good long after graduation.</p></div>
+  </div>
+  <a href="#apply" class="outline-btn">Apply to Be an Ambassador</a>
+</section>
+
+<div class="divider"><div class="divider-line"></div><div class="divider-diamond"></div><div class="divider-line"></div></div>
+
+<section class="amb-apply" id="apply">
+  <div class="apply-inner">
+    <p class="section-label">Apply Now</p>
+    <h2 class="apply-headline">Join the Team.</h2>
+    <p class="apply-sub">Tell us who you are and where you rep. We'll be in touch before launch.</p>
+    <div class="apply-form" id="apply-form">
+      <div class="apply-row">
+        <input class="apply-input" type="text" placeholder="First Name" id="apply-first" />
+        <input class="apply-input" type="text" placeholder="Last Name" id="apply-last" />
+      </div>
+      <input class="apply-input" type="email" placeholder="Email Address" id="apply-email" />
+      <input class="apply-input" type="text" placeholder="University / College" id="apply-school" />
+      <div class="apply-row">
+        <input class="apply-input" type="text" placeholder="Chapter Name (e.g. Sigma Chi)" id="apply-chapter" />
+        <select class="apply-select" id="apply-council">
+          <option value="" disabled selected>Council</option>
+          <option>IFC</option><option>NPC</option><option>NPHC</option>
+          <option>NALFO</option><option>NAPA</option><option>SAFA</option><option>Other</option>
+        </select>
+      </div>
+      <input class="apply-input" type="text" placeholder="Instagram Handle (optional)" id="apply-ig" />
+      <button class="apply-submit" onclick="submitApplication()">Submit Application</button>
+    </div>
+    <div class="apply-success" id="apply-success">
+      Application received.<br />
+      <span style="color:var(--white-mute);font-size:0.95rem;">We'll reach out before launch. Welcome to the Empire.</span>
+    </div>
+  </div>
+</section>
+
+<section class="bottom-cta">
+  <h2 class="bottom-headline">Four Years.<br /><span style="color:var(--gold);">One Culture.</span></h2>
+  <p class="bottom-sub">Don't miss what's coming.</p>
+  <div class="bottom-form">
+    <div class="form-row" id="bottom-form-row">
+      <input type="email" class="form-input" placeholder="Your email address" id="bottom-email" />
+      <button class="form-btn" onclick="submitEmail('bottom-email','bottom-success','bottom-form-row')">Join Now</button>
+    </div>
+    <div class="success-msg" id="bottom-success">Welcome to Greek Empire. We'll be in touch.</div>
+    <p class="form-note">Nationwide launch coming soon.</p>
+  </div>
+</section>
+
+<footer>
+  <div>
+    <span class="footer-logo">Greek Empire</span>
+    <span class="footer-tagline">Apparel for the Best Years of Your Life</span>
+    <p class="footer-address">281 Benigno Blvd<br />Bellmawr, New Jersey 08031<br />crystal@empirepromos.com<br />+1 (877) 477 6667</p>
+  </div>
+  <div>
+    <p class="footer-col-title">Shop</p>
+    <div class="footer-links">
+      <a href="https://greekempire.swagflo.com/apparel" target="_blank">Apparel</a>
+      <a href="https://greekempire.swagflo.com/headwear" target="_blank">Headwear</a>
+      <a href="https://greekempire.swagflo.com/bags" target="_blank">Bags</a>
+      <a href="https://greekempire.swagflo.com/drinkware" target="_blank">Drinkware</a>
+    </div>
+  </div>
+  <div>
+    <p class="footer-col-title">Company</p>
+    <div class="footer-links">
+      <a href="#ambassadors">Ambassadors</a>
+      <a href="https://greekempire.swagflo.com/contactus" target="_blank">Contact Us</a>
+      <a href="https://greekempire.swagflo.com/privacy-policy" target="_blank">Privacy Policy</a>
+      <a href="https://greekempire.swagflo.com/terms-condition" target="_blank">Terms of Service</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2026 Greek Empire · Apparel for the Best Years of Your Life</span>
+    <span class="footer-copy">Est. 334 BC</span>
+  </div>
+</footer>
+
+<script>
+function submitEmail(inputId, successId, rowId) {
+  const input = document.getElementById(inputId);
+  const success = document.getElementById(successId);
+  const row = document.getElementById(rowId);
+  const email = input.value.trim();
+  if (!email || !email.includes('@')) {
+    input.style.border = '1px solid rgba(220,60,60,0.5)';
+    input.placeholder = 'Enter a valid email';
+    setTimeout(() => { input.style.border = ''; input.placeholder = 'Your email address'; }, 2000);
+    return;
+  }
+  row.style.display = 'none';
+  success.style.display = 'block';
+}
+function submitApplication() {
+  const ids = ['apply-first','apply-last','apply-email','apply-school','apply-chapter'];
+  let valid = true;
+  ids.forEach(id => {
+    const el = document.getElementById(id);
+    if (!el.value.trim() || (id==='apply-email' && !el.value.includes('@'))) {
+      el.style.borderColor = 'rgba(220,60,60,0.5)';
+      setTimeout(() => { el.style.borderColor = 'rgba(201,168,76,0.15)'; }, 2000);
+      valid = false;
+    }
+  });
+  if (!valid) return;
+  document.getElementById('apply-form').style.display = 'none';
+  document.getElementById('apply-success').style.display = 'block';
+}
+</script>
+</body>
+</html>
