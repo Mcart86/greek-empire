@@ -333,6 +333,41 @@ footer { background: #000; border-top: 1px solid rgba(245,240,232,0.06); padding
   </div>
 </div>
 
+<!-- APPLY TOP -->
+<section class="apply-section apply-top" id="apply-top">
+  <div class="apply-inner">
+    <p class="section-tag" style="justify-content:center;">
+      <span style="width:28px;height:1px;background:var(--gold);display:block;"></span>
+      Ambassador Application
+      <span style="width:28px;height:1px;background:var(--gold);display:block;"></span>
+    </p>
+    <h2 class="section-heading reveal" style="margin-bottom:0.75rem;">Join the<br /><em>Team.</em></h2>
+    <p class="section-body reveal reveal-delay-1">Tell us who you are and where you rep. We'll be in touch before launch.</p>
+    <div class="apply-form-grid reveal reveal-delay-2" id="apply-form-top">
+      <div class="apply-row-2">
+        <input class="apply-input" type="text" placeholder="First Name" id="t-first" />
+        <input class="apply-input" type="text" placeholder="Last Name" id="t-last" />
+      </div>
+      <input class="apply-input" type="email" placeholder="Email Address" id="t-email" />
+      <input class="apply-input" type="text" placeholder="University / College" id="t-school" />
+      <div class="apply-row-2">
+        <input class="apply-input" type="text" placeholder="Chapter Name (e.g. Sigma Chi)" id="t-chapter" />
+        <select class="apply-select" id="t-council">
+          <option value="" disabled selected>Council</option>
+          <option>IFC</option><option>NPC</option><option>NPHC</option>
+          <option>NALFO</option><option>NAPA</option><option>SAFA</option><option>Other</option>
+        </select>
+      </div>
+      <input class="apply-input" type="text" placeholder="Instagram Handle (optional)" id="t-ig" />
+      <button class="apply-submit" onclick="submitAppTop()">Submit Application</button>
+    </div>
+    <div class="apply-success" id="apply-success-top">
+      Application received.<br />
+      <span style="color:var(--muted);font-size:0.92rem;">We'll reach out before launch. Welcome to the Empire.</span>
+    </div>
+  </div>
+</section>
+
 <!-- ABOUT -->
 <section class="about" id="about">
   <div class="about-text reveal">
@@ -626,6 +661,14 @@ function submitEmail(iid, sid, rid) {
   const i = document.getElementById(iid), s = document.getElementById(sid), r = document.getElementById(rid);
   if(!i.value.trim() || !i.value.includes('@')) { i.style.borderColor='rgba(220,60,60,0.5)'; i.placeholder='Valid email required'; setTimeout(()=>{ i.style.borderColor=''; i.placeholder='Your email address'; },2500); return; }
   r.style.display='none'; s.style.display='block';
+}
+function submitAppTop() {
+  const ids = ['t-first','t-last','t-email','t-school','t-chapter'];
+  let ok = true;
+  ids.forEach(id => { const el = document.getElementById(id); if(!el.value.trim()||(id==='t-email'&&!el.value.includes('@'))) { el.style.borderColor='rgba(220,60,60,0.5)'; setTimeout(()=>el.style.borderColor='rgba(245,240,232,0.1)',2500); ok=false; } });
+  if(!ok) return;
+  document.getElementById('apply-form-top').style.display='none';
+  document.getElementById('apply-success-top').style.display='block';
 }
 function submitApp() {
   const ids = ['a-first','a-last','a-email','a-school','a-chapter'];
