@@ -118,7 +118,8 @@ nav.scrolled { background: rgba(5,5,5,0.96); backdrop-filter: blur(20px); paddin
 .section-body { font-family: var(--font-display); font-size: 1.1rem; letter-spacing: 0.1em; text-transform: uppercase; line-height: 1.85; color: var(--white); font-weight: 400; }
 
 /* ABOUT */
-.about { padding: 7rem 3.5rem; max-width: 1300px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 7rem; align-items: start; }
+.about { padding: 7rem 3.5rem; max-width: 1300px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: auto; gap: 0 7rem; align-items: start; }
+.about-heading-full { grid-column: 1 / -1; }
 .about-text .section-heading { margin-bottom: 1.75rem; }
 .about-text .section-body { margin-bottom: 0; }
 .about-stat-row { display: flex; gap: 2.5rem; margin-top: 3rem; padding-top: 3rem; border-top: 1px solid rgba(245,240,232,0.07); }
@@ -328,10 +329,12 @@ footer { background: #000; border-top: 1px solid rgba(245,240,232,0.06); padding
 
 <!-- ABOUT -->
 <section class="about" id="about">
-  <div class="about-text reveal">
+  <div class="about-heading-full reveal" style="grid-column: 1 / -1; width:100%; margin-bottom:3rem;">
     <p class="section-tag">More Than Merch</p>
     <h2 class="section-heading">We're not selling into Greek life.<br /><em>We're part of it.</em></h2>
-    <video autoplay muted loop playsinline style="width:100%; margin-top:2rem; display:block; border:1px solid rgba(201,168,76,0.15);">
+  </div>
+  <div class="about-text reveal">
+    <video autoplay muted loop playsinline style="width:100%; display:block; border:1px solid rgba(201,168,76,0.15);">
       <source src="sizzle.mp4" type="video/mp4">
     </video>
     <div class="about-stat-row">
