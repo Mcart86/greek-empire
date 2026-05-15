@@ -416,15 +416,15 @@ footer { background: #000; border-top: 1px solid rgba(245,240,232,0.06); padding
     </div>
     <div class="about-stat-row">
       <div class="about-stat">
-        <div class="about-stat-num">500+</div>
+        <div class="about-stat-num" data-target="500" data-suffix="+">0+</div>
         <div class="about-stat-label">Universities</div>
       </div>
       <div class="about-stat">
-        <div class="about-stat-num">161</div>
+        <div class="about-stat-num" data-target="161" data-suffix="">0</div>
         <div class="about-stat-label">Organizations</div>
       </div>
       <div class="about-stat">
-        <div class="about-stat-num">4</div>
+        <div class="about-stat-num" data-target="4" data-suffix="">0</div>
         <div class="about-stat-label">Years. That's All You Get.</div>
       </div>
     </div>
@@ -647,6 +647,32 @@ function submitAppTop() {
   document.getElementById('apply-form-top').style.display='none';
   document.getElementById('apply-success-top').style.display='block';
 }
+// Count-up animation on scroll
+const statNums = document.querySelectorAll('.about-stat-num[data-target]');
+const countObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting && !entry.target.classList.contains('counted')) {
+      entry.target.classList.add('counted');
+      const target = parseInt(entry.target.dataset.target);
+      const suffix = entry.target.dataset.suffix || '';
+      const duration = 1800;
+      const steps = 60;
+      const increment = target / steps;
+      let current = 0;
+      const timer = setInterval(() => {
+        current += increment;
+        if (current >= target) {
+          entry.target.textContent = target + suffix;
+          clearInterval(timer);
+        } else {
+          entry.target.textContent = Math.floor(current) + suffix;
+        }
+      }, duration / steps);
+    }
+  });
+}, { threshold: 0.5 });
+statNums.forEach(el => countObserver.observe(el));
+
 function submitApp() {
   const ids = ['a-first','a-last','a-email','a-school','a-chapter'];
   let ok = true;
