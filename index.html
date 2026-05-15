@@ -84,7 +84,7 @@ nav.scrolled { background: rgba(5,5,5,0.96); backdrop-filter: blur(20px); paddin
 .hero-kicker { font-size: 0.6rem; letter-spacing: 0.55em; text-transform: uppercase; font-weight: 500; color: var(--gold); margin-bottom: 2rem; opacity: 0; animation: heroReveal 1s ease 0.3s forwards; margin-top: 6rem; }
 .hero-logo-wrap { width: min(280px, 54vw); margin-bottom: 2.25rem; opacity: 0; animation: heroReveal 1.1s ease 0.5s forwards; filter: drop-shadow(0 0 60px rgba(201,168,76,0.25)); }
 .hero-logo-wrap img { width: 100%; display: block; }
-.hero-title { font-family: var(--font-display); font-size: clamp(1.2rem, 7vw, 7rem); line-height: 1.15; letter-spacing: 0.03em; color: var(--white); text-transform: uppercase; opacity: 0; animation: heroReveal 1s ease 0.7s forwards; white-space: nowrap; }
+.hero-title { font-family: var(--font-display); font-size: clamp(1.2rem, 7vw, 7rem); line-height: 1.15; letter-spacing: 0.03em; color: var(--white); text-transform: uppercase; opacity: 0; animation: heroReveal 1s ease 0.7s forwards; white-space: normal; }
 .hero-title .gold { display: block; font-family: 'LostInSouth', cursive; text-transform: none; letter-spacing: 0.01em; font-size: 1.1em; line-height: 1.1; background: linear-gradient(90deg, #8B6914 0%, #D4A43A 25%, #F0C040 50%, #D4A43A 75%, #8B6914 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
 .hero-tagline { font-family: var(--font-script); font-size: clamp(1.4rem, 3vw, 2.2rem); font-style: italic; font-weight: 400; color: var(--cream); letter-spacing: 0.06em; margin-top: 0.25rem; margin-bottom: 2.75rem; opacity: 0; animation: heroReveal 1s ease 0.9s forwards; }
 .hero-form { display: flex; flex-direction: column; align-items: center; gap: 0.7rem; width: min(480px, 92vw); opacity: 0; animation: heroReveal 1s ease 1.1s forwards; }
@@ -93,7 +93,7 @@ nav.scrolled { background: rgba(5,5,5,0.96); backdrop-filter: blur(20px); paddin
 .hero-form-row:focus-within { border-color: var(--gold); }
 .hero-form-row input { flex: 1; background: transparent; border: none; outline: none; padding: 1rem 1.25rem; font-family: var(--font-sans); font-size: 0.82rem; letter-spacing: 0.04em; color: var(--off-white); }
 .hero-form-row input::placeholder { color: var(--faint); }
-.hero-form-row button { font-family: var(--font-display); font-size: 1rem; letter-spacing: 0.18em; background: var(--gold); color: var(--black); border: none; padding: 1rem 1.75rem; cursor: pointer; transition: background 0.2s; white-space: nowrap; }
+.hero-form-row button { font-family: var(--font-display); font-size: 1rem; letter-spacing: 0.18em; background: var(--gold); color: var(--black); border: none; padding: 1rem 1.75rem; cursor: pointer; transition: background 0.2s; white-space: normal; }
 .hero-form-row button:hover { background: var(--gold-bright); }
 .hero-note { font-size: 0.58rem; color: var(--faint); letter-spacing: 0.1em; }
 .hero-success { display: none; font-family: var(--font-script); font-size: 1.1rem; font-style: italic; color: var(--gold); padding: 0.75rem 1.5rem; border: 1px solid var(--gold-dim); }
@@ -106,7 +106,7 @@ nav.scrolled { background: rgba(5,5,5,0.96); backdrop-filter: blur(20px); paddin
 /* MARQUEE */
 .marquee-strip { background: var(--gold); padding: 0.8rem 0; overflow: hidden; }
 .marquee-track { display: flex; animation: marqueeScroll 28s linear infinite; width: max-content; }
-.marquee-item { font-family: var(--font-display); font-size: 0.82rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--black); white-space: nowrap; padding: 0 2.25rem; display: flex; align-items: center; gap: 2.25rem; }
+.marquee-item { font-family: var(--font-display); font-size: 0.82rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--black); white-space: normal; padding: 0 2.25rem; display: flex; align-items: center; gap: 2.25rem; }
 .marquee-item::after { content: '—'; font-size: 0.5rem; color: rgba(0,0,0,0.35); }
 @keyframes marqueeScroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
@@ -169,7 +169,7 @@ nav.scrolled { background: rgba(5,5,5,0.96); backdrop-filter: blur(20px); paddin
 
 /* AMBASSADOR */
 .ambassador { padding: 3rem 3.5rem; position: relative; overflow: hidden; }
-.ambassador::before { content: 'AMBASSADOR'; position: absolute; top: 30%; left: 50%; transform: translate(-50%,-50%); font-family: var(--font-display); font-size: clamp(5rem, 18vw, 16rem); letter-spacing: 0.05em; color: rgba(201,168,76,0.028); white-space: nowrap; pointer-events: none; z-index: 0; }
+.ambassador::before { content: 'AMBASSADOR'; position: absolute; top: 30%; left: 50%; transform: translate(-50%,-50%); font-family: var(--font-display); font-size: clamp(5rem, 18vw, 16rem); letter-spacing: 0.05em; color: rgba(201,168,76,0.028); white-space: normal; pointer-events: none; z-index: 0; }
 .ambassador-inner { max-width: 1300px; margin: 0 auto; position: relative; z-index: 1; }
 .ambassador-header { text-align: center; margin-bottom: 2rem; }
 .ambassador-header .section-heading { line-height: 1.05; }
@@ -208,7 +208,7 @@ nav.scrolled { background: rgba(5,5,5,0.96); backdrop-filter: blur(20px); paddin
 .bottom-form:focus-within { border-color: var(--gold); }
 .bottom-form input { flex: 1; background: transparent; border: none; outline: none; padding: 1.1rem 1.25rem; font-family: var(--font-sans); font-size: 0.82rem; letter-spacing: 0.04em; color: var(--off-white); }
 .bottom-form input::placeholder { color: var(--faint); }
-.bottom-form button { font-family: var(--font-display); font-size: 1rem; letter-spacing: 0.18em; background: var(--gold); color: var(--black); border: none; padding: 1.1rem 1.75rem; cursor: pointer; transition: background 0.2s; white-space: nowrap; }
+.bottom-form button { font-family: var(--font-display); font-size: 1rem; letter-spacing: 0.18em; background: var(--gold); color: var(--black); border: none; padding: 1.1rem 1.75rem; cursor: pointer; transition: background 0.2s; white-space: normal; }
 .bottom-form button:hover { background: var(--gold-bright); }
 .bottom-success { display: none; font-family: var(--font-script); font-size: 1.05rem; font-style: italic; color: var(--gold); padding: 1rem; border: 1px solid var(--gold-dim); width: min(480px,92vw); margin: 0 auto; }
 
