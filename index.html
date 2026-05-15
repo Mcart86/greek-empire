@@ -65,6 +65,7 @@ nav.scrolled { background: rgba(5,5,5,0.96); backdrop-filter: blur(20px); paddin
 
 /* HERO */
 .hero { position: relative; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; overflow: hidden; background: var(--black); }
+.hero-bg-photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center top; z-index: 0; opacity: 0.45; }
 .hero-lines { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
 .hero-lines span { position: absolute; background: linear-gradient(180deg, transparent, var(--gold-dim), transparent); width: 1px; animation: lineFall linear infinite; opacity: 0; }
 .hero-lines span:nth-child(1)  { left: 8%;  height: 30%; animation-duration: 8s;  animation-delay: 0s; }
@@ -283,6 +284,7 @@ footer { background: #000; border-top: 1px solid rgba(245,240,232,0.06); padding
 
 <!-- HERO -->
 <section class="hero">
+  <img class="hero-bg-photo" src="hero-party.jpg" alt="" />
   <div class="hero-lines">
     <span></span><span></span><span></span><span></span><span></span>
     <span></span><span></span><span></span><span></span><span></span>
