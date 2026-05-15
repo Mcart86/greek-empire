@@ -53,7 +53,7 @@ body::before { content: ''; position: fixed; inset: 0; z-index: 1; background-im
 /* NAV */
 nav { position: fixed; top: 0; left: 0; right: 0; z-index: 500; display: flex; align-items: center; justify-content: space-between; padding: 1.5rem 3.5rem; transition: background 0.4s, padding 0.4s; }
 nav.scrolled { background: rgba(5,5,5,0.96); backdrop-filter: blur(20px); padding: 0.9rem 3.5rem; border-bottom: 1px solid rgba(201,168,76,0.1); }
-.nav-logo { font-family: var(--font-display); font-size: 1.5rem; letter-spacing: 0.22em; color: var(--gold); text-decoration: none; transition: opacity 0.2s; }
+.nav-logo { font-family: var(--font-display); font-size: 1.5rem; letter-spacing: 0.22em; background: linear-gradient(90deg, #8B6914 0%, #D4A43A 25%, #F0C040 50%, #D4A43A 75%, #8B6914 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-decoration: none; transition: opacity 0.2s; }
 .nav-logo:hover { opacity: 0.75; }
 .nav-center { display: flex; gap: 2.5rem; }
 .nav-center a { font-size: 0.63rem; letter-spacing: 0.22em; text-transform: uppercase; font-weight: 500; color: var(--muted); text-decoration: none; transition: color 0.2s; }
@@ -85,7 +85,7 @@ nav.scrolled { background: rgba(5,5,5,0.96); backdrop-filter: blur(20px); paddin
 .hero-logo-wrap { width: min(280px, 54vw); margin-bottom: 2.25rem; opacity: 0; animation: heroReveal 1.1s ease 0.5s forwards; filter: drop-shadow(0 0 60px rgba(201,168,76,0.25)); }
 .hero-logo-wrap img { width: 100%; display: block; }
 .hero-title { font-family: var(--font-display); font-size: clamp(1.2rem, 7vw, 7rem); line-height: 1.15; letter-spacing: 0.03em; color: var(--white); text-transform: uppercase; opacity: 0; animation: heroReveal 1s ease 0.7s forwards; white-space: nowrap; }
-.hero-title .gold { display: block; font-family: 'LostInSouth', cursive; text-transform: none; letter-spacing: 0.01em; font-size: 1.1em; line-height: 1.1; background: linear-gradient(90deg, #c89116 0%, #e4e3e0 50%, #c89116 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.hero-title .gold { display: block; font-family: 'LostInSouth', cursive; text-transform: none; letter-spacing: 0.01em; font-size: 1.1em; line-height: 1.1; background: linear-gradient(90deg, #8B6914 0%, #D4A43A 25%, #F0C040 50%, #D4A43A 75%, #8B6914 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
 .hero-tagline { font-family: var(--font-script); font-size: clamp(1.4rem, 3vw, 2.2rem); font-style: italic; font-weight: 400; color: var(--cream); letter-spacing: 0.06em; margin-top: 0.25rem; margin-bottom: 2.75rem; opacity: 0; animation: heroReveal 1s ease 0.9s forwards; }
 .hero-form { display: flex; flex-direction: column; align-items: center; gap: 0.7rem; width: min(480px, 92vw); opacity: 0; animation: heroReveal 1s ease 1.1s forwards; }
 .hero-form-label { font-size: 0.58rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold); font-weight: 500; }
