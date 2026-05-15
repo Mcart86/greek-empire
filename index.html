@@ -60,7 +60,7 @@ nav.scrolled { background: rgba(5,5,5,0.96); backdrop-filter: blur(20px); paddin
 .nav-center a:hover { color: var(--gold); }
 .nav-right { display: flex; align-items: center; gap: 1.5rem; }
 .nav-est { font-family: var(--font-script); font-size: 0.95rem; font-style: italic; color: var(--faint); }
-.nav-cta { font-family: var(--font-display); font-size: 0.9rem; letter-spacing: 0.2em; background: var(--gold); color: var(--black); padding: 0.5rem 1.4rem; text-decoration: none; transition: background 0.2s, transform 0.2s; }
+.nav-cta { font-family: var(--font-display); font-size: 0.9rem; letter-spacing: 0.2em; background: linear-gradient(90deg, #8B6914 0%, #D4A43A 25%, #F0C040 50%, #D4A43A 75%, #8B6914 100%); color: var(--black); padding: 0.5rem 1.4rem; text-decoration: none; transition: opacity 0.2s, transform 0.2s; }
 .nav-cta:hover { background: var(--gold-bright); transform: translateY(-1px); }
 
 /* HERO */
@@ -104,7 +104,7 @@ nav.scrolled { background: rgba(5,5,5,0.96); backdrop-filter: blur(20px); paddin
 @keyframes heroReveal { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: translateY(0); } }
 
 /* MARQUEE */
-.marquee-strip { background: var(--gold); padding: 0.8rem 0; overflow: hidden; }
+.marquee-strip { background: linear-gradient(90deg, #8B6914 0%, #D4A43A 25%, #F0C040 50%, #D4A43A 75%, #8B6914 100%); padding: 0.8rem 0; overflow: hidden; }
 .marquee-track { display: flex; animation: marqueeScroll 28s linear infinite; width: max-content; }
 .marquee-item { font-family: var(--font-display); font-size: 0.945rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--black); white-space: normal; padding: 0 2.25rem; display: flex; align-items: center; gap: 2.25rem; }
 .marquee-item::after { content: '—'; font-size: 0.5rem; color: rgba(0,0,0,0.35); }
@@ -194,7 +194,7 @@ nav.scrolled { background: rgba(5,5,5,0.96); backdrop-filter: blur(20px); paddin
 .apply-input::placeholder { color: rgba(245,240,232,0.7); }
 .apply-select { background: var(--black); border: 1px solid rgba(245,240,232,0.1); outline: none; padding: 0.95rem 1.2rem; font-family: var(--font-sans); font-size: 0.82rem; color: rgba(245,240,232,0.28); width: 100%; cursor: pointer; appearance: none; transition: border-color 0.25s; }
 .apply-select:focus { border-color: var(--gold); }
-.apply-submit { font-family: var(--font-display); font-size: 1.1rem; letter-spacing: 0.25em; background: var(--gold); color: var(--black); border: none; padding: 1.1rem 2rem; cursor: pointer; width: 100%; margin-top: 0.4rem; transition: background 0.2s, transform 0.2s; }
+.apply-submit { font-family: var(--font-display); font-size: 1.1rem; letter-spacing: 0.25em; background: linear-gradient(90deg, #8B6914 0%, #D4A43A 25%, #F0C040 50%, #D4A43A 75%, #8B6914 100%); color: var(--black); border: none; padding: 1.1rem 2rem; cursor: pointer; width: 100%; margin-top: 0.4rem; transition: opacity 0.2s, transform 0.2s; }
 .apply-submit:hover { background: var(--gold-bright); transform: translateY(-2px); }
 .apply-success { display: none; font-family: var(--font-script); font-size: 1.15rem; font-style: italic; color: var(--gold); padding: 1.75rem; border: 1px solid var(--gold-dim); line-height: 1.8; }
 
@@ -295,7 +295,7 @@ footer { background: #000; border-top: 1px solid rgba(245,240,232,0.06); padding
     <p class="hero-kicker">Est. 334 BC &nbsp;·&nbsp; Greek Life Culture &nbsp;·&nbsp; Nationwide</p>
 
     <h1 class="hero-title">College Apparel for the<span class="gold" style="display:block;">Best Years of Your Life</span></h1>
-    <a href="#apply" style="margin-top:2.5rem;font-family:var(--font-display);font-size:0.85rem;letter-spacing:0.22em;text-transform:uppercase;background:var(--gold);color:var(--black);padding:1rem 2.5rem;text-decoration:none;opacity:0;animation:heroReveal 1s ease 1.1s forwards;transition:background 0.2s;" onmouseover="this.style.background='var(--gold-bright)'" onmouseout="this.style.background='var(--gold)'">Join the Team</a>
+    <a href="#apply" style="margin-top:2.5rem;font-family:var(--font-display);font-size:0.85rem;letter-spacing:0.22em;text-transform:uppercase;background:linear-gradient(90deg, #8B6914 0%, #D4A43A 25%, #F0C040 50%, #D4A43A 75%, #8B6914 100%);color:var(--black);padding:1rem 2.5rem;text-decoration:none;opacity:0;animation:heroReveal 1s ease 1.1s forwards;transition:background 0.2s;" onmouseover="this.style.background='var(--gold-bright)'" onmouseout="this.style.background='var(--gold)'">Join the Team</a>
 
   </div>
   <div class="scroll-hint">
