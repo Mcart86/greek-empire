@@ -276,15 +276,24 @@ footer { background: #000; border-top: 1px solid rgba(245,240,232,0.06); padding
   .apply-section { padding: 4rem 1.5rem; }
   .bottom-cta { padding: 4rem 1.5rem; }
   .about-heading-full { margin-bottom: 2rem; }
+  footer { padding: 1.5rem 1.5rem 1rem; }
 }
 @media (max-width: 600px) {
+  /* Nav */
+  nav { padding: 1rem 1.25rem; }
+
   /* Hero */
-  .hero-title { font-size: clamp(2rem, 8vw, 4rem) !important; }
+  .hero { min-height: 65vh; }
+  .hero-title { font-size: clamp(2.2rem, 9vw, 4rem) !important; }
   .hero-title .gold { font-size: 1em !important; }
-  .hero { min-height: 60vh; }
+  .hero-kicker { font-size: 0.7rem; letter-spacing: 0.3em; margin-top: 4rem; }
 
   /* Marquee fix */
   .marquee-item { white-space: nowrap; }
+
+  /* About */
+  .about { padding: 3rem 1.25rem; }
+  .about-stat-row { flex-direction: column; gap: 1.5rem; }
 
   /* Products */
   .products-grid { grid-template-columns: 1fr; }
@@ -295,21 +304,24 @@ footer { background: #000; border-top: 1px solid rgba(245,240,232,0.06); padding
   /* Section headings */
   .section-heading { font-size: clamp(2rem, 8vw, 3.5rem); }
 
-  /* Footer mobile - override inline styles */
-  footer > div:first-child { flex-direction: column !important; align-items: flex-start !important; }
-  footer > div:first-child > div:last-child { width: auto !important; }
+  /* Ambassador headline */
+  .ambassador-header .section-heading { font-size: clamp(2.5rem, 9vw, 4.5rem) !important; }
 
-  /* Video controls */
-  #play-btn, #mute-btn { font-size: 0.6rem !important; padding: 0.5rem 0.8rem !important; }
+  /* Manifesto */
+  .manifesto { padding: 3rem 1.25rem; }
+  .manifesto-quote { font-size: clamp(1.3rem, 5vw, 2rem); }
+
+  /* Footer */
+  footer { padding: 1.5rem 1.25rem 1rem; }
+  footer .footer-bottom { flex-direction: column; gap: 0.4rem; text-align: center; }
 
   /* Hide custom cursor on touch */
   .cursor, .cursor-ring { display: none; }
 
-  /* Padding */
-  .about { padding: 3rem 1.25rem; }
-  .manifesto { padding: 3rem 1.25rem; }
+  /* Apply section */
   .ambassador { padding: 3rem 1.25rem; }
   .apply-section { padding: 3rem 1.25rem; }
+  .bottom-cta { padding: 3rem 1.25rem; }
 }
 </style>
 </head>
@@ -668,8 +680,6 @@ window.addEventListener('scroll', () => {
   scrollBar.style.width = pct + '%';
   document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 60);
 });
-
-// 7. Word-by-word manifesto animation
 const manifestoP = document.querySelector('.manifesto-quote');
 if (manifestoP) {
   const html = manifestoP.innerHTML;
@@ -691,21 +701,13 @@ if (manifestoP) {
   wordObs.observe(manifestoP);
 }
 
-window.addEventListener('scroll', () => document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 60));
+// 7. Word-by-word manifesto animation = new IntersectionObserver(entries => entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); }), { threshold: 0.1 });
 const obs = new IntersectionObserver(entries => entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); }), { threshold: 0.1 });
 document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
 function submitEmail(iid, sid, rid) {
   const i = document.getElementById(iid), s = document.getElementById(sid), r = document.getElementById(rid);
   if(!i.value.trim() || !i.value.includes('@')) { i.style.borderColor='rgba(220,60,60,0.5)'; i.placeholder='Valid email required'; setTimeout(()=>{ i.style.borderColor=''; i.placeholder='Your email address'; },2500); return; }
   r.style.display='none'; s.style.display='block';
-}
-function submitAppTop() {
-  const ids = ['t-first','t-last','t-email','t-school','t-chapter'];
-  let ok = true;
-  ids.forEach(id => { const el = document.getElementById(id); if(!el.value.trim()||(id==='t-email'&&!el.value.includes('@'))) { el.style.borderColor='rgba(220,60,60,0.5)'; setTimeout(()=>el.style.borderColor='rgba(245,240,232,0.1)',2500); ok=false; } });
-  if(!ok) return;
-  document.getElementById('apply-form-top').style.display='none';
-  document.getElementById('apply-success-top').style.display='block';
 }
 // Count-up animation on scroll
 const statNums = document.querySelectorAll('.about-stat-num[data-target]');
