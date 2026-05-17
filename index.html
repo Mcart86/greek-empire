@@ -232,7 +232,16 @@ nav.scrolled { background: rgba(5,5,5,0.96); backdrop-filter: blur(20px); paddin
 .bottom-form input::placeholder { color: var(--faint); }
 .bottom-form button { font-family: var(--font-display); font-size: 1rem; letter-spacing: 0.18em; background: var(--gold); color: var(--black); border: none; padding: 1.1rem 1.75rem; cursor: pointer; transition: background 0.2s; white-space: normal; }
 .bottom-form button:hover { background: var(--gold-bright); }
-/* REVEAL */
+/* HAMBURGER */
+.nav-hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; z-index: 200; }
+.nav-hamburger span { display: block; width: 24px; height: 2px; background: var(--off-white); transition: all 0.3s; }
+.nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-hamburger.open span:nth-child(2) { opacity: 0; }
+.nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+.nav-mobile-menu { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.97); z-index: 150; flex-direction: column; align-items: center; justify-content: center; gap: 2.5rem; }
+.nav-mobile-menu.open { display: flex; }
+.nav-mobile-menu a { font-family: var(--font-display); font-size: clamp(1.8rem, 8vw, 2.5rem); letter-spacing: 0.2em; color: var(--off-white); text-decoration: none; text-transform: uppercase; transition: color 0.2s; }
+.nav-mobile-menu a:hover { color: var(--gold); }
 .reveal { opacity: 0; transform: translateY(36px); transition: opacity 0.8s ease, transform 0.8s ease; }
 .reveal.visible { opacity: 1; transform: translateY(0); }
 .reveal-delay-1 { transition-delay: 0.1s; }
@@ -263,8 +272,8 @@ nav.scrolled { background: rgba(5,5,5,0.96); backdrop-filter: blur(20px); paddin
   footer { padding: 1.5rem 1.5rem 1rem; }
 }
 @media (max-width: 600px) {
-  /* Nav */
   nav { padding: 1rem 1.25rem; }
+  .nav-hamburger { display: flex; }
 
   /* Hero */
   .hero { min-height: 65vh; }
@@ -328,8 +337,19 @@ nav.scrolled { background: rgba(5,5,5,0.96); backdrop-filter: blur(20px); paddin
   <div class="nav-right">
     <span class="nav-est">Est. 334 BC</span>
     <a href="#apply" class="nav-cta">Apply</a>
+    <div class="nav-hamburger" id="hamburger" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </div>
   </div>
 </nav>
+
+<!-- MOBILE MENU -->
+<div class="nav-mobile-menu" id="mobileMenu">
+  <a href="#about" onclick="toggleMenu()">About</a>
+  <a href="#products" onclick="toggleMenu()">Apparel</a>
+  <a href="#ambassador" onclick="toggleMenu()">Ambassadors</a>
+  <a href="#apply" onclick="toggleMenu()" style="color:var(--gold);">Apply Now</a>
+</div>
 
 <!-- HERO -->
 <section class="hero">
@@ -722,6 +742,13 @@ const countObserver = new IntersectionObserver((entries) => {
 }, { threshold: 0.5 });
 statNums.forEach(el => countObserver.observe(el));
 
+function toggleMenu() {
+  const h = document.getElementById('hamburger');
+  const m = document.getElementById('mobileMenu');
+  h.classList.toggle('open');
+  m.classList.toggle('open');
+  document.body.style.overflow = m.classList.contains('open') ? 'hidden' : '';
+}
 function submitApp() {
   const ids = ['a-first','a-last','a-email','a-school','a-chapter'];
   let ok = true;
