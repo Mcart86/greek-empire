@@ -7,7 +7,7 @@
 <meta name="description" content="Greek Empire is the culture brand of Greek life. Custom apparel for fraternities and sororities nationwide." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cinzel:wght@400;600;700;900&family=Cormorant:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Kaushan+Script&family=Permanent+Marker&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Kaushan+Script&family=Permanent+Marker&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet" />
 <!-- Lost in South via CDN fallback to Cormorant italic -->
 <style>
 @font-face {
@@ -59,7 +59,7 @@ body::before { content: ''; position: fixed; inset: 0; z-index: 1; background-im
 /* NAV */
 nav { position: fixed; top: 0; left: 0; right: 0; z-index: 500; display: flex; align-items: center; justify-content: space-between; padding: 1.5rem 3.5rem; transition: background 0.4s, padding 0.4s; }
 nav.scrolled { background: rgba(5,5,5,0.96); backdrop-filter: blur(20px); padding: 0.9rem 3.5rem; border-bottom: 1px solid rgba(201,168,76,0.1); }
-.nav-logo { font-family: 'Cinzel', serif; font-size: 1.15rem; font-weight: 700; letter-spacing: 0.28em; text-transform: uppercase; background: linear-gradient(180deg, #E8C96A 0%, #C9A84C 20%, #F5D980 45%, #C9A84C 70%, #8B6914 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-decoration: none; transition: opacity 0.2s; }
+.nav-logo { font-family: var(--font-display); font-size: 1.5rem; letter-spacing: 0.22em; background: linear-gradient(90deg, #8B6914 0%, #D4A43A 25%, #F0C040 50%, #D4A43A 75%, #8B6914 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-decoration: none; transition: opacity 0.2s; }
 .nav-logo:hover { opacity: 0.75; }
 .nav-center { display: flex; gap: 2.5rem; }
 .nav-center a { font-size: 0.63rem; letter-spacing: 0.22em; text-transform: uppercase; font-weight: 500; color: var(--white); text-decoration: none; transition: color 0.2s; }
@@ -238,7 +238,7 @@ nav.scrolled { background: rgba(5,5,5,0.96); backdrop-filter: blur(20px); paddin
 /* FOOTER */
 footer { background: #000; border-top: 1px solid rgba(245,240,232,0.06); padding: 1.5rem 3.5rem 1rem; }
 .footer-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 2rem; margin-bottom: 1.25rem; padding-bottom: 1.25rem; border-bottom: 1px solid rgba(245,240,232,0.06); }
-.footer-brand-name { font-family: 'Cinzel', serif; font-size: 1.8rem; font-weight: 700; letter-spacing: 0.25em; background: linear-gradient(180deg, #E8C96A 0%, #C9A84C 20%, #F5D980 45%, #C9A84C 70%, #8B6914 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; display: block; margin-bottom: 0.4rem; }
+.footer-brand-name { font-family: var(--font-display); font-size: 2.2rem; letter-spacing: 0.2em; color: var(--gold); display: block; margin-bottom: 0.4rem; }
 .footer-brand-tag { font-family: var(--font-script); font-size: 0.8rem; font-style: italic; display: block; margin-bottom: 1.25rem; background: linear-gradient(90deg, #8B6914 0%, #D4A43A 25%, #F0C040 50%, #D4A43A 75%, #8B6914 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
 .footer-contact { font-size: 0.7rem; color: var(--white); line-height: 2; letter-spacing: 0.04em; }
 .footer-col-title { font-family: var(--font-display); font-size: 0.7rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.1rem; }
@@ -323,7 +323,7 @@ footer { background: #000; border-top: 1px solid rgba(245,240,232,0.06); padding
 
 <!-- NAV -->
 <nav id="nav">
-  <a href="#" class="nav-logo">GREEK EMPIRE</a>
+  <a href="#" class="nav-logo"><img src="logo-text.png" alt="Greek Empire" style="height:36px;width:auto;display:block;" /></a>
   <div class="nav-center">
     <a href="#about">About</a>
     <a href="#products">Apparel</a>
