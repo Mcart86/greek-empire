@@ -187,8 +187,8 @@ nav.scrolled { background: rgba(5,5,5,0.96); backdrop-filter: blur(20px); paddin
 
 /* AMBASSADOR */
 .ambassador { padding: 3rem 3.5rem; position: relative; overflow: hidden; }
-.ambassador-inner { max-width: 1300px; margin: 0 auto; position: relative; z-index: 1; }
-.ambassador-inner::before { content: 'AMBASSADOR'; position: absolute; top: 38%; left: 50%; transform: translate(-50%,-50%); font-family: var(--font-display); font-size: clamp(3.5rem, 18vw, 16rem); letter-spacing: 0.05em; color: rgba(201,168,76,0.12); white-space: nowrap; pointer-events: none; z-index: 0; }
+.ambassador-inner { max-width: 1300px; margin: 0 auto; position: relative; z-index: 1; overflow: visible; }
+.ambassador-inner::before { content: 'AMBASSADOR'; position: absolute; top: 30%; left: 50%; transform: translate(-50%,-50%); font-family: var(--font-display); font-size: clamp(2.8rem, 22vw, 16rem); letter-spacing: 0.05em; color: rgba(201,168,76,0.12); white-space: nowrap; pointer-events: none; z-index: 0; width: max-content; }
 .ambassador-header { text-align: center; margin-bottom: 2rem; }
 .ambassador-header .section-heading { line-height: 1.05; }
 .ambassador-header .section-tag { justify-content: center; }
@@ -242,6 +242,7 @@ nav.scrolled { background: rgba(5,5,5,0.96); backdrop-filter: blur(20px); paddin
 .nav-mobile-menu.open { display: flex; }
 .nav-mobile-menu a { font-family: var(--font-display); font-size: clamp(1.8rem, 8vw, 2.5rem); letter-spacing: 0.2em; color: var(--off-white); text-decoration: none; text-transform: uppercase; transition: color 0.2s; }
 .nav-mobile-menu a:hover { color: var(--gold); }
+.nav-apply-btn { background: linear-gradient(90deg,#8B6914 0%,#D4A43A 25%,#F0C040 50%,#D4A43A 75%,#8B6914 100%) !important; color: #000 !important; padding: 0.9rem 2.5rem !important; font-size: clamp(1rem,4vw,1.3rem) !important; margin-top: 0.5rem; }
 .reveal { opacity: 0; transform: translateY(36px); transition: opacity 0.8s ease, transform 0.8s ease; }
 .reveal.visible { opacity: 1; transform: translateY(0); }
 .reveal-delay-1 { transition-delay: 0.1s; }
@@ -348,7 +349,7 @@ nav.scrolled { background: rgba(5,5,5,0.96); backdrop-filter: blur(20px); paddin
   <a href="#about" onclick="toggleMenu()">About</a>
   <a href="#products" onclick="toggleMenu()">Apparel</a>
   <a href="#ambassador" onclick="toggleMenu()">Ambassadors</a>
-  <a href="#apply" onclick="toggleMenu()" style="background:linear-gradient(90deg,#8B6914 0%,#D4A43A 25%,#F0C040 50%,#D4A43A 75%,#8B6914 100%); color:#000 !important; padding:0.9rem 2.5rem; letter-spacing:0.2em; font-size:clamp(1rem,4vw,1.3rem);">Apply Now</a>
+  <a href="#apply" onclick="toggleMenu()" class="nav-apply-btn">Apply Now</a>
 </div>
 
 <!-- HERO -->
