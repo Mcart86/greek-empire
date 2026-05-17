@@ -188,10 +188,10 @@ nav.scrolled { background: rgba(5,5,5,0.96); backdrop-filter: blur(20px); paddin
 /* AMBASSADOR */
 .ambassador { padding: 3rem 3.5rem; position: relative; overflow: hidden; }
 .ambassador-inner { max-width: 1300px; margin: 0 auto; position: relative; z-index: 1; overflow: visible; }
-.ambassador-inner::before { content: 'AMBASSADOR'; position: absolute; top: 30%; left: 50%; transform: translate(-50%,-50%); font-family: var(--font-display); font-size: clamp(2.8rem, 22vw, 16rem); letter-spacing: 0.05em; color: rgba(201,168,76,0.12); white-space: nowrap; pointer-events: none; z-index: -1; width: max-content; }
-.ambassador-header { text-align: center; margin-bottom: 2rem; }
-.ambassador-header .section-heading { line-height: 1.05; }
-.ambassador-header .section-tag { justify-content: center; }
+.ambassador-header { text-align: center; margin-bottom: 2rem; position: relative; overflow: hidden; }
+.ambassador-header::before { content: 'AMBASSADOR'; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); font-family: var(--font-display); font-size: clamp(2.8rem, 22vw, 16rem); letter-spacing: 0.05em; color: rgba(201,168,76,0.15); white-space: nowrap; pointer-events: none; z-index: 0; width: max-content; }
+.ambassador-header .section-heading { line-height: 1.05; position: relative; z-index: 1; }
+.ambassador-header .section-tag { justify-content: center; position: relative; z-index: 1; }
 .ambassador-header .section-tag::before, .ambassador-header .section-tag::after { content: ''; display: block; width: 28px; height: 1px; background: var(--gold); }
 .ambassador-perks { display: grid; grid-template-columns: repeat(4,1fr); gap: 1.25rem; margin-bottom: 4rem; }
 .perk-card { background: var(--black-2); border: 1px solid rgba(245,240,232,0.06); padding: 2.25rem 1.75rem; position: relative; overflow: hidden; transition: border-color 0.3s, transform 0.3s; z-index: 1; }
