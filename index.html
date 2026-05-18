@@ -236,6 +236,7 @@ nav.scrolled { background: rgba(5,5,5,0.96); backdrop-filter: blur(20px); paddin
 .nav-mobile-menu a { font-family: var(--font-display); font-size: clamp(1.8rem, 8vw, 2.5rem); letter-spacing: 0.2em; color: var(--off-white); text-decoration: none; text-transform: uppercase; transition: color 0.2s; }
 .nav-mobile-menu a:hover { color: var(--gold); }
 .nav-apply-btn { background: linear-gradient(90deg,#8B6914 0%,#D4A43A 25%,#F0C040 50%,#D4A43A 75%,#8B6914 100%) !important; color: #000 !important; padding: 0.9rem 2.5rem !important; font-size: clamp(1rem,4vw,1.3rem) !important; margin-top: 0.5rem; }
+@keyframes goldShimmer { 0% { background-position: 200% center; } 100% { background-position: -200% center; } }
 .reveal { opacity: 0; transform: translateY(36px); transition: opacity 0.8s ease, transform 0.8s ease; }
 .reveal.visible { opacity: 1; transform: translateY(0); }
 .reveal-delay-1 { transition-delay: 0.1s; }
@@ -532,7 +533,7 @@ nav.scrolled { background: rgba(5,5,5,0.96); backdrop-filter: blur(20px); paddin
       The rush shirts. The bid day drops. The apparel you wear long after graduation.<br />
       The bonds built inside chapter houses and outside of them.
     </p>
-    <p style="font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:700; font-size:clamp(1.6rem,3.5vw,3rem); letter-spacing:0.02em; background:linear-gradient(90deg,#8B6914 0%,#D4A43A 25%,#F0C040 50%,#D4A43A 75%,#8B6914 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; margin-top:1.5rem; margin-bottom:0; position:relative; z-index:2; display:inline-block; width:100%;">This is what the best years look like.</p>
+    <p class="reveal" style="font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:700; font-size:clamp(1.6rem,3.5vw,3rem); letter-spacing:0.02em; background:linear-gradient(90deg,#8B6914 0%,#D4A43A 25%,#F0C040 50%,#D4A43A 75%,#8B6914 100%,#D4A43A 125%,#8B6914 150%); background-size:200% auto; -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; margin-top:1.5rem; margin-bottom:0; position:relative; z-index:2; display:inline-block; width:100%; animation:goldShimmer 3s linear infinite; transition-delay:0.3s;">This is what the best years look like.</p>
     <p class="manifesto-attr reveal reveal-delay-2">Greek Empire &nbsp;·&nbsp; Est. 334 BC</p>
   </div>
 </section>
