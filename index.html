@@ -174,8 +174,11 @@ nav.scrolled { background: rgba(5,5,5,0.96); backdrop-filter: blur(20px); paddin
 .product-card::before { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: var(--gold); transform: scaleX(0); transform-origin: left; transition: transform 0.4s ease; }
 .product-card:hover { background: var(--black-3); }
 .product-card:hover::before { transform: scaleX(1); }
-.product-card-icon { width: 28px; height: 28px; margin-bottom: 1.5rem; }
-.product-card-icon svg { width: 100%; height: 100%; stroke: var(--gold-dim); fill: none; stroke-width: 1.5; }
+.product-img-wrap { width: 100%; aspect-ratio: 4/3; overflow: hidden; margin-bottom: 1.25rem; background: #f0f0f0; }
+.product-img { width: 100%; height: 100%; object-fit: cover; object-position: center top; transition: transform 0.5s ease; }
+.product-card:hover .product-img { transform: scale(1.05); }
+.product-img-placeholder { display: flex; align-items: center; justify-content: center; background: #ebebeb; border: 2px dashed rgba(201,168,76,0.3); }
+.product-img-placeholder span { font-size: 2rem; color: rgba(201,168,76,0.4); font-weight: 300; }
 .product-name { font-family: var(--font-display); font-size: 1.15rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.55rem; }
 .product-desc { font-family: var(--font-display); font-size: 1.03rem; font-style: normal; letter-spacing: 0.1em; text-transform: uppercase; color: #1a1a1a; line-height: 1.7; }
 
@@ -494,26 +497,44 @@ nav.scrolled { background: rgba(5,5,5,0.96); backdrop-filter: blur(20px); paddin
     </div>
     <div class="products-grid">
       <div class="product-card reveal reveal-delay-1">
+        <div class="product-img-wrap">
+          <img src="product-sweatshirt.jpg" alt="Sweatshirts" class="product-img" />
+        </div>
+        <div class="product-name">Sweatshirts</div>
+        <div class="product-desc">Class. Chapter house. Tailgates. The sweatshirt that goes everywhere the best years take you.</div>
+      </div>
+      <div class="product-card reveal reveal-delay-2">
+        <div class="product-img-wrap product-img-placeholder">
+          <span>+</span>
+        </div>
         <div class="product-name">Shirts</div>
         <div class="product-desc">Bid day. Rush week. Socials. Philanthropy. The shirt that marks every moment worth remembering.</div>
       </div>
-      <div class="product-card reveal reveal-delay-2">
-        <div class="product-name">Hoodies</div>
-        <div class="product-desc">Class. Chapter house. Tailgates. The hoodie that goes everywhere the best years take you.</div>
-      </div>
       <div class="product-card reveal reveal-delay-3">
+        <div class="product-img-wrap product-img-placeholder">
+          <span>+</span>
+        </div>
         <div class="product-name">Hats</div>
         <div class="product-desc">Still on your head long after graduation. Some gear outlasts the chapter.</div>
       </div>
       <div class="product-card reveal reveal-delay-4">
+        <div class="product-img-wrap product-img-placeholder">
+          <span>+</span>
+        </div>
         <div class="product-name">Tank Tops</div>
         <div class="product-desc">Built for the function. Made for the photo. The uniform of a good night.</div>
       </div>
       <div class="product-card reveal reveal-delay-1">
+        <div class="product-img-wrap product-img-placeholder">
+          <span>+</span>
+        </div>
         <div class="product-name">Drinkware</div>
         <div class="product-desc">Tumblers and cups that live at every tailgate, every function, every pre-game.</div>
       </div>
       <div class="product-card reveal reveal-delay-2">
+        <div class="product-img-wrap product-img-placeholder">
+          <span>+</span>
+        </div>
         <div class="product-name">Bags</div>
         <div class="product-desc">Totes, drawstrings, and backpacks. Chapter merch that goes everywhere you do.</div>
       </div>
