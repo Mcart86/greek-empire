@@ -130,7 +130,7 @@ nav.scrolled { background: rgba(5,5,5,0.96); backdrop-filter: blur(20px); paddin
 .section-tag { font-size: 0.58rem; letter-spacing: 0.45em; text-transform: uppercase; font-weight: 500; color: var(--gold); margin-bottom: 1.25rem; display: flex; align-items: center; gap: 1rem; }
 .section-tag::before { content: ''; display: block; width: 28px; height: 1px; background: var(--gold); }
 .section-heading { font-family: var(--font-display); font-size: clamp(2.8rem, 6vw, 5.5rem); line-height: 0.92; letter-spacing: 0.02em; text-transform: uppercase; color: var(--white); }
-.section-heading em { font-family: var(--font-script); font-style: italic; font-size: 1.085em; letter-spacing: 0.04em; display: block; line-height: 1.2; text-transform: none; background: linear-gradient(90deg, #A07010 0%, #C9921A 20%, #E8B830 40%, #F5D060 50%, #E8B830 60%, #C9921A 80%, #A07010 100%); background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; animation: goldShimmer 3s linear infinite; }
+.section-heading em { font-family: var(--font-script); font-style: italic; font-size: 1.085em; letter-spacing: 0.04em; display: inline; line-height: 1.2; text-transform: none; background: linear-gradient(90deg, #A07010 0%, #C9921A 20%, #E8B830 40%, #F5D060 50%, #E8B830 60%, #C9921A 80%, #A07010 100%); background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; animation: goldShimmer 3s linear infinite; }
 .section-body { font-family: var(--font-display); font-size: 1.1rem; letter-spacing: 0.1em; text-transform: uppercase; line-height: 1.85; color: #1a1a1a; font-weight: 400; }
 
 /* ABOUT */
@@ -299,8 +299,8 @@ nav.scrolled { background: rgba(5,5,5,0.96); backdrop-filter: blur(20px); paddin
 
   /* Section headings */
   .section-heading { font-size: clamp(2rem, 8vw, 3.5rem); }
-  .about .section-heading { font-size: clamp(1.3rem, 5.5vw, 2.5rem); }
-  .about .section-heading em { font-size: clamp(1.8rem, 7vw, 3rem); }
+  .about .section-heading { font-size: clamp(1.3rem, 3.5vw, 3.2rem); }
+  .about .section-heading em { font-size: 1em; display: inline; }
 
   /* Ambassador headline */
   .ambassador-header .section-heading { font-size: clamp(2.5rem, 9vw, 4.5rem) !important; }
