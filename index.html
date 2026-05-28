@@ -306,7 +306,13 @@ nav.scrolled { background: rgba(5,5,5,0.96); backdrop-filter: blur(20px); paddin
   .manifesto { padding: 0 1.25rem; text-align: center !important; }
   .manifesto-quote { font-size: clamp(1.2rem, 5vw, 2rem); text-align: center !important; }
 
-  /* Ambassador */
+  /* Show up / Know your audience - stack to 1 col */
+  .show-up-grid { grid-template-columns: 1fr !important; gap: 2.5rem !important; }
+
+  /* Signing up for - stack role cards to 2 cols */
+  .signing-up-grid { grid-template-columns: 1fr 1fr !important; }
+
+  /* Ambassador perks */
   .ambassador { padding: 3rem 1.25rem; }
   .ambassador-perks { grid-template-columns: 1fr; }
   .ambassador-header .section-heading { font-size: clamp(2rem, 8vw, 3.5rem) !important; }
@@ -442,7 +448,7 @@ nav.scrolled { background: rgba(5,5,5,0.96); backdrop-filter: blur(20px); paddin
       <h2 class="section-heading" style="color:#fff;">What you're <em style="font-size:1em;">signing up for</em></h2>
       <p style="font-family:var(--font-sans); font-size:1rem; color:rgba(255,255,255,0.55); line-height:1.85; max-width:600px; margin:1rem auto 0;">Greek Empire ambassadors are active — building relationships, generating orders, posting content, and growing the network. The more you put in, the more you earn.</p>
     </div>
-    <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:rgba(201,168,76,0.1);" class="reveal">
+    <div class="signing-up-grid" style="display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:rgba(201,168,76,0.1);" class="reveal">
       <div style="background:#0a0a0a; padding:2.5rem 2rem;">
         <div style="font-family:var(--font-display); font-size:3rem; color:#C9921A; line-height:1; margin-bottom:1rem;">01</div>
         <p style="font-family:var(--font-display); font-size:0.75rem; letter-spacing:0.15em; text-transform:uppercase; color:#fff; margin-bottom:0.75rem;">Drive Chapter Orders</p>
@@ -469,7 +475,7 @@ nav.scrolled { background: rgba(5,5,5,0.96); backdrop-filter: blur(20px); paddin
 
 <!-- BUILD CAMPUS AWARENESS DETAIL -->
 <section style="background:#fff; padding:5rem 4rem; border-bottom:1px solid rgba(0,0,0,0.06);">
-  <div style="max-width:1100px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:start;">
+  <div class="show-up-grid" style="max-width:1100px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:start;">
     <div class="reveal">
       <p class="section-tag">On the Ground</p>
       <h2 class="section-heading" style="margin-bottom:1.5rem">How to show <em style="font-size:1em;">up</em></h2>
