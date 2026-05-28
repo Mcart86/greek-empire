@@ -182,8 +182,8 @@ nav.scrolled { background: rgba(5,5,5,0.96); backdrop-filter: blur(20px); paddin
 .product-img-placeholder { display: flex; align-items: center; justify-content: center; background: #f5f5f5; }
 .amb-circle { width:280px; height:280px; border-radius:50%; overflow:hidden; margin:0 auto 1.25rem; border:none; cursor:pointer; transition: box-shadow 0.3s ease; position:relative; background:transparent; }
 .amb-circle:hover { box-shadow: 0 0 24px rgba(201,168,76,0.4); }
-.amb-img { width:100%; height:100%; object-fit:cover; display:block; transition: transform 0.4s ease; min-width:100%; min-height:100%; position:absolute; top:0; left:0; }
-.amb-circle:hover .amb-img { transform: scale(1.1); }
+.amb-img { width:130%; height:130%; object-fit:cover; display:block; transition: transform 0.4s ease; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); }
+.amb-circle:hover .amb-img { transform:translate(-50%,-50%) scale(1.1); }
 .product-img-placeholder span { font-size: 2rem; color: rgba(201,168,76,0.35); font-weight: 300; }
 .product-name { font-family: var(--font-display); font-size: 1rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin: 1.25rem 1.5rem 0.4rem; }
 .product-desc { font-family: var(--font-sans); font-size: 0.82rem; letter-spacing: 0.02em; text-transform: none; color: #555; line-height: 1.65; margin: 0 1.5rem 1.5rem; font-weight: 400; }
@@ -566,7 +566,7 @@ nav.scrolled { background: rgba(5,5,5,0.96); backdrop-filter: blur(20px); paddin
     <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:2rem; width:100%;" class="reveal">
 
       <!-- Ambassador 1 -->
-      <div style="text-align:center;">
+      <div style="text-align:center; width:280px; flex-shrink:0;">
         <div class="amb-circle">
           <img src="ambassador-1.png" class="amb-img" style="object-position:center center;" />
         </div>
@@ -576,7 +576,7 @@ nav.scrolled { background: rgba(5,5,5,0.96); backdrop-filter: blur(20px); paddin
       </div>
 
       <!-- Ambassador 2 -->
-      <div style="text-align:center;">
+      <div style="text-align:center; width:280px; flex-shrink:0;">
         <div class="amb-circle">
           <img src="ambassador-2.png" class="amb-img" style="object-position:center center;" />
         </div>
@@ -586,7 +586,7 @@ nav.scrolled { background: rgba(5,5,5,0.96); backdrop-filter: blur(20px); paddin
       </div>
 
       <!-- Ambassador 3 -->
-      <div style="text-align:center;">
+      <div style="text-align:center; width:280px; flex-shrink:0;">
         <div class="amb-circle">
           <img src="ambassador-3.png" class="amb-img" style="object-position:center center;" />
         </div>
@@ -596,7 +596,7 @@ nav.scrolled { background: rgba(5,5,5,0.96); backdrop-filter: blur(20px); paddin
       </div>
 
       <!-- Ambassador 4 -->
-      <div style="text-align:center;">
+      <div style="text-align:center; width:280px; flex-shrink:0;">
         <div class="amb-circle">
           <img src="ambassador-4.png" class="amb-img" style="object-position:center center;" />
         </div>
