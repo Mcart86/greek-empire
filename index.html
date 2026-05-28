@@ -54,7 +54,7 @@
 html { scroll-behavior: smooth; }
 body {
   background: #ffffff;
-  color: #1a1a1a;
+  color: #000000;
   font-family: var(--font-sans);
   overflow-x: hidden;
 }
@@ -72,7 +72,7 @@ nav.scrolled { background: rgba(5,5,5,0.96); backdrop-filter: blur(20px); paddin
 .nav-logo { font-family: var(--font-display); font-size: 1.5rem; letter-spacing: 0.22em; background: linear-gradient(90deg, #8B6914 0%, #D4A43A 25%, #F0C040 50%, #D4A43A 75%, #8B6914 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-decoration: none; transition: opacity 0.2s; }
 .nav-logo:hover { opacity: 0.75; }
 .nav-center { display: flex; gap: 2.5rem; }
-.nav-center a { font-size: 0.63rem; letter-spacing: 0.22em; text-transform: uppercase; font-weight: 500; color: #1a1a1a; text-decoration: none; transition: color 0.2s; }
+.nav-center a { font-size: 0.63rem; letter-spacing: 0.22em; text-transform: uppercase; font-weight: 500; color: #000000; text-decoration: none; transition: color 0.2s; }
 .nav-center a:hover { color: var(--gold); }
 .nav-right { display: flex; align-items: center; gap: 1.5rem; }
 .nav-est { font-family: var(--font-display); font-size: 0.75rem; letter-spacing: 0.2em; font-style: normal; color: #555; text-transform: uppercase; }
@@ -131,7 +131,7 @@ nav.scrolled { background: rgba(5,5,5,0.96); backdrop-filter: blur(20px); paddin
 .section-tag::before { content: ''; display: block; width: 28px; height: 1px; background: var(--gold); }
 .section-heading { font-family: var(--font-display); font-size: clamp(2.4rem, 5vw, 4.2rem); line-height: 0.95; letter-spacing: 0.02em; text-transform: uppercase; color: var(--white); }
 .section-heading em { font-family: var(--font-script); font-style: italic; font-size: 1em; letter-spacing: 0.04em; display: inline; line-height: 1.2; text-transform: none; background: linear-gradient(90deg, #A07010 0%, #C9921A 20%, #E8B830 40%, #F5D060 50%, #E8B830 60%, #C9921A 80%, #A07010 100%); background-size: 300% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; animation: goldShimmer 9s linear infinite; }
-.section-body { font-family: var(--font-display); font-size: 1.1rem; letter-spacing: 0.1em; text-transform: uppercase; line-height: 1.85; color: #1a1a1a; font-weight: 400; }
+.section-body { font-family: var(--font-display); font-size: 1.1rem; letter-spacing: 0.1em; text-transform: uppercase; line-height: 1.85; color: #000000; font-weight: 400; }
 
 /* ABOUT */
 .about { padding: 7rem 3.5rem; max-width: 1300px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: auto; gap: 0 7rem; align-items: start; }
@@ -144,9 +144,9 @@ nav.scrolled { background: rgba(5,5,5,0.96); backdrop-filter: blur(20px); paddin
 .about-pillars { display: flex; flex-direction: column; }
 .pillar-item { padding: 1.75rem 0; border-bottom: 1px solid rgba(245,240,232,0.07); display: grid; grid-template-columns: 2.5rem 1fr; gap: 1.25rem; align-items: start; }
 .pillar-item:first-child { border-top: 1px solid rgba(245,240,232,0.07); }
-.pillar-num { font-family: var(--font-display); font-size: 0.9rem; color: #1a1a1a; letter-spacing: 0.1em; padding-top: 0.15rem; }
+.pillar-num { font-family: var(--font-display); font-size: 0.9rem; color: #000000; letter-spacing: 0.1em; padding-top: 0.15rem; }
 .pillar-title { font-family: var(--font-display); font-size: 1.05rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.4rem; }
-.pillar-text { font-family: var(--font-display); font-size: 1.1rem; font-style: normal; letter-spacing: 0.12em; text-transform: uppercase; color: #1a1a1a; line-height: 1.7; }
+.pillar-text { font-family: var(--font-display); font-size: 1.1rem; font-style: normal; letter-spacing: 0.12em; text-transform: uppercase; color: #000000; line-height: 1.7; }
 
 /* PHOTO GRID */
 .photo-grid { padding: 0 3.5rem 7rem; max-width: 1300px; margin: 0 auto; }
@@ -190,7 +190,7 @@ nav.scrolled { background: rgba(5,5,5,0.96); backdrop-filter: blur(20px); paddin
 
 /* MANIFESTO */
 .manifesto { padding: 3.5rem 3.5rem; max-width: 860px; margin: 0 auto; text-align: center; min-height: 0; }
-.manifesto-quote { font-family: var(--font-display); font-size: clamp(1.5rem, 3.2vw, 2.6rem); font-style: normal; font-weight: 700; line-height: 1.55; color: #1a1a1a; letter-spacing: 0.04em; text-transform: uppercase; text-align: left; }
+.manifesto-quote { font-family: var(--font-display); font-size: clamp(1.5rem, 3.2vw, 2.6rem); font-style: normal; font-weight: 700; line-height: 1.55; color: #000000; letter-spacing: 0.04em; text-transform: uppercase; text-align: left; }
 .manifesto-quote strong { font-weight: normal; font-style: normal; font-family: 'Cormorant Garamond', serif; font-style:italic; font-weight:700; font-size: 1.1em; letter-spacing: 0.02em; text-transform: none; background: linear-gradient(90deg, #8B6914 0%, #D4A43A 25%, #F0C040 50%, #D4A43A 75%, #8B6914 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
 .manifesto-attr { font-size: 0.58rem; letter-spacing: 0.42em; text-transform: uppercase; color: var(--faint); margin-top: 2.25rem; }
 
@@ -222,10 +222,10 @@ nav.scrolled { background: rgba(5,5,5,0.96); backdrop-filter: blur(20px); paddin
 .apply-inner .section-body { margin-bottom: 3rem; }
 .apply-form-grid { display: grid; gap: 0.75rem; text-align: left; }
 .apply-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
-.apply-input { background: transparent; border: none; border-bottom: 1px solid rgba(201,168,76,0.3); outline: none; padding: 0.95rem 0.25rem; font-family: var(--font-sans); font-size: 0.82rem; letter-spacing: 0.04em; color: #1a1a1a; width: 100%; transition: border-color 0.25s; border-radius: 0; }
+.apply-input { background: transparent; border: none; border-bottom: 1px solid rgba(201,168,76,0.3); outline: none; padding: 0.95rem 0.25rem; font-family: var(--font-sans); font-size: 0.82rem; letter-spacing: 0.04em; color: #000000; width: 100%; transition: border-color 0.25s; border-radius: 0; }
 .apply-input:focus { border-bottom-color: var(--gold); }
 .apply-input:focus { border-color: var(--gold); }
-.apply-input::placeholder { color: rgba(0,0,0,0.4); }
+.apply-input::placeholder { color: rgba(0,0,0,0.5); }
 .apply-select { background: var(--black); border: 1px solid rgba(245,240,232,0.1); outline: none; padding: 0.95rem 1.2rem; font-family: var(--font-sans); font-size: 0.82rem; color: rgba(245,240,232,0.28); width: 100%; cursor: pointer; appearance: none; transition: border-color 0.25s; }
 .apply-select:focus { border-color: var(--gold); }
 .apply-submit { font-family: var(--font-display); font-size: 1.1rem; letter-spacing: 0.25em; background: linear-gradient(90deg, #8B6914 0%, #D4A43A 25%, #F0C040 50%, #D4A43A 75%, #8B6914 100%); color: var(--black); border: none; padding: 1.1rem 2rem; cursor: pointer; width: 100%; margin-top: 0.4rem; transition: opacity 0.2s, transform 0.2s; }
@@ -245,7 +245,7 @@ nav.scrolled { background: rgba(5,5,5,0.96); backdrop-filter: blur(20px); paddin
 .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 .nav-mobile-menu { display: none; position: fixed; inset: 0; background: rgba(255,255,255,0.98); z-index: 150; flex-direction: column; align-items: center; justify-content: center; gap: 2.5rem; }
 .nav-mobile-menu.open { display: flex; }
-.nav-mobile-menu a { font-family: var(--font-display); font-size: clamp(1.8rem, 8vw, 2.5rem); letter-spacing: 0.2em; color: #1a1a1a; text-decoration: none; text-transform: uppercase; transition: color 0.2s; }
+.nav-mobile-menu a { font-family: var(--font-display); font-size: clamp(1.8rem, 8vw, 2.5rem); letter-spacing: 0.2em; color: #000000; text-decoration: none; text-transform: uppercase; transition: color 0.2s; }
 .nav-mobile-menu a:hover { color: var(--gold); }
 .nav-apply-btn { background: linear-gradient(90deg,#8B6914 0%,#D4A43A 25%,#F0C040 50%,#D4A43A 75%,#8B6914 100%) !important; color: #000 !important; padding: 0.9rem 2.5rem !important; font-size: clamp(1rem,4vw,1.3rem) !important; margin-top: 0.5rem; }
 @keyframes goldShimmer { 0% { background-position: -200% center; } 100% { background-position: 200% center; } }
@@ -727,16 +727,9 @@ nav.scrolled { background: rgba(5,5,5,0.96); backdrop-filter: blur(20px); paddin
       </div>
       <input class="apply-input" type="email" placeholder="Email Address" id="a-email" />
       <input class="apply-input" type="text" placeholder="University / College" id="a-school" />
-      <div class="apply-row-2">
-        <input class="apply-input" type="text" placeholder="Chapter Name (e.g. Sigma Chi)" id="a-chapter" />
-        <select class="apply-select" id="a-council">
-          <option value="" disabled selected>Council</option>
-          <option>IFC</option><option>NPC</option><option>NPHC</option>
-          <option>NALFO</option><option>NAPA</option><option>SAFA</option><option>Other</option>
-        </select>
-      </div>
+      <input class="apply-input" type="text" placeholder="Chapter Name (e.g. Sigma Chi)" id="a-chapter" />
       <input class="apply-input" type="text" placeholder="Instagram Handle (optional)" id="a-ig" />
-      <select class="apply-input" id="a-recruited" style="background:transparent; cursor:pointer; appearance:none; -webkit-appearance:none;">
+      <select class="apply-input" id="a-recruited" style="background:transparent; cursor:pointer; appearance:none; -webkit-appearance:none; color:#000;">
         <option value="" disabled selected>Who recruited you?</option>
         <option value="Alexa">Alexa</option>
         <option value="Avry">Avry</option>
