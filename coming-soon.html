@@ -28,6 +28,7 @@ body{
   opacity:0.07;font-family:serif;font-size:clamp(5rem,10vw,9rem);font-weight:900;
   color:#C9A84C;line-height:1.05;white-space:nowrap;
   display:flex;flex-direction:column;justify-content:space-around;user-select:none;
+  top:0;bottom:0;
 }
 .radial-glow{
   position:fixed;inset:0;z-index:0;pointer-events:none;
@@ -160,9 +161,10 @@ body{
 
 /* MARQUEE */
 .marquee-strip{
-  position:relative;z-index:2;
+  position:relative;z-index:10;
   background:linear-gradient(90deg,#8B6914 0%,#D4A43A 25%,#F0C040 50%,#D4A43A 75%,#8B6914 100%);
   padding:0.8rem 0;overflow:hidden;width:100%;
+  flex-shrink:0;
 }
 .marquee-track{display:flex;animation:marqueeScroll 28s linear infinite;width:max-content;}
 .marquee-item{
