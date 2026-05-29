@@ -716,6 +716,7 @@ nav.scrolled { background: rgba(5,5,5,0.96); backdrop-filter: blur(20px); paddin
         <option value="Elijah">Elijah</option>
         <option value="Jackson">Jackson</option>
       </select>
+      <input type="text" id="a-company" name="company" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;" />
       <button class="apply-submit" onclick="submitApp()">Submit Application</button>
       <p style="font-family:var(--font-sans); font-size:0.8rem; color:rgba(0,0,0,0.45); text-align:center; margin-top:1rem; letter-spacing:0.02em;">All applications will be reviewed within 24–48 hours to set up a call.</p>
     </div>
@@ -858,10 +859,35 @@ function toggleMenu() {
 function submitApp() {
   const ids = ['a-first','a-last','a-email','a-school','a-chapter'];
   let ok = true;
-  ids.forEach(id => { const el = document.getElementById(id); if(!el.value.trim()||(id==='a-email'&&!el.value.includes('@'))) { el.style.borderColor='rgba(220,60,60,0.5)'; setTimeout(()=>el.style.borderColor='rgba(245,240,232,0.1)',2500); ok=false; } });
-  if(!ok) return;
-  document.getElementById('apply-form').style.display='none';
-  document.getElementById('apply-success').style.display='block';
+  ids.forEach(id => {
+    const el = document.getElementById(id);
+    if (!el.value.trim() || (id === 'a-email' && !el.value.includes('@'))) {
+      el.style.borderColor = 'rgba(220,60,60,0.5)';
+      setTimeout(() => el.style.borderColor = 'rgba(245,240,232,0.1)', 2500);
+      ok = false;
+    }
+  });
+  if (!ok) return;
+
+  const payload = {
+    name_first:        document.getElementById('a-first').value.trim(),
+    name_last:         document.getElementById('a-last').value.trim(),
+    email:             document.getElementById('a-email').value.trim(),
+    school_text:       document.getElementById('a-school').value.trim(),
+    chapter_text:      document.getElementById('a-chapter').value.trim(),
+    instagram_handle:  document.getElementById('a-ig').value.trim(),
+    recruited_by_text: document.getElementById('a-recruited').value,
+    company:           document.getElementById('a-company').value,
+    source:            'website'
+  };
+  fetch('https://gxglrktbvumrpzhlogno.supabase.co/functions/v1/apply', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  }).catch(function(){ /* never block the applicant on a network hiccup */ });
+
+  document.getElementById('apply-form').style.display = 'none';
+  document.getElementById('apply-success').style.display = 'block';
 }
 </script>
 </body>
