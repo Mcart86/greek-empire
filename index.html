@@ -700,11 +700,11 @@ nav.scrolled { background: rgba(5,5,5,0.96); backdrop-filter: blur(20px); paddin
   <div class="apply-inner">
     <p class="section-tag" style="justify-content:center;">
       <span style="width:28px;height:1px;background:var(--gold);display:block;"></span>
-      Apply Now
+      Contact Us
       <span style="width:28px;height:1px;background:var(--gold);display:block;"></span>
     </p>
-    <h2 class="section-heading reveal" style="margin-bottom:0.75rem;">Join the <em style="display:inline;font-size:1em;">Team</em></h2>
-    <p class="section-body reveal reveal-delay-1">Tell us who you are and where you rep. We'll be in touch before launch.</p>
+    <h2 class="section-heading reveal" style="margin-bottom:0.75rem;">Get in <em style="display:inline;font-size:1em;">Touch</em></h2>
+    <p class="section-body reveal reveal-delay-1">Questions about orders, the ambassador program, or anything else — we're here.</p>
     <div class="apply-form-grid reveal reveal-delay-2" id="apply-form">
       <div class="apply-row-2">
         <input class="apply-input" type="text" placeholder="First Name" id="a-first" />
@@ -714,20 +714,14 @@ nav.scrolled { background: rgba(5,5,5,0.96); backdrop-filter: blur(20px); paddin
       <input class="apply-input" type="text" placeholder="University / College" id="a-school" />
       <input class="apply-input" type="text" placeholder="Chapter Name (e.g. Sigma Chi)" id="a-chapter" />
       <input class="apply-input" type="text" placeholder="Instagram Handle (optional)" id="a-ig" />
-      <select class="apply-input" id="a-recruited" style="background:transparent; cursor:pointer; appearance:none; -webkit-appearance:none; color:#000;">
-        <option value="" disabled selected>Who recruited you?</option>
-        <option value="Alexa">Alexa</option>
-        <option value="Avry">Avry</option>
-        <option value="Elijah">Elijah</option>
-        <option value="Jackson">Jackson</option>
-      </select>
+      <textarea class="apply-input" placeholder="Message" id="a-message" rows="4" style="resize:vertical; font-family:var(--font-sans); font-size:0.82rem; letter-spacing:0.04em; color:#000; padding:0.95rem 0.25rem; border:none; border-bottom:1px solid rgba(201,168,76,0.3); background:transparent; outline:none; width:100%; transition:border-color 0.25s;"></textarea>
       <input type="text" id="a-company" name="company" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;" />
-      <button class="apply-submit" onclick="submitApp()">Submit Application</button>
-      <p style="font-family:var(--font-sans); font-size:0.8rem; color:rgba(0,0,0,0.45); text-align:center; margin-top:1rem; letter-spacing:0.02em;">All applications will be reviewed within 24–48 hours to set up a call.</p>
+      <button class="apply-submit" onclick="submitApp()">Send Message</button>
+      <p style="font-family:var(--font-sans); font-size:0.8rem; color:rgba(0,0,0,0.45); text-align:center; margin-top:1rem; letter-spacing:0.02em;">We'll get back to you within 24–48 hours.</p>
     </div>
     <div class="apply-success" id="apply-success">
-      Application received.<br />
-      <span style="color:var(--muted);font-size:0.92rem;">We'll reach out before launch. Welcome to the Empire.</span>
+      Message received.<br />
+      <span style="color:var(--muted);font-size:0.92rem;">We'll be in touch soon. Welcome to the Empire.</span>
     </div>
   </div>
 </section>
@@ -862,28 +856,28 @@ function toggleMenu() {
   document.body.style.overflow = m.classList.contains('open') ? 'hidden' : '';
 }
 function submitApp() {
-  const ids = ['a-first','a-last','a-email','a-school','a-chapter','a-recruited'];
+  const ids = ['a-first','a-last','a-email'];
   let ok = true;
   ids.forEach(id => {
     const el = document.getElementById(id);
     if (!el.value.trim() || (id === 'a-email' && !el.value.includes('@'))) {
       el.style.borderColor = 'rgba(220,60,60,0.5)';
-      setTimeout(() => el.style.borderColor = 'rgba(245,240,232,0.1)', 2500);
+      setTimeout(() => el.style.borderColor = 'rgba(201,168,76,0.3)', 2500);
       ok = false;
     }
   });
   if (!ok) return;
 
   const payload = {
-    name_first:        document.getElementById('a-first').value.trim(),
-    name_last:         document.getElementById('a-last').value.trim(),
-    email:             document.getElementById('a-email').value.trim(),
-    school_text:       document.getElementById('a-school').value.trim(),
-    chapter_text:      document.getElementById('a-chapter').value.trim(),
-    instagram_handle:  document.getElementById('a-ig').value.trim(),
-    recruited_by_text: document.getElementById('a-recruited').value,
-    company:           document.getElementById('a-company').value,
-    source:            'website'
+    name_first:       document.getElementById('a-first').value.trim(),
+    name_last:        document.getElementById('a-last').value.trim(),
+    email:            document.getElementById('a-email').value.trim(),
+    school_text:      document.getElementById('a-school').value.trim(),
+    chapter_text:     document.getElementById('a-chapter').value.trim(),
+    instagram_handle: document.getElementById('a-ig').value.trim(),
+    message:          document.getElementById('a-message').value.trim(),
+    company:          document.getElementById('a-company').value,
+    source:           'contact'
   };
   fetch('https://gxglrktbvumrpzhlogno.supabase.co/functions/v1/apply', {
     method: 'POST',
