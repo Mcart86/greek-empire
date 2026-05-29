@@ -193,6 +193,27 @@ body{
 }
 
 /* ANIMATIONS */
+/* PRODUCTS */
+.products-section{background:#f5f5f5;padding:5rem 3.5rem;border-top:1px solid rgba(0,0,0,0.06);}
+.products-inner{max-width:1300px;margin:0 auto;}
+.products-header{margin-bottom:2.5rem;}
+.section-tag{font-size:0.58rem;letter-spacing:0.45em;text-transform:uppercase;font-weight:500;color:#C9A84C;margin-bottom:1rem;display:flex;align-items:center;gap:1rem;}
+.section-tag::before{content:'';display:block;width:28px;height:1px;background:#C9A84C;}
+.section-heading{font-family:'Bebas Neue',sans-serif;font-size:clamp(2rem,4vw,3.5rem);line-height:1;letter-spacing:0.02em;text-transform:uppercase;color:#111;}
+.section-heading em{font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-weight:700;font-size:1em;text-transform:none;background:linear-gradient(90deg,#8B6914 0%,#D4A43A 25%,#F0C040 50%,#D4A43A 75%,#8B6914 100%);background-size:300% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:goldShimmer 9s linear infinite;}
+.products-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(0,0,0,0.06);}
+.product-card{background:#fff;padding:0;display:flex;flex-direction:column;align-items:flex-start;transition:transform 0.4s,box-shadow 0.4s;position:relative;overflow:hidden;}
+.product-card:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,0.13);}
+.product-card::before{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#8B6914,#D4A43A,#F0C040,#D4A43A,#8B6914);transform:scaleX(0);transform-origin:left;transition:transform 0.4s;z-index:2;}
+.product-card:hover::before{transform:scaleX(1);}
+.product-img-wrap{width:100%;aspect-ratio:4/3;overflow:hidden;background:#f0f0f0;}
+.product-img{width:100%;height:100%;object-fit:cover;object-position:center 70%;transition:transform 0.6s;}
+.product-card:hover .product-img{transform:scale(1.04);}
+.product-name{font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:0.2em;text-transform:uppercase;color:#C9A84C;margin:1.25rem 1.5rem 0.4rem;}
+.product-desc{font-family:'Barlow',sans-serif;font-size:0.82rem;color:#555;line-height:1.65;margin:0 1.5rem 1.5rem;}
+@media(max-width:900px){.products-section{padding:3rem 1.5rem;}.products-grid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:480px){.products-grid{grid-template-columns:1fr;}}
+
 @keyframes fadeUp{from{opacity:0;transform:translateY(22px);}to{opacity:1;transform:translateY(0);}}
 @keyframes goldShimmer{0%{background-position:-200% center;}100%{background-position:200% center;}}
 @keyframes marqueeScroll{from{transform:translateX(0);}to{transform:translateX(-50%);}}
@@ -303,6 +324,48 @@ body{
     </div><!-- /form-inner -->
   </div><!-- /form-two-col -->
 </div>
+
+<!-- PRODUCTS -->
+<section class="products-section">
+  <div class="products-inner">
+    <div class="products-header">
+      <p class="section-tag">What We Make</p>
+      <h2 class="section-heading">We're not selling into Greek life. <em>We're part of it</em></h2>
+    </div>
+    <div class="products-grid">
+      <div class="product-card">
+        <div class="product-img-wrap"><img src="product-sweatshirt.jpg" alt="Sweatshirts" class="product-img" /></div>
+        <div class="product-name">Sweatshirts</div>
+        <div class="product-desc">Class. Chapter house. Tailgates. The sweatshirt that goes everywhere the best years take you.</div>
+      </div>
+      <div class="product-card">
+        <div class="product-img-wrap"><img src="product-shirts.jpg" alt="Shirts" class="product-img" /></div>
+        <div class="product-name">Shirts</div>
+        <div class="product-desc">Bid day. Rush week. Socials. Philanthropy. The shirt that marks every moment worth remembering.</div>
+      </div>
+      <div class="product-card">
+        <div class="product-img-wrap"><img src="product-hats.jpg" alt="Hats" class="product-img" style="object-position:center 60%;" /></div>
+        <div class="product-name">Hats</div>
+        <div class="product-desc">Still on your head long after graduation. Some gear outlasts the chapter.</div>
+      </div>
+      <div class="product-card">
+        <div class="product-img-wrap"><img src="product-tanktops.jpg" alt="Tank Tops" class="product-img" /></div>
+        <div class="product-name">Tank Tops</div>
+        <div class="product-desc">Built for the function. Made for the photo. The uniform of a good night.</div>
+      </div>
+      <div class="product-card">
+        <div class="product-img-wrap"><img src="product-drinkware.jpg" alt="Drinkware" class="product-img" /></div>
+        <div class="product-name">Drinkware</div>
+        <div class="product-desc">Tumblers and cups that live at every tailgate, every function, every pre-game.</div>
+      </div>
+      <div class="product-card">
+        <div class="product-img-wrap"><img src="product-bags.jpg" alt="Bags" class="product-img" /></div>
+        <div class="product-name">Bags</div>
+        <div class="product-desc">Totes, drawstrings, and backpacks. Chapter merch that goes everywhere you do.</div>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- FOOTER -->
 <div class="footer">
