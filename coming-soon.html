@@ -109,15 +109,29 @@ body{
   position:relative;z-index:2;
   background:#ffffff;
   border-top:1px solid rgba(201,168,76,0.2);
-  padding:3rem 2rem;
+  padding:0;
   text-align:center;
 }
-.form-inner{max-width:560px;margin:0 auto;}
+.form-two-col{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  min-height:600px;
+}
+.form-video-wrap{
+  position:relative;overflow:hidden;
+  background:#0a0a0a;
+}
+.form-inner{max-width:none;margin:0;padding:3rem 3rem;text-align:left;display:flex;flex-direction:column;justify-content:center;}
+@media(max-width:768px){
+  .form-two-col{grid-template-columns:1fr;}
+  .form-video-wrap{height:300px;}
+  .form-inner{padding:2rem 1.5rem;}
+}
 .form-heading{
   font-family:'Barlow',sans-serif;
-  font-size:clamp(1rem,2vw,1.2rem);
-  font-weight:500;letter-spacing:0.04em;color:#222;
-  margin-bottom:2rem;line-height:1.6;
+  font-size:clamp(1rem,1.5vw,1.2rem);
+  font-weight:500;letter-spacing:0.02em;color:#222;
+  margin-bottom:2rem;line-height:1.7;
 }
 .form-sub{display:none;}
 .form-grid{display:grid;gap:0.75rem;text-align:left;}
@@ -256,9 +270,17 @@ body{
 
 <!-- FORM -->
 <div class="form-section">
-  <div class="form-inner">
-    <div class="form-heading">Drop your info and we'll let you know when Greek Empire hits your campus.</div>
-    <div class="form-grid" id="cs-form">
+  <div class="form-two-col">
+    <!-- LEFT: Video -->
+    <div class="form-video-wrap">
+      <video autoplay muted playsinline loop style="width:100%;height:100%;object-fit:cover;display:block;">
+        <source src="coming-soon-reel.mp4" type="video/mp4">
+      </video>
+    </div>
+    <!-- RIGHT: Form -->
+    <div class="form-inner">
+      <div class="form-heading">Drop your info and we'll let you know when Greek Empire hits your campus.</div>
+      <div class="form-grid" id="cs-form">
       <div class="form-row-2">
         <input class="form-input" type="text" placeholder="First Name" id="cs-first" />
         <input class="form-input" type="text" placeholder="Last Name" id="cs-last" />
@@ -274,9 +296,10 @@ body{
     </div>
     <div class="form-success" id="cs-success">
       You're on the list.<br />
-      <span style="font-size:0.92rem;color:rgba(245,240,232,0.5);">We'll reach out before Greek Empire hits your campus.</span>
+      <span style="font-size:0.92rem;color:rgba(0,0,0,0.45);">We'll reach out before Greek Empire hits your campus.</span>
     </div>
-  </div>
+    </div><!-- /form-inner -->
+  </div><!-- /form-two-col -->
 </div>
 
 <!-- FOOTER -->
