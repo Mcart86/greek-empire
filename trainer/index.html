@@ -790,6 +790,16 @@ async function send(){
 
     const botData=await botRes.json();
     const coachData=await coachRes.json();
+    console.log('BOT RESPONSE:', botData);
+    console.log('COACH RESPONSE:', coachData);
+    
+    if(botData.error){
+      appendMsg(`API Error: ${botData.error.message||JSON.stringify(botData.error)}`, 'them');
+      document.getElementById('coachTxt').textContent='API error — check browser console';
+      typing.classList.remove('show');
+      return;
+    }
+    
     let reply=botData.content?.[0]?.text||'yeah idk';
     const coach=coachData.content?.[0]?.text||'Keep the conversation moving.';
 
