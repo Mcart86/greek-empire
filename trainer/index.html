@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="theme-color" content="#1A1A1A"/>
+<title>Greek Empire — Pitch Trainer</title>
+<link rel="manifest" href="/trainer/manifest.json"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+html,body{height:100%;background:#1A1A1A;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
+.app{background:#1A1A1A;height:100dvh;display:flex;flex-direction:column;max-width:480px;margin:0 auto;position:relative;}
+
+.top-bar{background:#111;padding:11px 14px;padding-top:max(11px,env(safe-area-inset-top));border-bottom:1px solid #C9A84C33;display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.avatar-wrap{position:relative;flex-shrink:0;}
+.avatar{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;border:2px solid;flex-shrink:0;}
+.year-badge{position:absolute;bottom:-2px;right:-2px;width:16px;height:16px;border-radius:50%;background:#111;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;border:1px solid #333;}
+.contact-info{flex:1;min-width:0;}
+.contact-name{font-size:13px;font-weight:600;color:#F5F0E8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.contact-meta{font-size:10px;color:#555;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.top-right{display:flex;flex-direction:column;align-items:flex-end;gap:3px;flex-shrink:0;}
+.online{display:flex;align-items:center;gap:3px;font-size:9px;color:#4CAF50;}
+.online-dot{width:5px;height:5px;border-radius:50%;background:#4CAF50;}
+.reroll-btn{background:transparent;border:1px solid #C9A84C33;color:#C9A84C88;font-size:9px;padding:3px 7px;border-radius:8px;cursor:pointer;}
+.reroll-btn:active{background:#C9A84C18;}
+
+.scenario-bar{background:#0D0D0D;padding:7px 12px;border-bottom:1px solid #C9A84C1A;display:flex;gap:5px;overflow-x:auto;scrollbar-width:none;flex-shrink:0;}
+.scenario-bar::-webkit-scrollbar{display:none;}
+.chip{padding:5px 10px;border-radius:14px;font-size:10px;border:1px solid #2A2A2A;color:#555;cursor:pointer;white-space:nowrap;background:transparent;transition:all .15s;}
+.chip.active{background:#C9A84C15;border-color:#C9A84C55;color:#C9A84C;}
+
+.persona-tag{background:#0D0D0D;padding:5px 14px;border-bottom:1px solid #C9A84C0D;display:flex;align-items:center;gap:6px;flex-shrink:0;}
+.persona-pill{font-size:9px;padding:2px 8px;border-radius:10px;letter-spacing:.3px;font-weight:600;}
+.variant-label{font-size:9px;color:#3A3A3A;margin-left:auto;}
+
+.messages{flex:1;padding:12px 14px;display:flex;flex-direction:column;gap:8px;overflow-y:auto;-webkit-overflow-scrolling:touch;}
+.msg{display:flex;flex-direction:column;max-width:78%;}
+.msg.them{align-self:flex-start;}
+.msg.me{align-self:flex-end;}
+.bubble{padding:9px 12px;border-radius:18px;font-size:14px;line-height:1.5;}
+.msg.them .bubble{background:#252525;color:#EDE8DC;border-bottom-left-radius:4px;}
+.msg.me .bubble{background:#C9A84C;color:#1A1A1A;font-weight:500;border-bottom-right-radius:4px;}
+.msg-time{font-size:9px;color:#3A3A3A;margin-top:3px;padding:0 4px;}
+.msg.me .msg-time{text-align:right;}
+
+.typing-row{align-self:flex-start;display:none;}
+.typing-row.show{display:flex;}
+.typing-bubble{background:#252525;border-radius:18px;border-bottom-left-radius:4px;padding:10px 14px;display:flex;gap:4px;align-items:center;}
+.dot{width:6px;height:6px;border-radius:50%;background:#555;animation:bounce 1.3s infinite;}
+.dot:nth-child(2){animation-delay:.2s;}
+.dot:nth-child(3){animation-delay:.4s;}
+@keyframes bounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-5px)}}
+
+.coach-bar{background:#0D0D0D;border-top:1px solid #C9A84C1A;padding:7px 14px;min-height:30px;display:flex;align-items:center;gap:6px;flex-shrink:0;}
+.coach-label{font-size:9px;color:#C9A84C;font-weight:600;letter-spacing:.5px;flex-shrink:0;text-transform:uppercase;}
+.coach-text{font-size:11px;color:#777;line-height:1.4;flex:1;}
+
+.hint-row{background:#0D0D0D;padding:6px 12px;border-top:1px solid #0A0A0A;display:flex;gap:5px;overflow-x:auto;scrollbar-width:none;flex-shrink:0;}
+.hint-row::-webkit-scrollbar{display:none;}
+.hint-pill{padding:4px 10px;border-radius:10px;font-size:10px;border:1px solid #C9A84C1A;color:#C9A84C66;cursor:pointer;white-space:nowrap;background:transparent;}
+.hint-pill:active{background:#C9A84C15;color:#C9A84C;}
+
+.input-row{background:#111;padding:10px 12px;padding-bottom:max(10px,env(safe-area-inset-bottom));border-top:1px solid #1A1A1A;display:flex;gap:8px;align-items:flex-end;flex-shrink:0;}
+.msg-input{flex:1;background:#1A1A1A;border:1px solid #C9A84C22;color:#F5F0E8;padding:9px 13px;border-radius:20px;font-size:15px;font-family:inherit;resize:none;max-height:80px;line-height:1.4;outline:none;}
+.msg-input:focus{border-color:#C9A84C44;}
+.msg-input::placeholder{color:#3A3A3A;}
+.send-btn{width:36px;height:36px;border-radius:50%;background:#C9A84C;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.send-btn:active{opacity:.75;transform:scale(.93);}
+.send-btn:disabled{opacity:.25;cursor:not-allowed;}
+.send-icon{width:16px;height:16px;fill:none;stroke:#1A1A1A;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;}
+
+/* Result overlay */
+.result-overlay{display:none;position:absolute;top:0;left:0;right:0;bottom:0;z-index:20;background:#1A1A1Aee;flex-direction:column;align-items:center;justify-content:center;padding:20px;}
+.result-overlay.show{display:flex;}
+.confetti-canvas{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;}
+.result-card{background:#111;border-radius:20px;width:100%;max-width:340px;overflow:hidden;position:relative;z-index:2;border:1px solid #2A2A2A;}
+.result-header-win{padding:28px 20px 18px;text-align:center;background:#140E00;}
+.result-header-loss{padding:28px 20px 18px;text-align:center;background:#0D0D0D;}
+.result-icon{font-size:44px;margin-bottom:10px;}
+.result-title{font-size:24px;font-weight:700;margin-bottom:4px;}
+.result-sub{font-size:12px;color:#777;}
+.score-row{display:flex;align-items:center;justify-content:center;gap:10px;padding:14px 20px;}
+.score-num{font-size:42px;font-weight:700;line-height:1;}
+.score-label{font-size:11px;color:#666;text-align:left;line-height:1.5;}
+.result-divider{height:1px;background:#1E1E1E;margin:0 20px;}
+.result-body{padding:16px 20px;}
+.result-section{margin-bottom:14px;}
+.result-section:last-child{margin-bottom:0;}
+.result-section-label{font-size:9px;letter-spacing:.8px;text-transform:uppercase;margin-bottom:5px;font-weight:700;}
+.result-section-text{font-size:12px;line-height:1.6;color:#999;}
+.result-actions{padding:16px 20px 20px;display:flex;gap:8px;}
+.btn-primary{flex:1;padding:11px;border-radius:12px;font-size:13px;font-weight:700;cursor:pointer;border:none;background:#C9A84C;color:#1A1A1A;letter-spacing:.3px;}
+.btn-primary:active{opacity:.85;}
+.btn-secondary{flex:1;padding:11px;border-radius:12px;font-size:13px;font-weight:600;cursor:pointer;background:transparent;border:1px solid #2A2A2A;color:#777;letter-spacing:.3px;}
+.btn-secondary:active{background:#1E1E1E;}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="top-bar">
+    <div class="avatar-wrap">
+      <div class="avatar" id="av">CM</div>
+      <div class="year-badge" id="yrBadge">Jr</div>
+    </div>
+    <div class="contact-info">
+      <div class="contact-name" id="cName">Loading...</div>
+      <div class="contact-meta" id="cMeta">Generating contact...</div>
+    </div>
+    <div class="top-right">
+      <div class="online"><div class="online-dot"></div><span style="font-size:9px;color:#4CAF50;">active</span></div>
+      <button class="reroll-btn" onclick="reroll()">new contact ↺</button>
+    </div>
+  </div>
+
+  <div class="scenario-bar" id="scenarioBar"></div>
+
+  <div class="persona-tag">
+    <div class="persona-pill" id="personaPill">Loading</div>
+    <div class="persona-pill" id="yearPill" style="background:#33333355;color:#888;border:1px solid #33333388;margin-left:4px;font-size:9px;padding:2px 8px;border-radius:10px;">Year</div>
+    <div class="variant-label" id="varLabel">—</div>
+  </div>
+
+  <div class="messages" id="msgs">
+    <div class="typing-row" id="typing">
+      <div class="typing-bubble"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+    </div>
+  </div>
+
+  <div class="coach-bar">
+    <span class="coach-label">Coach</span>
+    <span class="coach-text" id="coachTxt">Loading your contact...</span>
+  </div>
+
+  <div class="hint-row">
+    <button class="hint-pill" onclick="hint('hey its [name] i rep greek empire — rush coming up?')">Rush opener</button>
+    <button class="hint-pill" onclick="hint('what do you use for shirts rn?')">Qualify</button>
+    <button class="hint-pill" onclick="hint('we\'re not just another vendor — greek empire is the brand for greek life')">Culture angle</button>
+    <button class="hint-pill" onclick="hint('i can get a quote to you same day, what\'s your timeline?')">Quote push</button>
+    <button class="hint-pill" onclick="hint('who else is part of this decision?')">Decision maker</button>
+  </div>
+
+  <div class="input-row">
+    <textarea class="msg-input" id="inp" placeholder="Type your message..." rows="1" onkeydown="onKey(event)" oninput="resize(this)"></textarea>
+    <button class="send-btn" id="sendBtn" onclick="send()" aria-label="Send">
+      <svg class="send-icon" viewBox="0 0 24 24"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+    </button>
+  </div>
+
+  <!-- Result overlay -->
+  <div class="result-overlay" id="resultOverlay">
+    <canvas class="confetti-canvas" id="confettiCanvas"></canvas>
+    <div class="result-card">
+      <div id="resultHeader" class="result-header-loss">
+        <div class="result-icon" id="resultIcon">📵</div>
+        <div class="result-title" id="resultTitle" style="color:#F5F0E8;">No Deal</div>
+        <div class="result-sub" id="resultSub">They passed</div>
+      </div>
+      <div class="score-row">
+        <div class="score-num" id="scoreNum" style="color:#C9A84C;">—</div>
+        <div class="score-label">out of 10<br><span style="color:#444;font-size:10px;">pitch score</span></div>
+      </div>
+      <div class="result-divider"></div>
+      <div class="result-body">
+        <div class="result-section">
+          <div class="result-section-label" id="goodLabel" style="color:#50C878;">What worked</div>
+          <div class="result-section-text" id="goodText">Analyzing...</div>
+        </div>
+        <div class="result-section">
+          <div class="result-section-label" id="badLabel" style="color:#E8735A;">What to fix</div>
+          <div class="result-section-text" id="badText">...</div>
+        </div>
+        <div class="result-section">
+          <div class="result-section-label" style="color:#C9A84C;">Next time</div>
+          <div class="result-section-text" id="nextText">...</div>
+        </div>
+      </div>
+      <div class="result-actions">
+        <button class="btn-primary" onclick="reroll()">Try Again</button>
+        <button class="btn-secondary" onclick="nextScenario()">Next Scenario</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const API = '/api/chat';
+
+const NAMES_M=['Chase','Tyler','Jake','Connor','Brandon','Matt','Ryan','Zach','Austin','Derek','Will','Logan','Hunter','Tanner','Cole','Blake','Cody','Garrett','Dylan','Brett','Spencer','Griffin','Parker','Reid','Mason','Carter','Landon','Brody','Colton','Nate'];
+const NAMES_F=['Ashley','Mia','Sarah','Emma','Olivia','Madison','Lauren','Kayla','Taylor','Brooke','Shelby','Morgan','Paige','Haley','Brittany','Kelsey','Courtney','Lindsey','Katelyn','Jordan','Alexis','Caitlin','Savannah','Peyton','Riley','Avery','Hailey','Tori','Abby','Lexi'];
+const LAST=['Williams','Johnson','Smith','Davis','Miller','Wilson','Moore','Taylor','Anderson','Thomas','Jackson','White','Harris','Martin','Thompson','Garcia','Martinez','Robinson','Clark','Rodriguez','Lewis','Lee','Walker','Hall','Allen','Young','Hernandez','King','Wright','Lopez'];
+const SCHOOLS=[
+  {name:'UNC Chapel Hill',conf:'ACC',region:'Southeast'},{name:'University of Virginia',conf:'ACC',region:'Southeast'},
+  {name:'NC State',conf:'ACC',region:'Southeast'},{name:'Duke University',conf:'ACC',region:'Southeast'},
+  {name:'Wake Forest',conf:'ACC',region:'Southeast'},{name:'Clemson University',conf:'ACC',region:'Southeast'},
+  {name:'Florida State',conf:'ACC',region:'Southeast'},{name:'University of Miami',conf:'ACC',region:'Southeast'},
+  {name:'Penn State',conf:'Big Ten',region:'Northeast'},{name:'University of Michigan',conf:'Big Ten',region:'Midwest'},
+  {name:'Ohio State',conf:'Big Ten',region:'Midwest'},{name:'Indiana University',conf:'Big Ten',region:'Midwest'},
+  {name:'University of Maryland',conf:'Big Ten',region:'Mid-Atlantic'},{name:'Northwestern University',conf:'Big Ten',region:'Midwest'},
+  {name:'University of Georgia',conf:'SEC',region:'Southeast'},{name:'University of Florida',conf:'SEC',region:'Southeast'},
+  {name:'Auburn University',conf:'SEC',region:'Southeast'},{name:'University of Alabama',conf:'SEC',region:'Southeast'},
+  {name:'Ole Miss',conf:'SEC',region:'Southeast'},{name:'Vanderbilt University',conf:'SEC',region:'Southeast'},
+  {name:'University of Tennessee',conf:'SEC',region:'Southeast'},{name:'LSU',conf:'SEC',region:'Southeast'},
+  {name:'Georgetown University',conf:'Independent',region:'DC'},{name:'George Washington University',conf:'Independent',region:'DC'},
+  {name:'Boston University',conf:'Patriot',region:'Northeast'},{name:'Northeastern University',conf:'CAA',region:'Northeast'},
+  {name:'Boston College',conf:'ACC',region:'Northeast'},{name:'University of Connecticut',conf:'Big East',region:'Northeast'},
+  {name:'Syracuse University',conf:'ACC',region:'Northeast'},{name:'Villanova University',conf:'Big East',region:'Northeast'},
+  {name:'University of Delaware',conf:'CAA',region:'Mid-Atlantic'},{name:'James Madison University',conf:'Sun Belt',region:'Mid-Atlantic'},
+  {name:'Virginia Tech',conf:'ACC',region:'Mid-Atlantic'},{name:'University of Richmond',conf:'Atlantic 10',region:'Mid-Atlantic'},
+  {name:'Lehigh University',conf:'Patriot',region:'Northeast'},{name:'Bucknell University',conf:'Patriot',region:'Northeast'},
+  {name:'Rutgers University',conf:'Big Ten',region:'Northeast'},{name:'University of Vermont',conf:'America East',region:'Northeast'},
+];
+const ORGS_FRAT=['Sigma Chi','Pike','Beta Theta Pi','Phi Delt','Kappa Alpha','Sigma Nu','Theta Chi','Lambda Chi','Phi Kappa Psi','Delta Tau Delta','Sigma Alpha Epsilon','Kappa Sig','ATO','Sigma Phi Epsilon','Phi Tau'];
+const ORGS_SOR=['Kappa Delta','Chi Omega','Tri Delta','Alpha Chi Omega','Kappa Kappa Gamma','Pi Beta Phi','Alpha Phi','Delta Gamma','Zeta Tau Alpha','Phi Mu','Alpha Delta Pi','Gamma Phi Beta','Kappa Alpha Theta','Delta Zeta'];
+const ROLES_FRAT=['Rush Chair','Merch Chair','President','VP','Treasurer','Social Chair'];
+const ROLES_SOR=['VP Merch','Recruitment Chair','President','Events Chair','Philanthropy Chair','Social Chair'];
+const YEARS=[{label:'Freshman',short:'Fr',num:1},{label:'Sophomore',short:'So',num:2},{label:'Junior',short:'Jr',num:3},{label:'Senior',short:'Sr',num:4}];
+const COMPETITORS=[
+  {name:'Fresh Prints',angle:'has a student rep on campus they know personally',weak:'vendor with a face, not a culture brand'},
+  {name:'Something Greek',angle:'likes their officially licensed designs',weak:'catalog site, zero identity'},
+  {name:'Metro Greek',angle:'uses their huge design gallery',weak:'design shop only, no brand'},
+  {name:'Greek Gear',angle:'gets cheap bulk pricing with promo codes',weak:'cheap and generic'},
+  {name:'Hang Loose Hut',angle:'loves their trendy social media aesthetic',weak:'trendy but forgettable'},
+  {name:'GreekU',angle:'uses them for sorority-specific licensed gear',weak:'purely transactional'},
+];
+const AVATAR_COLORS=[
+  {bg:'#C9A84C22',border:'#C9A84C55',text:'#C9A84C'},{bg:'#4A90D922',border:'#4A90D955',text:'#4A90D9'},
+  {bg:'#E8735A22',border:'#E8735A55',text:'#E8735A'},{bg:'#7B68EE22',border:'#7B68EE55',text:'#7B68EE'},
+  {bg:'#50C87822',border:'#50C87855',text:'#50C878'},{bg:'#FF69B422',border:'#FF69B455',text:'#FF69B4'},
+];
+const SCENARIOS=[
+  {id:0,label:'Has a Vendor',pill:'Vendor Loyal',pillColor:'#E8735A',pillBg:'#E8735A15',pillBorder:'#E8735A33'},
+  {id:1,label:'Price Focused',pill:'Price Guard',pillColor:'#4A90D9',pillBg:'#4A90D915',pillBorder:'#4A90D933'},
+  {id:2,label:'Too Busy',pill:'No Time',pillColor:'#888',pillBg:'#33333322',pillBorder:'#44444466'},
+  {id:3,label:'Warm Lead',pill:'Open',pillColor:'#50C878',pillBg:'#50C87815',pillBorder:'#50C87833'},
+  {id:4,label:'New to Role',pill:'New Chair',pillColor:'#7B68EE',pillBg:'#7B68EE15',pillBorder:'#7B68EE33'},
+  {id:5,label:'Aesthetic Loyal',pill:'Brand Snob',pillColor:'#FF69B4',pillBg:'#FF69B415',pillBorder:'#FF69B433'},
+];
+const VARIANTS=[
+  ['Skeptical','Distracted','Low-key Open','Just Annoyed'],
+  ['Penny Pincher','Comparison Shopper','Budget Stressed','Show Me Value'],
+  ['Swamped','One Word Answers','Multitasking','In a Rush'],
+  ['Actually Interested','Asking Questions','Ready to Order','Needs Convincing'],
+  ['Clueless but Eager','Overwhelmed','Asking for Guidance','Wants to Impress'],
+  ['Very Particular','Design Obsessed','Trend Chaser','Picky'],
+];
+const YEAR_VOICES={
+  1:'You are a freshman — new to this role, easily impressed, ask basic questions.',
+  2:'You are a sophomore — one year experience, somewhat confident, sometimes defer to older members.',
+  3:'You are a junior — experienced, opinionated, been through rush before, push back confidently.',
+  4:'You are a senior — seen everything, low patience, nostalgic, reference it being your last year.',
+};
+const SCHOOL_EVENTS={
+  'ACC':'ACC rivalries, football season, Greek Week in spring, formal season, bid day',
+  'SEC':'SEC football Saturdays, tailgates, bid day in fall, formals in spring, philanthropy week',
+  'Big Ten':'Big Ten football, homecoming week, fall rush, spring formals',
+  'Northeast':'house parties, fall recruitment, spring formals, smaller campus feel',
+  'DC':'DC networking culture, tight-knit Greek scene, spring formals',
+  'Independent':'campus traditions, strong chapter identity, house events',
+  'Mid-Atlantic':'campus rivalries, Greek Week, formals, philanthropy events',
+  'Midwest':'Big Ten football, Greek Week, formals, fall rush',
+};
+
+let state={scenario:0,contact:null,history:[],ended:false};
+let confettiParticles=[];
+let confettiFrame=null;
+
+function rnd(arr){return arr[Math.floor(Math.random()*arr.length)];}
+function rndInt(min,max){return Math.floor(Math.random()*(max-min+1))+min;}
+function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');}
+function time(){const d=new Date();return(d.getHours()%12||12)+':'+((''+d.getMinutes()).padStart(2,'0'))+' '+(d.getHours()>=12?'PM':'AM');}
+
+function buildContact(sid){
+  const isFemale=Math.random()>.5;
+  const school=rnd(SCHOOLS);
+  const conf=school.conf==='Independent'?school.region:school.conf;
+  return{
+    firstName:rnd(isFemale?NAMES_F:NAMES_M),
+    lastName:rnd(LAST),
+    school,org:rnd(isFemale?ORGS_SOR:ORGS_FRAT),
+    role:rnd(isFemale?ROLES_SOR:ROLES_FRAT),
+    year:rnd(YEARS),competitor:rnd(COMPETITORS),
+    variant:VARIANTS[sid][rndInt(0,VARIANTS[sid].length-1)],
+    colorIdx:rndInt(0,AVATAR_COLORS.length-1),
+    conf,events:SCHOOL_EVENTS[school.conf]||SCHOOL_EVENTS[school.region]||'campus events, rush, formals',
+    isFemale,scenarioId:sid
+  };
+}
+
+function getOpening(c,sid){
+  const o={
+    0:[`yeah who's this`,`we already use ${c.competitor.name} tbh`,`hey we're good on apparel rn`,`idk we have someone we use`],
+    1:[`how much are your shirts`,`what's the pricing like`,`we're on a tight budget`,`what's your min order and price`],
+    2:[`hey who is this, kinda busy`,`in the middle of something whats up`,`make it quick`,`yeah what's up`],
+    3:[`omg hey we actually need shirts soon`,`yo perfect timing we're looking`,`hey what do you do exactly`,`we've been looking around`],
+    4:[`hey i just got this role and have no idea lol`,`hi i'm new to being merch chair`,`ok so i genuinely have no idea what i'm doing`,`yo what does ordering even look like`],
+    5:[`we're pretty particular about our aesthetic tbh`,`idk we're very specific about what we like`,`depends — what's your vibe`,`our chapter is really picky`],
+  };
+  return rnd(o[sid]);
+}
+
+function buildSystemPrompt(c,sid){
+  const sc=SCENARIOS[sid];
+  const inst={
+    0:`You use ${c.competitor.name} — ${c.competitor.angle}. Objections: "we already use ${c.competitor.name}", "why switch", "our vendor works fine". Warm up ONLY if they build genuine rapport AND lead with culture/identity over product. After 4-8 messages: if real rapport was built and objection handled well, end with "yeah ok send me what you've got, we can chat" and add [WIN] at the very end. If not, end with "yeah we're good with ${c.competitor.name}, appreciate it tho" and add [LOSS].`,
+    1:`Only care about price. Ask about cost constantly. After 4-8 messages: if they explained VALUE beyond just price matching, end "ok fine send me a quote" [WIN]. If they couldn't justify cost, end "gonna stick with what we have, it's cheaper" [LOSS].`,
+    2:`Genuinely swamped. Very short replies. After 4-6 messages: if they created urgency or said something genuinely interesting, end "ok fine what's your number i'll hit you later" [WIN]. If they kept pitching without reading the room, end "yeah i gotta go good luck" [LOSS].`,
+    3:`Warm and looking. Ask good questions about timeline, process, what other chapters ordered. After 4-8 messages: if they're knowledgeable and you've connected, end "ok yes let's do it — send me stuff" [WIN]. If they fumbled or felt generic, end "hmm maybe i'll look around more first" [LOSS].`,
+    4:`New to the role, need guidance. After 4-8 messages: if they explained the process clearly and made you feel confident, end "ok this actually makes sense, let's do it" [WIN]. If confusing or pushy, end "i think i need to ask around more first" [LOSS].`,
+    5:`Very particular aesthetically. After 4-8 messages: if they sold Greek Empire's brand IDENTITY compellingly, end "ok i'm actually into this, send me more" [WIN]. If they talked product specs or were generic, end "yeah it's not really the vibe we're going for" [LOSS].`,
+  };
+  return`You are ${c.firstName} ${c.lastName}, ${c.year.label} at ${c.school.name}. ${c.role} for ${c.org}. ${c.conf} school. ${YEAR_VOICES[c.year.num]}
+
+Scenario: ${sc.label}. Variant: ${c.variant}.
+${inst[sid]}
+
+Reference ${c.school.name} Greek life naturally when relevant: ${c.events}.
+
+RULES: Reply like a real college student over text. Lowercase, casual. Max 2 sentences per reply. Stay completely in character. Respond to how genuine and personable the ambassador feels — not just what they say but HOW they say it. If they feel like a real person, warm up gradually. If they feel like a sales script, stay cold.`;
+}
+
+function initScenarioBar(){
+  document.getElementById('scenarioBar').innerHTML=SCENARIOS.map((s,i)=>`<button class="chip ${i===0?'active':''}" onclick="switchScenario(${i})">${s.label}</button>`).join('');
+}
+
+function switchScenario(idx){
+  state.scenario=idx;
+  document.querySelectorAll('.chip').forEach((c,i)=>c.classList.toggle('active',i===idx));
+  reroll();
+}
+
+function nextScenario(){switchScenario((state.scenario+1)%SCENARIOS.length);}
+
+function reroll(){
+  if(confettiFrame){cancelAnimationFrame(confettiFrame);confettiFrame=null;}
+  document.getElementById('resultOverlay').classList.remove('show');
+  const btn=document.getElementById('sendBtn');
+  btn.disabled=false;
+  document.getElementById('inp').disabled=false;
+
+  const c=buildContact(state.scenario);
+  state.contact=c;state.history=[];state.ended=false;
+
+  const color=AVATAR_COLORS[c.colorIdx];
+  const sc=SCENARIOS[state.scenario];
+
+  const av=document.getElementById('av');
+  av.textContent=c.firstName[0]+c.lastName[0];
+  av.style.cssText=`width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;border:2px solid;background:${color.bg};border-color:${color.border};color:${color.text};`;
+  document.getElementById('yrBadge').textContent=c.year.short;
+  document.getElementById('yrBadge').style.color=color.text;
+  document.getElementById('cName').textContent=`${c.firstName} ${c.lastName}`;
+  document.getElementById('cMeta').textContent=`${c.school.name} • ${c.org} • ${c.role}`;
+
+  const pp=document.getElementById('personaPill');
+  pp.textContent=sc.pill;
+  pp.style.cssText=`font-size:9px;padding:2px 8px;border-radius:10px;letter-spacing:.3px;font-weight:600;background:${sc.pillBg};color:${sc.pillColor};border:1px solid ${sc.pillBorder};`;
+  document.getElementById('yearPill').textContent=c.year.label;
+  document.getElementById('varLabel').textContent=`Variant: ${c.variant}`;
+
+  const opening=getOpening(c,state.scenario);
+  document.getElementById('msgs').innerHTML=`<div class="msg them"><div class="bubble">${esc(opening)}</div><div class="msg-time">${time()}</div></div><div class="typing-row" id="typing"><div class="typing-bubble"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div></div>`;
+
+  const coachLines=[
+    `${c.competitor.name} loyal ${c.year.label} at ${c.school.name}. Lead with culture — not product.`,
+    `Pure price objection incoming. Have your value answer ready.`,
+    `${c.year.label} with no time. One line hook or they're gone.`,
+    `Warm lead — ${c.year.label} who needs shirts. Close them.`,
+    `Brand new ${c.role}, no vendor yet. Guide them through it.`,
+    `Aesthetic-focused ${c.year.label}. Sell brand identity, not specs.`,
+  ];
+  document.getElementById('coachTxt').textContent=coachLines[state.scenario];
+}
+
+function hint(txt){
+  document.getElementById('inp').value=txt;
+  document.getElementById('inp').focus();
+  resize(document.getElementById('inp'));
+}
+
+function onKey(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();send();}}
+function resize(el){el.style.height='auto';el.style.height=Math.min(el.scrollHeight,80)+'px';}
+
+function appendMsg(txt,side){
+  const msgs=document.getElementById('msgs');
+  const typing=document.getElementById('typing');
+  const d=document.createElement('div');
+  d.className='msg '+side;
+  d.innerHTML=`<div class="bubble">${esc(txt)}</div><div class="msg-time">${time()}</div>`;
+  msgs.insertBefore(d,typing);
+  msgs.scrollTop=99999;
+}
+
+function launchConfetti(){
+  const canvas=document.getElementById('confettiCanvas');
+  const ctx=canvas.getContext('2d');
+  canvas.width=canvas.offsetWidth||340;
+  canvas.height=canvas.offsetHeight||600;
+  const colors=['#C9A84C','#F0C040','#8B6914','#FFD700','#FFF8DC','#E8D5A3','#FFFFFF'];
+  confettiParticles=Array.from({length:140},()=>({
+    x:Math.random()*canvas.width,y:-10,
+    vx:(Math.random()-.5)*5,vy:Math.random()*5+2,
+    color:colors[Math.floor(Math.random()*colors.length)],
+    size:Math.random()*7+3,rotation:Math.random()*360,
+    rotSpeed:(Math.random()-.5)*10,alpha:1
+  }));
+  function draw(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    confettiParticles.forEach(p=>{
+      ctx.save();ctx.globalAlpha=p.alpha;ctx.fillStyle=p.color;
+      ctx.translate(p.x,p.y);ctx.rotate(p.rotation*Math.PI/180);
+      ctx.fillRect(-p.size/2,-p.size/2,p.size,p.size*0.6);
+      ctx.restore();
+      p.x+=p.vx;p.y+=p.vy;p.rotation+=p.rotSpeed;p.vy+=0.06;p.alpha-=0.007;
+    });
+    confettiParticles=confettiParticles.filter(p=>p.alpha>0);
+    if(confettiParticles.length>0)confettiFrame=requestAnimationFrame(draw);
+  }
+  draw();
+}
+
+async function showResult(won,fullConvo){
+  state.ended=true;
+  document.getElementById('sendBtn').disabled=true;
+  document.getElementById('inp').disabled=true;
+
+  const c=state.contact;
+  const overlay=document.getElementById('resultOverlay');
+
+  document.getElementById('resultIcon').textContent=won?'🏆':'📵';
+  document.getElementById('resultTitle').textContent=won?'Deal Closed!':'No Deal';
+  document.getElementById('resultTitle').style.color=won?'#C9A84C':'#F5F0E8';
+  document.getElementById('resultSub').textContent=won?`${c.firstName} agreed to connect`:`${c.firstName} passed`;
+  document.getElementById('resultHeader').className=won?'result-header-win':'result-header-loss';
+  document.getElementById('scoreNum').style.color=won?'#C9A84C':'#E8735A';
+  document.getElementById('scoreNum').textContent='...';
+  document.getElementById('goodText').textContent='Analyzing your pitch...';
+  document.getElementById('badText').textContent='...';
+  document.getElementById('nextText').textContent='...';
+
+  overlay.classList.add('show');
+  if(won)setTimeout(launchConfetti,200);
+
+  try{
+    const res=await fetch(API,{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',max_tokens:1000,
+        system:`You are a Greek Empire sales coach. Analyze this pitch and return ONLY valid JSON, no markdown, no extra text:\n{"score":7,"good":"what worked in one sentence under 15 words","bad":"what didn't work under 15 words","next":"one actionable tip under 15 words"}\nBe honest, specific, direct.`,
+        messages:[{role:'user',content:`Outcome: ${won?'WIN':'LOSS'}\nContact: ${c.firstName} ${c.lastName}, ${c.year.label}, ${c.school.name}, ${c.role} for ${c.org}\nScenario: ${SCENARIOS[c.scenarioId].label}, Competitor: ${c.competitor.name}\n\nConversation:\n${fullConvo}`}]
+      })
+    });
+    const data=await res.json();
+    let txt=(data.content?.[0]?.text||'{}').replace(/```json|```/g,'').trim();
+    const j=JSON.parse(txt);
+    document.getElementById('scoreNum').textContent=j.score||'—';
+    document.getElementById('goodText').textContent=j.good||'Good effort.';
+    document.getElementById('badText').textContent=j.bad||'Keep practicing.';
+    document.getElementById('nextText').textContent=j.next||'Lead with culture next time.';
+  }catch(e){
+    document.getElementById('scoreNum').textContent=won?'7':'4';
+    document.getElementById('goodText').textContent=won?'You built real rapport.':'You made contact.';
+    document.getElementById('badText').textContent=won?'Push harder on the culture angle.':'Didn\'t land the hook.';
+    document.getElementById('nextText').textContent='Lead with identity, not product specs.';
+  }
+}
+
+async function send(){
+  if(state.ended)return;
+  const inp=document.getElementById('inp');
+  const txt=inp.value.trim();
+  if(!txt||!state.contact)return;
+  inp.value='';inp.style.height='auto';
+  appendMsg(txt,'me');
+  state.history.push({role:'user',content:txt});
+
+  const typing=document.getElementById('typing');
+  typing.classList.add('show');
+  document.getElementById('msgs').scrollTop=99999;
+  document.getElementById('coachTxt').textContent='...';
+
+  const c=state.contact;
+  const opening=document.querySelector('.msg.them .bubble')?.textContent||'';
+
+  try{
+    const[botRes,coachRes]=await Promise.all([
+      fetch(API,{
+        method:'POST',headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({
+          model:'claude-sonnet-4-20250514',max_tokens:1000,
+          system:buildSystemPrompt(c,state.scenario),
+          messages:[{role:'user',content:opening},...state.history]
+        })
+      }),
+      fetch(API,{
+        method:'POST',headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({
+          model:'claude-sonnet-4-20250514',max_tokens:1000,
+          system:`Greek Empire sales coach. One coaching tip, max 10 words, no quotes. Specific and direct. Examples: "Good — now find their timeline." / "Too salesy. One line. Let them respond." / "Push to a quote — they're warming up."`,
+          messages:[{role:'user',content:`Contact: ${c.firstName}, ${c.year.label}, ${c.school.name}, scenario: ${SCENARIOS[c.scenarioId].label}. Ambassador said: "${txt}". One tip:`}]
+        })
+      })
+    ]);
+
+    const botData=await botRes.json();
+    const coachData=await coachRes.json();
+    let reply=botData.content?.[0]?.text||'yeah idk';
+    const coach=coachData.content?.[0]?.text||'Keep the conversation moving.';
+
+    const won=reply.includes('[WIN]');
+    const lost=reply.includes('[LOSS]');
+    reply=reply.replace(/\[WIN\]|\[LOSS\]/g,'').trim();
+
+    typing.classList.remove('show');
+    appendMsg(reply,'them');
+    state.history.push({role:'assistant',content:reply});
+    document.getElementById('coachTxt').textContent=coach;
+
+    if(won||lost){
+      const fullConvo=state.history.map(m=>`${m.role==='user'?'Ambassador':'Contact'}: ${m.content}`).join('\n');
+      setTimeout(()=>showResult(won,fullConvo),1400);
+    }
+
+  }catch(e){
+    typing.classList.remove('show');
+    appendMsg('bad signal, try again','them');
+    document.getElementById('coachTxt').textContent='Connection issue — try again.';
+  }
+}
+
+initScenarioBar();
+reroll();
+</script>
+</body>
+</html>
