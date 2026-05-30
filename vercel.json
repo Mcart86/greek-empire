@@ -1,4 +1,11 @@
 {
+  "buildCommand": "echo 'Static + API build'",
+  "outputDirectory": ".",
+  "functions": {
+    "api/**/*.js": {
+      "runtime": "nodejs20.x"
+    }
+  },
   "rewrites": [
     { "source": "/trainer", "destination": "/trainer/index.html" }
   ]
