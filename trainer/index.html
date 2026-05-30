@@ -446,7 +446,7 @@ async function showResult(won,fullConvo){
     const res=await fetch(API,{
       method:'POST',headers:{'Content-Type':'application/json'},
       body:JSON.stringify({
-        model:'claude-sonnet-4-20250514',max_tokens:1000,
+        model:'claude-haiku-4-5-20251001',max_tokens:1000,
         system:`You are a Greek Empire sales coach. Analyze this pitch and return ONLY valid JSON, no markdown, no extra text:\n{"score":7,"good":"what worked in one sentence under 15 words","bad":"what didn't work under 15 words","next":"one actionable tip under 15 words"}\nBe honest, specific, direct.`,
         messages:[{role:'user',content:`Outcome: ${won?'WIN':'LOSS'}\nContact: ${c.firstName} ${c.lastName}, ${c.year.label}, ${c.school.name}, ${c.role} for ${c.org}\nScenario: ${SCENARIOS[c.scenarioId].label}, Competitor: ${c.competitor.name}\n\nConversation:\n${fullConvo}`}]
       })
@@ -488,7 +488,7 @@ async function send(){
       fetch(API,{
         method:'POST',headers:{'Content-Type':'application/json'},
         body:JSON.stringify({
-          model:'claude-sonnet-4-20250514',max_tokens:1000,
+          model:'claude-haiku-4-5-20251001',max_tokens:1000,
           system:buildSystemPrompt(c,state.scenario),
           messages:[{role:'user',content:opening},...state.history]
         })
@@ -496,7 +496,7 @@ async function send(){
       fetch(API,{
         method:'POST',headers:{'Content-Type':'application/json'},
         body:JSON.stringify({
-          model:'claude-sonnet-4-20250514',max_tokens:1000,
+          model:'claude-haiku-4-5-20251001',max_tokens:1000,
           system:`Greek Empire sales coach. One coaching tip, max 10 words, no quotes. Specific and direct. Examples: "Good — now find their timeline." / "Too salesy. One line. Let them respond." / "Push to a quote — they're warming up."`,
           messages:[{role:'user',content:`Contact: ${c.firstName}, ${c.year.label}, ${c.school.name}, scenario: ${SCENARIOS[c.scenarioId].label}. Ambassador said: "${txt}". One tip:`}]
         })
