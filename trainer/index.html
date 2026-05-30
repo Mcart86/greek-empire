@@ -10,12 +10,34 @@
 <link rel="manifest" href="/trainer/manifest.json"/>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
-html,body{height:100%;background:#1A1A1A;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
-.app{background:#1A1A1A;height:100dvh;display:flex;flex-direction:column;max-width:480px;margin:0 auto;position:relative;}
+html,body{height:100%;background:#1A1A1A;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;overflow:hidden;}
+.screen{position:absolute;top:0;left:0;right:0;bottom:0;display:none;flex-direction:column;}
+.screen.active{display:flex;}
 
+/* ONBOARDING */
+.onboard{background:#1A1A1A;align-items:center;justify-content:center;padding:32px 24px;}
+.ob-logo{width:80px;height:80px;margin-bottom:24px;}
+.ob-slides{width:100%;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+.ob-slide{display:none;text-align:center;padding:0 8px;}
+.ob-slide.active{display:block;}
+.ob-slide-icon{font-size:52px;margin-bottom:20px;}
+.ob-slide-title{font-size:26px;font-weight:700;color:#F5F0E8;margin-bottom:12px;line-height:1.2;}
+.ob-slide-title span{color:#C9A84C;}
+.ob-slide-body{font-size:15px;color:#777;line-height:1.7;max-width:300px;margin:0 auto;}
+.ob-dots{display:flex;gap:8px;margin:28px 0;}
+.ob-dot{width:8px;height:8px;border-radius:50%;background:#333;transition:background .2s;}
+.ob-dot.active{background:#C9A84C;}
+.ob-btn{width:100%;max-width:320px;padding:14px;border-radius:14px;background:#C9A84C;color:#1A1A1A;font-size:16px;font-weight:700;border:none;cursor:pointer;letter-spacing:.3px;}
+.ob-btn:active{opacity:.85;}
+.ob-skip{background:transparent;border:none;color:#444;font-size:13px;cursor:pointer;margin-top:16px;padding:8px;}
+
+/* MAIN APP */
+.app{background:#1A1A1A;max-width:480px;margin:0 auto;width:100%;}
+
+/* HEADER */
 .top-bar{background:#111;padding:11px 14px;padding-top:max(11px,env(safe-area-inset-top));border-bottom:1px solid #C9A84C33;display:flex;align-items:center;gap:10px;flex-shrink:0;}
 .avatar-wrap{position:relative;flex-shrink:0;}
-.avatar{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;border:2px solid;flex-shrink:0;}
+.avatar{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;border:2px solid;}
 .year-badge{position:absolute;bottom:-2px;right:-2px;width:16px;height:16px;border-radius:50%;background:#111;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;border:1px solid #333;}
 .contact-info{flex:1;min-width:0;}
 .contact-name{font-size:13px;font-weight:600;color:#F5F0E8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
@@ -24,27 +46,47 @@ html,body{height:100%;background:#1A1A1A;font-family:-apple-system,BlinkMacSyste
 .online{display:flex;align-items:center;gap:3px;font-size:9px;color:#4CAF50;}
 .online-dot{width:5px;height:5px;border-radius:50%;background:#4CAF50;}
 .reroll-btn{background:transparent;border:1px solid #C9A84C33;color:#C9A84C88;font-size:9px;padding:3px 7px;border-radius:8px;cursor:pointer;}
-.reroll-btn:active{background:#C9A84C18;}
 
-.scenario-bar{background:#0D0D0D;padding:7px 12px;border-bottom:1px solid #C9A84C1A;display:flex;gap:5px;overflow-x:auto;scrollbar-width:none;flex-shrink:0;}
+/* STATS BAR */
+.stats-bar{background:#0A0A0A;padding:6px 14px;border-bottom:1px solid #C9A84C1A;display:flex;align-items:center;gap:0;flex-shrink:0;}
+.stat-item{flex:1;text-align:center;}
+.stat-val{font-size:14px;font-weight:700;color:#C9A84C;}
+.stat-lbl{font-size:8px;color:#444;text-transform:uppercase;letter-spacing:.5px;margin-top:1px;}
+.stat-divider{width:1px;height:24px;background:#1E1E1E;}
+.streak-fire{font-size:12px;}
+.daily-badge{background:#C9A84C22;border:1px solid #C9A84C44;color:#C9A84C;font-size:8px;padding:2px 6px;border-radius:8px;letter-spacing:.3px;white-space:nowrap;}
+
+/* DIFFICULTY */
+.diff-bar{background:#0D0D0D;padding:5px 12px;border-bottom:1px solid #C9A84C1A;display:flex;gap:4px;align-items:center;flex-shrink:0;}
+.diff-label{font-size:9px;color:#444;text-transform:uppercase;letter-spacing:.5px;margin-right:4px;}
+.diff-chip{padding:3px 10px;border-radius:10px;font-size:9px;border:1px solid #2A2A2A;color:#555;cursor:pointer;background:transparent;transition:all .15s;font-weight:500;}
+.diff-chip.easy.active{background:#50C87815;border-color:#50C87855;color:#50C878;}
+.diff-chip.medium.active{background:#C9A84C15;border-color:#C9A84C55;color:#C9A84C;}
+.diff-chip.hard.active{background:#E8735A15;border-color:#E8735A55;color:#E8735A;}
+.daily-chip{margin-left:auto;padding:3px 8px;border-radius:10px;font-size:9px;border:1px solid #C9A84C33;color:#C9A84C88;cursor:pointer;background:transparent;}
+.daily-chip.active{background:#C9A84C22;color:#C9A84C;}
+
+/* SCENARIO BAR */
+.scenario-bar{background:#0D0D0D;padding:6px 12px;border-bottom:1px solid #0A0A0A;display:flex;gap:5px;overflow-x:auto;scrollbar-width:none;flex-shrink:0;}
 .scenario-bar::-webkit-scrollbar{display:none;}
-.chip{padding:5px 10px;border-radius:14px;font-size:10px;border:1px solid #2A2A2A;color:#555;cursor:pointer;white-space:nowrap;background:transparent;transition:all .15s;}
+.chip{padding:5px 9px;border-radius:12px;font-size:10px;border:1px solid #1E1E1E;color:#444;cursor:pointer;white-space:nowrap;background:transparent;transition:all .15s;}
 .chip.active{background:#C9A84C15;border-color:#C9A84C55;color:#C9A84C;}
 
-.persona-tag{background:#0D0D0D;padding:5px 14px;border-bottom:1px solid #C9A84C0D;display:flex;align-items:center;gap:6px;flex-shrink:0;}
+/* PERSONA TAG */
+.persona-tag{background:#0D0D0D;padding:4px 14px;border-bottom:1px solid #0A0A0A;display:flex;align-items:center;gap:6px;flex-shrink:0;}
 .persona-pill{font-size:9px;padding:2px 8px;border-radius:10px;letter-spacing:.3px;font-weight:600;}
-.variant-label{font-size:9px;color:#3A3A3A;margin-left:auto;}
+.variant-label{font-size:9px;color:#333;margin-left:auto;}
 
-.messages{flex:1;padding:12px 14px;display:flex;flex-direction:column;gap:8px;overflow-y:auto;-webkit-overflow-scrolling:touch;}
+/* MESSAGES */
+.messages{flex:1;padding:12px 14px;display:flex;flex-direction:column;gap:8px;overflow-y:auto;-webkit-overflow-scrolling:touch;min-height:0;}
 .msg{display:flex;flex-direction:column;max-width:78%;}
 .msg.them{align-self:flex-start;}
 .msg.me{align-self:flex-end;}
 .bubble{padding:9px 12px;border-radius:18px;font-size:14px;line-height:1.5;}
 .msg.them .bubble{background:#252525;color:#EDE8DC;border-bottom-left-radius:4px;}
 .msg.me .bubble{background:#C9A84C;color:#1A1A1A;font-weight:500;border-bottom-right-radius:4px;}
-.msg-time{font-size:9px;color:#3A3A3A;margin-top:3px;padding:0 4px;}
+.msg-time{font-size:9px;color:#333;margin-top:3px;padding:0 4px;}
 .msg.me .msg-time{text-align:right;}
-
 .typing-row{align-self:flex-start;display:none;}
 .typing-row.show{display:flex;}
 .typing-bubble{background:#252525;border-radius:18px;border-bottom-left-radius:4px;padding:10px 14px;display:flex;gap:4px;align-items:center;}
@@ -53,102 +95,185 @@ html,body{height:100%;background:#1A1A1A;font-family:-apple-system,BlinkMacSyste
 .dot:nth-child(3){animation-delay:.4s;}
 @keyframes bounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-5px)}}
 
-.coach-bar{background:#0D0D0D;border-top:1px solid #C9A84C1A;padding:7px 14px;min-height:30px;display:flex;align-items:center;gap:6px;flex-shrink:0;}
-.coach-label{font-size:9px;color:#C9A84C;font-weight:600;letter-spacing:.5px;flex-shrink:0;text-transform:uppercase;}
-.coach-text{font-size:11px;color:#777;line-height:1.4;flex:1;}
+/* TURNING POINT */
+.turning-point{align-self:center;background:#E8735A15;border:1px solid #E8735A33;border-radius:10px;padding:5px 12px;font-size:10px;color:#E8735A;text-align:center;max-width:90%;margin:4px 0;}
+.turning-point.win{background:#50C87815;border-color:#50C87833;color:#50C878;}
 
-.hint-row{background:#0D0D0D;padding:6px 12px;border-top:1px solid #0A0A0A;display:flex;gap:5px;overflow-x:auto;scrollbar-width:none;flex-shrink:0;}
+/* COACH */
+.coach-bar{background:#0D0D0D;border-top:1px solid #C9A84C1A;padding:7px 14px;min-height:28px;display:flex;align-items:center;gap:6px;flex-shrink:0;}
+.coach-label{font-size:9px;color:#C9A84C;font-weight:600;letter-spacing:.5px;flex-shrink:0;text-transform:uppercase;}
+.coach-text{font-size:11px;color:#666;line-height:1.4;flex:1;}
+
+/* HINTS */
+.hint-row{background:#0D0D0D;padding:5px 12px;border-top:1px solid #0A0A0A;display:flex;gap:5px;overflow-x:auto;scrollbar-width:none;flex-shrink:0;}
 .hint-row::-webkit-scrollbar{display:none;}
-.hint-pill{padding:4px 10px;border-radius:10px;font-size:10px;border:1px solid #C9A84C1A;color:#C9A84C66;cursor:pointer;white-space:nowrap;background:transparent;}
+.hint-pill{padding:4px 10px;border-radius:10px;font-size:9px;border:1px solid #C9A84C1A;color:#C9A84C55;cursor:pointer;white-space:nowrap;background:transparent;}
 .hint-pill:active{background:#C9A84C15;color:#C9A84C;}
 
+/* INPUT */
 .input-row{background:#111;padding:10px 12px;padding-bottom:max(10px,env(safe-area-inset-bottom));border-top:1px solid #1A1A1A;display:flex;gap:8px;align-items:flex-end;flex-shrink:0;}
 .msg-input{flex:1;background:#1A1A1A;border:1px solid #C9A84C22;color:#F5F0E8;padding:9px 13px;border-radius:20px;font-size:15px;font-family:inherit;resize:none;max-height:80px;line-height:1.4;outline:none;}
 .msg-input:focus{border-color:#C9A84C44;}
-.msg-input::placeholder{color:#3A3A3A;}
+.msg-input::placeholder{color:#333;}
 .send-btn{width:36px;height:36px;border-radius:50%;background:#C9A84C;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
 .send-btn:active{opacity:.75;transform:scale(.93);}
-.send-btn:disabled{opacity:.25;cursor:not-allowed;}
-.send-icon{width:16px;height:16px;fill:none;stroke:#1A1A1A;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;}
+.send-btn:disabled{opacity:.2;cursor:not-allowed;}
 
-/* Result overlay */
+/* RESULT OVERLAY */
 .result-overlay{display:none;position:absolute;top:0;left:0;right:0;bottom:0;z-index:20;background:#1A1A1Aee;flex-direction:column;align-items:center;justify-content:center;padding:20px;}
 .result-overlay.show{display:flex;}
 .confetti-canvas{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;}
 .result-card{background:#111;border-radius:20px;width:100%;max-width:340px;overflow:hidden;position:relative;z-index:2;border:1px solid #2A2A2A;}
-.result-header-win{padding:28px 20px 18px;text-align:center;background:#140E00;}
-.result-header-loss{padding:28px 20px 18px;text-align:center;background:#0D0D0D;}
-.result-icon{font-size:44px;margin-bottom:10px;}
-.result-title{font-size:24px;font-weight:700;margin-bottom:4px;}
-.result-sub{font-size:12px;color:#777;}
-.score-row{display:flex;align-items:center;justify-content:center;gap:10px;padding:14px 20px;}
-.score-num{font-size:42px;font-weight:700;line-height:1;}
-.score-label{font-size:11px;color:#666;text-align:left;line-height:1.5;}
+.result-header-win{padding:24px 20px 14px;text-align:center;background:#140E00;}
+.result-header-loss{padding:24px 20px 14px;text-align:center;background:#0D0D0D;}
+.result-icon{font-size:44px;margin-bottom:8px;}
+.result-title{font-size:22px;font-weight:700;margin-bottom:3px;}
+.result-sub{font-size:11px;color:#666;}
+.score-row{display:flex;align-items:center;justify-content:center;gap:10px;padding:12px 20px;}
+.score-num{font-size:40px;font-weight:700;line-height:1;}
+.score-label{font-size:11px;color:#555;text-align:left;line-height:1.5;}
 .result-divider{height:1px;background:#1E1E1E;margin:0 20px;}
-.result-body{padding:16px 20px;}
-.result-section{margin-bottom:14px;}
+.result-body{padding:14px 20px;}
+.result-section{margin-bottom:12px;}
 .result-section:last-child{margin-bottom:0;}
-.result-section-label{font-size:9px;letter-spacing:.8px;text-transform:uppercase;margin-bottom:5px;font-weight:700;}
-.result-section-text{font-size:12px;line-height:1.6;color:#999;}
-.result-actions{padding:16px 20px 20px;display:flex;gap:8px;}
-.btn-primary{flex:1;padding:11px;border-radius:12px;font-size:13px;font-weight:700;cursor:pointer;border:none;background:#C9A84C;color:#1A1A1A;letter-spacing:.3px;}
+.result-section-label{font-size:9px;letter-spacing:.8px;text-transform:uppercase;margin-bottom:4px;font-weight:700;}
+.result-section-text{font-size:12px;line-height:1.6;color:#888;}
+.followup-box{background:#C9A84C12;border:1px solid #C9A84C33;border-radius:10px;padding:10px 12px;margin-top:8px;font-size:12px;color:#C9A84C99;line-height:1.6;position:relative;}
+.followup-copy{position:absolute;top:8px;right:8px;background:#C9A84C22;border:1px solid #C9A84C44;color:#C9A84C;font-size:9px;padding:2px 7px;border-radius:6px;cursor:pointer;}
+.followup-text{color:#EDE8DC;padding-right:44px;}
+.result-actions{padding:12px 20px 18px;display:flex;gap:8px;}
+.btn-primary{flex:1;padding:11px;border-radius:12px;font-size:13px;font-weight:700;cursor:pointer;border:none;background:#C9A84C;color:#1A1A1A;}
 .btn-primary:active{opacity:.85;}
-.btn-secondary{flex:1;padding:11px;border-radius:12px;font-size:13px;font-weight:600;cursor:pointer;background:transparent;border:1px solid #2A2A2A;color:#777;letter-spacing:.3px;}
+.btn-secondary{flex:1;padding:11px;border-radius:12px;font-size:13px;font-weight:600;cursor:pointer;background:transparent;border:1px solid #2A2A2A;color:#666;}
 .btn-secondary:active{background:#1E1E1E;}
+.replay-btn{width:100%;padding:9px;border-radius:12px;font-size:12px;font-weight:600;cursor:pointer;background:transparent;border:1px solid #E8735A33;color:#E8735A88;margin-bottom:8px;}
+.replay-btn:active{background:#E8735A15;}
+.streak-toast{position:absolute;top:60px;left:50%;transform:translateX(-50%);background:#C9A84C;color:#1A1A1A;padding:8px 18px;border-radius:20px;font-size:12px;font-weight:700;opacity:0;pointer-events:none;transition:opacity .3s;z-index:99;white-space:nowrap;}
+.streak-toast.show{opacity:1;}
 </style>
 </head>
 <body>
-<div class="app">
-  <div class="top-bar">
-    <div class="avatar-wrap">
-      <div class="avatar" id="av">CM</div>
-      <div class="year-badge" id="yrBadge">Jr</div>
+
+<!-- ONBOARDING -->
+<div class="screen active" id="screenOnboard">
+  <div class="onboard">
+    <svg class="ob-logo" viewBox="0 0 80 80" fill="none">
+      <rect width="80" height="80" rx="16" fill="#C9A84C22"/>
+      <text x="40" y="52" text-anchor="middle" font-size="28" font-weight="800" fill="#C9A84C" font-family="-apple-system,sans-serif">GE</text>
+      <rect x="12" y="58" width="56" height="2" rx="1" fill="#C9A84C44"/>
+    </svg>
+    <div class="ob-slides">
+      <div class="ob-slide active" id="ob0">
+        <div class="ob-slide-icon">📱</div>
+        <div class="ob-slide-title">The <span>Pitch Trainer</span></div>
+        <div class="ob-slide-body">Practice your Greek Empire pitch against real chapter contacts — before you send a single real text.</div>
+      </div>
+      <div class="ob-slide" id="ob1">
+        <div class="ob-slide-icon">🎯</div>
+        <div class="ob-slide-title">Win the <span>Conversation</span></div>
+        <div class="ob-slide-body">Every contact has a real school, competitor, and personality. Build rapport, handle objections, close the meeting. They'll say yes or no — just like real life.</div>
+      </div>
+      <div class="ob-slide" id="ob2">
+        <div class="ob-slide-icon">🏆</div>
+        <div class="ob-slide-title">Track Your <span>Streak</span></div>
+        <div class="ob-slide-body">Win rate, streaks, daily challenges. The best ambassadors practice before they pitch. This is how you get there.</div>
+      </div>
     </div>
-    <div class="contact-info">
-      <div class="contact-name" id="cName">Loading...</div>
-      <div class="contact-meta" id="cMeta">Generating contact...</div>
+    <div class="ob-dots">
+      <div class="ob-dot active" id="d0"></div>
+      <div class="ob-dot" id="d1"></div>
+      <div class="ob-dot" id="d2"></div>
     </div>
-    <div class="top-right">
-      <div class="online"><div class="online-dot"></div><span style="font-size:9px;color:#4CAF50;">active</span></div>
-      <button class="reroll-btn" onclick="reroll()">new contact ↺</button>
+    <button class="ob-btn" id="obBtn" onclick="obNext()">Get Started</button>
+    <button class="ob-skip" onclick="startApp()">Skip intro</button>
+  </div>
+</div>
+
+<!-- MAIN APP -->
+<div class="screen" id="screenApp">
+  <div class="app" style="height:100dvh;display:flex;flex-direction:column;">
+
+    <div class="top-bar">
+      <div class="avatar-wrap">
+        <div class="avatar" id="av">CM</div>
+        <div class="year-badge" id="yrBadge">Jr</div>
+      </div>
+      <div class="contact-info">
+        <div class="contact-name" id="cName">Loading...</div>
+        <div class="contact-meta" id="cMeta">Generating contact...</div>
+      </div>
+      <div class="top-right">
+        <div class="online"><div class="online-dot"></div><span style="font-size:9px;color:#4CAF50;">active</span></div>
+        <button class="reroll-btn" onclick="reroll()">new ↺</button>
+      </div>
+    </div>
+
+    <div class="stats-bar">
+      <div class="stat-item">
+        <div class="stat-val" id="statWins">0</div>
+        <div class="stat-lbl">Wins</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <div class="stat-val" id="statRate">—</div>
+        <div class="stat-lbl">Win Rate</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <div class="stat-val"><span class="streak-fire">🔥</span><span id="statStreak">0</span></div>
+        <div class="stat-lbl">Streak</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <div id="dailyBadge" class="daily-badge">Daily ★</div>
+      </div>
+    </div>
+
+    <div class="diff-bar">
+      <span class="diff-label">Level</span>
+      <button class="diff-chip easy active" onclick="setDiff('easy',this)">Easy</button>
+      <button class="diff-chip medium" onclick="setDiff('medium',this)">Medium</button>
+      <button class="diff-chip hard" onclick="setDiff('hard',this)">Hard</button>
+      <button class="daily-chip" id="dailyBtn" onclick="loadDaily()">⭐ Daily</button>
+    </div>
+
+    <div class="scenario-bar" id="scenarioBar"></div>
+
+    <div class="persona-tag">
+      <div class="persona-pill" id="personaPill">Loading</div>
+      <div class="persona-pill" id="yearPill" style="background:#33333355;color:#888;border:1px solid #33333388;margin-left:4px;font-size:9px;padding:2px 8px;border-radius:10px;">Year</div>
+      <div class="variant-label" id="varLabel">—</div>
+    </div>
+
+    <div class="messages" id="msgs">
+      <div class="typing-row" id="typing">
+        <div class="typing-bubble"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+      </div>
+    </div>
+
+    <div class="coach-bar">
+      <span class="coach-label">Coach</span>
+      <span class="coach-text" id="coachTxt">Loading...</span>
+    </div>
+
+    <div class="hint-row">
+      <button class="hint-pill" onclick="hint('hey its [name] i rep greek empire — rush coming up?')">Rush opener</button>
+      <button class="hint-pill" onclick="hint('what do you use for shirts rn?')">Qualify</button>
+      <button class="hint-pill" onclick="hint('we\'re not just another vendor — greek empire is the brand for greek life')">Culture angle</button>
+      <button class="hint-pill" onclick="hint('i can get a quote to you same day, what\'s your timeline?')">Quote push</button>
+      <button class="hint-pill" onclick="hint('who else is part of this decision?')">Decision maker</button>
+    </div>
+
+    <div class="input-row">
+      <textarea class="msg-input" id="inp" placeholder="Type your message..." rows="1" onkeydown="onKey(event)" oninput="resize(this)"></textarea>
+      <button class="send-btn" id="sendBtn" onclick="send()" aria-label="Send">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+      </button>
     </div>
   </div>
 
-  <div class="scenario-bar" id="scenarioBar"></div>
+  <div class="streak-toast" id="streakToast">🔥 3 in a row!</div>
 
-  <div class="persona-tag">
-    <div class="persona-pill" id="personaPill">Loading</div>
-    <div class="persona-pill" id="yearPill" style="background:#33333355;color:#888;border:1px solid #33333388;margin-left:4px;font-size:9px;padding:2px 8px;border-radius:10px;">Year</div>
-    <div class="variant-label" id="varLabel">—</div>
-  </div>
-
-  <div class="messages" id="msgs">
-    <div class="typing-row" id="typing">
-      <div class="typing-bubble"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
-    </div>
-  </div>
-
-  <div class="coach-bar">
-    <span class="coach-label">Coach</span>
-    <span class="coach-text" id="coachTxt">Loading your contact...</span>
-  </div>
-
-  <div class="hint-row">
-    <button class="hint-pill" onclick="hint('hey its [name] i rep greek empire — rush coming up?')">Rush opener</button>
-    <button class="hint-pill" onclick="hint('what do you use for shirts rn?')">Qualify</button>
-    <button class="hint-pill" onclick="hint('we\'re not just another vendor — greek empire is the brand for greek life')">Culture angle</button>
-    <button class="hint-pill" onclick="hint('i can get a quote to you same day, what\'s your timeline?')">Quote push</button>
-    <button class="hint-pill" onclick="hint('who else is part of this decision?')">Decision maker</button>
-  </div>
-
-  <div class="input-row">
-    <textarea class="msg-input" id="inp" placeholder="Type your message..." rows="1" onkeydown="onKey(event)" oninput="resize(this)"></textarea>
-    <button class="send-btn" id="sendBtn" onclick="send()" aria-label="Send">
-      <svg class="send-icon" viewBox="0 0 24 24"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
-    </button>
-  </div>
-
-  <!-- Result overlay -->
   <div class="result-overlay" id="resultOverlay">
     <canvas class="confetti-canvas" id="confettiCanvas"></canvas>
     <div class="result-card">
@@ -164,52 +289,60 @@ html,body{height:100%;background:#1A1A1A;font-family:-apple-system,BlinkMacSyste
       <div class="result-divider"></div>
       <div class="result-body">
         <div class="result-section">
-          <div class="result-section-label" id="goodLabel" style="color:#50C878;">What worked</div>
+          <div class="result-section-label" style="color:#50C878;">What worked</div>
           <div class="result-section-text" id="goodText">Analyzing...</div>
         </div>
         <div class="result-section">
-          <div class="result-section-label" id="badLabel" style="color:#E8735A;">What to fix</div>
+          <div class="result-section-label" style="color:#E8735A;">What to fix</div>
           <div class="result-section-text" id="badText">...</div>
         </div>
         <div class="result-section">
           <div class="result-section-label" style="color:#C9A84C;">Next time</div>
           <div class="result-section-text" id="nextText">...</div>
         </div>
+        <div id="followupSection" style="display:none;">
+          <div class="result-section-label" style="color:#C9A84C;margin-bottom:6px;">Send this follow-up now ↓</div>
+          <div class="followup-box">
+            <button class="followup-copy" onclick="copyFollowup()">Copy</button>
+            <div class="followup-text" id="followupText">Generating...</div>
+          </div>
+        </div>
       </div>
       <div class="result-actions">
         <button class="btn-primary" onclick="reroll()">Try Again</button>
         <button class="btn-secondary" onclick="nextScenario()">Next Scenario</button>
+      </div>
+      <div style="padding:0 20px 16px;">
+        <button class="replay-btn" id="replayBtn" onclick="showReplay()" style="display:none;">↩ Replay — see where you lost them</button>
       </div>
     </div>
   </div>
 </div>
 
 <script>
-const API = '/api/chat';
+const API='/api/chat';
 
+// DATA
 const NAMES_M=['Chase','Tyler','Jake','Connor','Brandon','Matt','Ryan','Zach','Austin','Derek','Will','Logan','Hunter','Tanner','Cole','Blake','Cody','Garrett','Dylan','Brett','Spencer','Griffin','Parker','Reid','Mason','Carter','Landon','Brody','Colton','Nate'];
 const NAMES_F=['Ashley','Mia','Sarah','Emma','Olivia','Madison','Lauren','Kayla','Taylor','Brooke','Shelby','Morgan','Paige','Haley','Brittany','Kelsey','Courtney','Lindsey','Katelyn','Jordan','Alexis','Caitlin','Savannah','Peyton','Riley','Avery','Hailey','Tori','Abby','Lexi'];
 const LAST=['Williams','Johnson','Smith','Davis','Miller','Wilson','Moore','Taylor','Anderson','Thomas','Jackson','White','Harris','Martin','Thompson','Garcia','Martinez','Robinson','Clark','Rodriguez','Lewis','Lee','Walker','Hall','Allen','Young','Hernandez','King','Wright','Lopez'];
 const SCHOOLS=[
-  {name:'UNC Chapel Hill',conf:'ACC',region:'Southeast'},{name:'University of Virginia',conf:'ACC',region:'Southeast'},
-  {name:'NC State',conf:'ACC',region:'Southeast'},{name:'Duke University',conf:'ACC',region:'Southeast'},
-  {name:'Wake Forest',conf:'ACC',region:'Southeast'},{name:'Clemson University',conf:'ACC',region:'Southeast'},
-  {name:'Florida State',conf:'ACC',region:'Southeast'},{name:'University of Miami',conf:'ACC',region:'Southeast'},
-  {name:'Penn State',conf:'Big Ten',region:'Northeast'},{name:'University of Michigan',conf:'Big Ten',region:'Midwest'},
-  {name:'Ohio State',conf:'Big Ten',region:'Midwest'},{name:'Indiana University',conf:'Big Ten',region:'Midwest'},
-  {name:'University of Maryland',conf:'Big Ten',region:'Mid-Atlantic'},{name:'Northwestern University',conf:'Big Ten',region:'Midwest'},
-  {name:'University of Georgia',conf:'SEC',region:'Southeast'},{name:'University of Florida',conf:'SEC',region:'Southeast'},
-  {name:'Auburn University',conf:'SEC',region:'Southeast'},{name:'University of Alabama',conf:'SEC',region:'Southeast'},
-  {name:'Ole Miss',conf:'SEC',region:'Southeast'},{name:'Vanderbilt University',conf:'SEC',region:'Southeast'},
-  {name:'University of Tennessee',conf:'SEC',region:'Southeast'},{name:'LSU',conf:'SEC',region:'Southeast'},
-  {name:'Georgetown University',conf:'Independent',region:'DC'},{name:'George Washington University',conf:'Independent',region:'DC'},
-  {name:'Boston University',conf:'Patriot',region:'Northeast'},{name:'Northeastern University',conf:'CAA',region:'Northeast'},
-  {name:'Boston College',conf:'ACC',region:'Northeast'},{name:'University of Connecticut',conf:'Big East',region:'Northeast'},
-  {name:'Syracuse University',conf:'ACC',region:'Northeast'},{name:'Villanova University',conf:'Big East',region:'Northeast'},
-  {name:'University of Delaware',conf:'CAA',region:'Mid-Atlantic'},{name:'James Madison University',conf:'Sun Belt',region:'Mid-Atlantic'},
-  {name:'Virginia Tech',conf:'ACC',region:'Mid-Atlantic'},{name:'University of Richmond',conf:'Atlantic 10',region:'Mid-Atlantic'},
-  {name:'Lehigh University',conf:'Patriot',region:'Northeast'},{name:'Bucknell University',conf:'Patriot',region:'Northeast'},
-  {name:'Rutgers University',conf:'Big Ten',region:'Northeast'},{name:'University of Vermont',conf:'America East',region:'Northeast'},
+  {name:'UNC Chapel Hill',conf:'ACC'},{name:'University of Virginia',conf:'ACC'},{name:'NC State',conf:'ACC'},
+  {name:'Duke University',conf:'ACC'},{name:'Wake Forest',conf:'ACC'},{name:'Clemson University',conf:'ACC'},
+  {name:'Florida State',conf:'ACC'},{name:'University of Miami',conf:'ACC'},{name:'Boston College',conf:'ACC'},
+  {name:'Virginia Tech',conf:'ACC'},{name:'Syracuse University',conf:'ACC'},
+  {name:'Penn State',conf:'Big Ten'},{name:'University of Michigan',conf:'Big Ten'},{name:'Ohio State',conf:'Big Ten'},
+  {name:'Indiana University',conf:'Big Ten'},{name:'University of Maryland',conf:'Big Ten'},{name:'Northwestern',conf:'Big Ten'},
+  {name:'Rutgers University',conf:'Big Ten'},{name:'Purdue University',conf:'Big Ten'},
+  {name:'University of Georgia',conf:'SEC'},{name:'University of Florida',conf:'SEC'},{name:'Auburn University',conf:'SEC'},
+  {name:'University of Alabama',conf:'SEC'},{name:'Ole Miss',conf:'SEC'},{name:'Vanderbilt',conf:'SEC'},
+  {name:'University of Tennessee',conf:'SEC'},{name:'LSU',conf:'SEC'},{name:'University of Kentucky',conf:'SEC'},
+  {name:'Georgetown University',conf:'DC'},{name:'George Washington University',conf:'DC'},{name:'American University',conf:'DC'},
+  {name:'Boston University',conf:'Northeast'},{name:'Northeastern University',conf:'Northeast'},
+  {name:'University of Connecticut',conf:'Northeast'},{name:'Villanova University',conf:'Northeast'},
+  {name:'University of Delaware',conf:'Mid-Atlantic'},{name:'James Madison University',conf:'Mid-Atlantic'},
+  {name:'University of Richmond',conf:'Mid-Atlantic'},{name:'Lehigh University',conf:'Mid-Atlantic'},
+  {name:'Bucknell University',conf:'Mid-Atlantic'},{name:'University of Vermont',conf:'Northeast'},
 ];
 const ORGS_FRAT=['Sigma Chi','Pike','Beta Theta Pi','Phi Delt','Kappa Alpha','Sigma Nu','Theta Chi','Lambda Chi','Phi Kappa Psi','Delta Tau Delta','Sigma Alpha Epsilon','Kappa Sig','ATO','Sigma Phi Epsilon','Phi Tau'];
 const ORGS_SOR=['Kappa Delta','Chi Omega','Tri Delta','Alpha Chi Omega','Kappa Kappa Gamma','Pi Beta Phi','Alpha Phi','Delta Gamma','Zeta Tau Alpha','Phi Mu','Alpha Delta Pi','Gamma Phi Beta','Kappa Alpha Theta','Delta Zeta'];
@@ -217,12 +350,12 @@ const ROLES_FRAT=['Rush Chair','Merch Chair','President','VP','Treasurer','Socia
 const ROLES_SOR=['VP Merch','Recruitment Chair','President','Events Chair','Philanthropy Chair','Social Chair'];
 const YEARS=[{label:'Freshman',short:'Fr',num:1},{label:'Sophomore',short:'So',num:2},{label:'Junior',short:'Jr',num:3},{label:'Senior',short:'Sr',num:4}];
 const COMPETITORS=[
-  {name:'Fresh Prints',angle:'has a student rep on campus they know personally',weak:'vendor with a face, not a culture brand'},
+  {name:'Fresh Prints',angle:'has a student rep they know personally',weak:'vendor with a face, not a culture brand'},
   {name:'Something Greek',angle:'likes their officially licensed designs',weak:'catalog site, zero identity'},
   {name:'Metro Greek',angle:'uses their huge design gallery',weak:'design shop only, no brand'},
   {name:'Greek Gear',angle:'gets cheap bulk pricing with promo codes',weak:'cheap and generic'},
-  {name:'Hang Loose Hut',angle:'loves their trendy social media aesthetic',weak:'trendy but forgettable'},
-  {name:'GreekU',angle:'uses them for sorority-specific licensed gear',weak:'purely transactional'},
+  {name:'Hang Loose Hut',angle:'loves their trendy aesthetic',weak:'trendy but forgettable'},
+  {name:'GreekU',angle:'uses them for sorority licensed gear',weak:'purely transactional'},
 ];
 const AVATAR_COLORS=[
   {bg:'#C9A84C22',border:'#C9A84C55',text:'#C9A84C'},{bg:'#4A90D922',border:'#4A90D955',text:'#4A90D9'},
@@ -236,6 +369,9 @@ const SCENARIOS=[
   {id:3,label:'Warm Lead',pill:'Open',pillColor:'#50C878',pillBg:'#50C87815',pillBorder:'#50C87833'},
   {id:4,label:'New to Role',pill:'New Chair',pillColor:'#7B68EE',pillBg:'#7B68EE15',pillBorder:'#7B68EE33'},
   {id:5,label:'Aesthetic Loyal',pill:'Brand Snob',pillColor:'#FF69B4',pillBg:'#FF69B415',pillBorder:'#FF69B433'},
+  {id:6,label:'Philanthropy',pill:'Event Need',pillColor:'#50C878',pillBg:'#50C87815',pillBorder:'#50C87833'},
+  {id:7,label:'Alumni Budget',pill:'Alumni',pillColor:'#C9A84C',pillBg:'#C9A84C15',pillBorder:'#C9A84C33'},
+  {id:8,label:'IFC Rep',pill:'Multi-Chapter',pillColor:'#7B68EE',pillBg:'#7B68EE15',pillBorder:'#7B68EE33'},
 ];
 const VARIANTS=[
   ['Skeptical','Distracted','Low-key Open','Just Annoyed'],
@@ -244,28 +380,98 @@ const VARIANTS=[
   ['Actually Interested','Asking Questions','Ready to Order','Needs Convincing'],
   ['Clueless but Eager','Overwhelmed','Asking for Guidance','Wants to Impress'],
   ['Very Particular','Design Obsessed','Trend Chaser','Picky'],
+  ['Event Urgent','Tight Timeline','Needs Ideas','Just Browsing'],
+  ['Controls the Purse','Old School','Skeptical of New','Actually Nostalgic'],
+  ['Gatekeeping','Friendly but Busy','Willing to Refer','Needs Convincing'],
 ];
 const YEAR_VOICES={
-  1:'You are a freshman — new to this role, easily impressed, ask basic questions.',
+  1:'You are a freshman — new to this role, easily impressed, ask basic questions, sometimes unsure.',
   2:'You are a sophomore — one year experience, somewhat confident, sometimes defer to older members.',
   3:'You are a junior — experienced, opinionated, been through rush before, push back confidently.',
-  4:'You are a senior — seen everything, low patience, nostalgic, reference it being your last year.',
+  4:'You are a senior — seen everything, low patience, nostalgic, reference it being your last year a lot.',
 };
 const SCHOOL_EVENTS={
   'ACC':'ACC rivalries, football season, Greek Week in spring, formal season, bid day',
   'SEC':'SEC football Saturdays, tailgates, bid day in fall, formals in spring, philanthropy week',
   'Big Ten':'Big Ten football, homecoming week, fall rush, spring formals',
-  'Northeast':'house parties, fall recruitment, spring formals, smaller campus feel',
-  'DC':'DC networking culture, tight-knit Greek scene, spring formals',
-  'Independent':'campus traditions, strong chapter identity, house events',
+  'Northeast':'house parties, fall recruitment, spring formals',
+  'DC':'DC networking culture, tight-knit Greek scene, spring formals, political connections',
   'Mid-Atlantic':'campus rivalries, Greek Week, formals, philanthropy events',
-  'Midwest':'Big Ten football, Greek Week, formals, fall rush',
+};
+const DIFF_SETTINGS={
+  easy:{foldSpeed:3,warmthBonus:2,label:'Easy'},
+  medium:{foldSpeed:5,warmthBonus:0,label:'Medium'},
+  hard:{foldSpeed:8,warmthBonus:-2,label:'Hard'},
 };
 
-let state={scenario:0,contact:null,history:[],ended:false};
+// STATE
+let state={scenario:0,contact:null,history:[],ended:false,difficulty:'medium',dailyMode:false};
+let stats={wins:0,losses:0,streak:0,bestStreak:0,played:0};
 let confettiParticles=[];
 let confettiFrame=null;
+let obSlide=0;
+let replayHistory=[];
 
+// LOAD STATS
+try{const s=localStorage.getItem('ge_stats');if(s)stats=JSON.parse(s);}catch(e){}
+function saveStats(){try{localStorage.setItem('ge_stats',JSON.stringify(stats));}catch(e){}}
+
+// ONBOARDING
+const seen=localStorage.getItem('ge_seen');
+if(seen){startApp();}
+
+function obNext(){
+  obSlide++;
+  if(obSlide>=3){startApp();return;}
+  document.querySelectorAll('.ob-slide').forEach((s,i)=>s.classList.toggle('active',i===obSlide));
+  document.querySelectorAll('.ob-dot').forEach((d,i)=>d.classList.toggle('active',i===obSlide));
+  if(obSlide===2)document.getElementById('obBtn').textContent='Start Training';
+}
+
+function startApp(){
+  localStorage.setItem('ge_seen','1');
+  document.getElementById('screenOnboard').classList.remove('active');
+  document.getElementById('screenApp').classList.add('active');
+  initScenarioBar();
+  updateStats();
+  reroll();
+}
+
+function updateStats(){
+  document.getElementById('statWins').textContent=stats.wins;
+  const rate=stats.played>0?Math.round((stats.wins/stats.played)*100)+'%':'—';
+  document.getElementById('statRate').textContent=rate;
+  document.getElementById('statStreak').textContent=stats.streak;
+  const daily=isDailyDone();
+  const db=document.getElementById('dailyBadge');
+  db.textContent=daily?'Daily ✓':'Daily ★';
+  db.style.background=daily?'#50C87820':'#C9A84C22';
+  db.style.color=daily?'#50C878':'#C9A84C';
+  db.style.borderColor=daily?'#50C87844':'#C9A84C44';
+}
+
+function isDailyDone(){
+  try{const d=localStorage.getItem('ge_daily_date');return d===todayStr();}catch(e){return false;}
+}
+function todayStr(){const d=new Date();return d.toISOString().split('T')[0];}
+function getDailySeed(){return todayStr().replace(/-/g,'')%SCENARIOS.length;}
+
+function loadDaily(){
+  state.dailyMode=true;
+  state.scenario=getDailySeed();
+  document.querySelectorAll('.chip').forEach((c,i)=>c.classList.toggle('active',i===state.scenario));
+  document.getElementById('dailyBtn').classList.add('active');
+  reroll();
+}
+
+// DIFFICULTY
+function setDiff(d,btn){
+  state.difficulty=d;
+  document.querySelectorAll('.diff-chip').forEach(c=>c.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+// UTILS
 function rnd(arr){return arr[Math.floor(Math.random()*arr.length)];}
 function rndInt(min,max){return Math.floor(Math.random()*(max-min+1))+min;}
 function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');}
@@ -274,16 +480,16 @@ function time(){const d=new Date();return(d.getHours()%12||12)+':'+((''+d.getMin
 function buildContact(sid){
   const isFemale=Math.random()>.5;
   const school=rnd(SCHOOLS);
-  const conf=school.conf==='Independent'?school.region:school.conf;
+  const conf=school.conf;
   return{
     firstName:rnd(isFemale?NAMES_F:NAMES_M),
-    lastName:rnd(LAST),
-    school,org:rnd(isFemale?ORGS_SOR:ORGS_FRAT),
+    lastName:rnd(LAST),school,
+    org:rnd(isFemale?ORGS_SOR:ORGS_FRAT),
     role:rnd(isFemale?ROLES_SOR:ROLES_FRAT),
     year:rnd(YEARS),competitor:rnd(COMPETITORS),
     variant:VARIANTS[sid][rndInt(0,VARIANTS[sid].length-1)],
     colorIdx:rndInt(0,AVATAR_COLORS.length-1),
-    conf,events:SCHOOL_EVENTS[school.conf]||SCHOOL_EVENTS[school.region]||'campus events, rush, formals',
+    conf,events:SCHOOL_EVENTS[conf]||'campus events, rush, formals',
     isFemale,scenarioId:sid
   };
 }
@@ -291,33 +497,41 @@ function buildContact(sid){
 function getOpening(c,sid){
   const o={
     0:[`yeah who's this`,`we already use ${c.competitor.name} tbh`,`hey we're good on apparel rn`,`idk we have someone we use`],
-    1:[`how much are your shirts`,`what's the pricing like`,`we're on a tight budget`,`what's your min order and price`],
-    2:[`hey who is this, kinda busy`,`in the middle of something whats up`,`make it quick`,`yeah what's up`],
-    3:[`omg hey we actually need shirts soon`,`yo perfect timing we're looking`,`hey what do you do exactly`,`we've been looking around`],
-    4:[`hey i just got this role and have no idea lol`,`hi i'm new to being merch chair`,`ok so i genuinely have no idea what i'm doing`,`yo what does ordering even look like`],
-    5:[`we're pretty particular about our aesthetic tbh`,`idk we're very specific about what we like`,`depends — what's your vibe`,`our chapter is really picky`],
+    1:[`how much are your shirts`,`what's the pricing`,`we're on a tight budget`,`what's min order and price`],
+    2:[`hey who is this, kinda busy`,`in the middle of something whats up`,`make it quick`,`yeah what`],
+    3:[`omg hey we actually need shirts soon`,`yo perfect timing we're looking`,`hey what do you do`,`we've been looking around`],
+    4:[`hey i just got this role lol no idea what i'm doing`,`hi i'm new to merch chair`,`what does ordering even look like`,`ok so i have no idea`],
+    5:[`we're pretty particular about our aesthetic`,`we're very specific about what we like`,`depends what's your vibe`,`our chapter is really picky`],
+    6:[`hey we have a philanthropy event in 3 weeks and need shirts fast`,`do you do rush orders`,`we need event shirts asap`,`our philanthropy is coming up we need shirts`],
+    7:[`hi i'm the alumni advisor who approves all chapter purchases`,`yeah i control the chapter budget, what do you want`,`i've been doing this for 20 years, convince me`,`what makes you different from every other vendor`],
+    8:[`hey i'm the IFC president, what do you do`,`i rep the IFC so i could potentially refer you to multiple chapters`,`we have 18 fraternities on this campus, tell me about greek empire`,`i coordinate between all the chapters, what's your pitch`],
   };
-  return rnd(o[sid]);
+  return rnd(o[sid]||o[0]);
 }
 
 function buildSystemPrompt(c,sid){
   const sc=SCENARIOS[sid];
+  const diff=DIFF_SETTINGS[state.difficulty];
+  const yearVoice=YEAR_VOICES[c.year.num];
   const inst={
-    0:`You use ${c.competitor.name} — ${c.competitor.angle}. Objections: "we already use ${c.competitor.name}", "why switch", "our vendor works fine". Warm up ONLY if they build genuine rapport AND lead with culture/identity over product. After 4-8 messages: if real rapport was built and objection handled well, end with "yeah ok send me what you've got, we can chat" and add [WIN] at the very end. If not, end with "yeah we're good with ${c.competitor.name}, appreciate it tho" and add [LOSS].`,
-    1:`Only care about price. Ask about cost constantly. After 4-8 messages: if they explained VALUE beyond just price matching, end "ok fine send me a quote" [WIN]. If they couldn't justify cost, end "gonna stick with what we have, it's cheaper" [LOSS].`,
-    2:`Genuinely swamped. Very short replies. After 4-6 messages: if they created urgency or said something genuinely interesting, end "ok fine what's your number i'll hit you later" [WIN]. If they kept pitching without reading the room, end "yeah i gotta go good luck" [LOSS].`,
-    3:`Warm and looking. Ask good questions about timeline, process, what other chapters ordered. After 4-8 messages: if they're knowledgeable and you've connected, end "ok yes let's do it — send me stuff" [WIN]. If they fumbled or felt generic, end "hmm maybe i'll look around more first" [LOSS].`,
-    4:`New to the role, need guidance. After 4-8 messages: if they explained the process clearly and made you feel confident, end "ok this actually makes sense, let's do it" [WIN]. If confusing or pushy, end "i think i need to ask around more first" [LOSS].`,
-    5:`Very particular aesthetically. After 4-8 messages: if they sold Greek Empire's brand IDENTITY compellingly, end "ok i'm actually into this, send me more" [WIN]. If they talked product specs or were generic, end "yeah it's not really the vibe we're going for" [LOSS].`,
+    0:`You use ${c.competitor.name} — ${c.competitor.angle}. Difficulty: ${diff.label}. Push back: "we already use ${c.competitor.name}", "why switch", "our vendor works fine". After ${diff.foldSpeed}-${diff.foldSpeed+3} messages: genuine rapport + culture angle handled = "yeah ok send me what you've got" [WIN]. Otherwise = "yeah we're good with ${c.competitor.name}, appreciate it" [LOSS].`,
+    1:`Only care about price. Difficulty: ${diff.label}. Ask about cost constantly. After ${diff.foldSpeed} messages: explained VALUE beyond price = "ok fine send me a quote" [WIN]. Couldn't justify cost = "gonna stick with what we have" [LOSS].`,
+    2:`Genuinely swamped. Difficulty: ${diff.label}. Very short replies. After ${diff.foldSpeed-1} messages: created real urgency = "ok what's your number i'll hit you later" [WIN]. Kept pitching without reading room = "yeah i gotta go" [LOSS].`,
+    3:`Warm and looking. Difficulty: ${diff.label}. Ask good questions. After ${diff.foldSpeed} messages: knowledgeable and connected = "ok yes let's do it" [WIN]. Fumbled = "hmm maybe i'll look around more" [LOSS].`,
+    4:`New to role, need guidance. Difficulty: ${diff.label}. After ${diff.foldSpeed} messages: explained process clearly = "ok this makes sense let's do it" [WIN]. Confusing or pushy = "i think i need to ask around more" [LOSS].`,
+    5:`Very particular aesthetically. Difficulty: ${diff.label}. After ${diff.foldSpeed} messages: sold Greek Empire brand identity compellingly = "ok i'm actually into this" [WIN]. Generic = "yeah it's not the vibe we're going for" [LOSS].`,
+    6:`Philanthropy chair, needs shirts in 3 weeks, tight timeline. Difficulty: ${diff.label}. After ${diff.foldSpeed-1} messages: confident on turnaround AND felt like a real person = "ok let's do it, what do you need from me" [WIN]. Uncertain on timeline or generic = "i think i'll just go with someone we've used before" [LOSS].`,
+    7:`Alumni advisor who controls the budget. Difficulty: ${diff.label}. Skeptical, old-school, seen every vendor pitch. After ${diff.foldSpeed+1} messages: gave a compelling brand identity story and earned respect = "alright you've got my attention, send me a proposal" [WIN]. Sounded like just another vendor = "appreciate the time, we'll stick with what we know" [LOSS].`,
+    8:`IFC president who can refer to 18 chapters. Difficulty: ${diff.label}. Evaluating Greek Empire as a campus-wide brand partner. After ${diff.foldSpeed} messages: impressed by brand vision and culture story = "i'd be open to introducing you to some chapter presidents" [WIN]. Felt like a vendor = "i'll keep you in mind but probably not" [LOSS].`,
   };
-  return`You are ${c.firstName} ${c.lastName}, ${c.year.label} at ${c.school.name}. ${c.role} for ${c.org}. ${c.conf} school. ${YEAR_VOICES[c.year.num]}
+  return`You are ${c.firstName} ${c.lastName}, ${c.year.label} at ${c.school.name}. ${c.role} for ${c.org}. ${c.conf} school. ${yearVoice}
 
 Scenario: ${sc.label}. Variant: ${c.variant}.
 ${inst[sid]}
 
-Reference ${c.school.name} Greek life naturally when relevant: ${c.events}.
+Reference ${c.school.name} Greek life naturally: ${c.events}.
 
-RULES: Reply like a real college student over text. Lowercase, casual. Max 2 sentences per reply. Stay completely in character. Respond to how genuine and personable the ambassador feels — not just what they say but HOW they say it. If they feel like a real person, warm up gradually. If they feel like a sales script, stay cold.`;
+RULES: Real college student texts. Lowercase. Max 2 sentences. Stay in character. Respond to how genuine the ambassador feels — rapport matters as much as what they say. If they feel like a real person, warm up. If they feel like a script, stay cold.`;
 }
 
 function initScenarioBar(){
@@ -325,8 +539,9 @@ function initScenarioBar(){
 }
 
 function switchScenario(idx){
-  state.scenario=idx;
+  state.scenario=idx;state.dailyMode=false;
   document.querySelectorAll('.chip').forEach((c,i)=>c.classList.toggle('active',i===idx));
+  document.getElementById('dailyBtn').classList.remove('active');
   reroll();
 }
 
@@ -335,16 +550,15 @@ function nextScenario(){switchScenario((state.scenario+1)%SCENARIOS.length);}
 function reroll(){
   if(confettiFrame){cancelAnimationFrame(confettiFrame);confettiFrame=null;}
   document.getElementById('resultOverlay').classList.remove('show');
-  const btn=document.getElementById('sendBtn');
-  btn.disabled=false;
+  document.getElementById('sendBtn').disabled=false;
   document.getElementById('inp').disabled=false;
 
   const c=buildContact(state.scenario);
   state.contact=c;state.history=[];state.ended=false;
+  replayHistory=[];
 
   const color=AVATAR_COLORS[c.colorIdx];
   const sc=SCENARIOS[state.scenario];
-
   const av=document.getElementById('av');
   av.textContent=c.firstName[0]+c.lastName[0];
   av.style.cssText=`width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;border:2px solid;background:${color.bg};border-color:${color.border};color:${color.text};`;
@@ -364,27 +578,31 @@ function reroll(){
 
   const coachLines=[
     `${c.competitor.name} loyal ${c.year.label} at ${c.school.name}. Lead with culture — not product.`,
-    `Pure price objection incoming. Have your value answer ready.`,
+    `Pure price objection. Have your value answer ready.`,
     `${c.year.label} with no time. One line hook or they're gone.`,
     `Warm lead — ${c.year.label} who needs shirts. Close them.`,
     `Brand new ${c.role}, no vendor yet. Guide them through it.`,
     `Aesthetic-focused ${c.year.label}. Sell brand identity, not specs.`,
+    `3-week deadline. Show you can deliver fast AND make it feel special.`,
+    `Alumni controlling the budget. Earn respect first, pitch second.`,
+    `IFC president — 18 chapters on the line. Sell the vision, not just the shirts.`,
   ];
-  document.getElementById('coachTxt').textContent=coachLines[state.scenario];
+  document.getElementById('coachTxt').textContent=coachLines[state.scenario]||coachLines[0];
 }
 
-function hint(txt){
-  document.getElementById('inp').value=txt;
-  document.getElementById('inp').focus();
-  resize(document.getElementById('inp'));
-}
-
+function hint(txt){document.getElementById('inp').value=txt;document.getElementById('inp').focus();resize(document.getElementById('inp'));}
 function onKey(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();send();}}
 function resize(el){el.style.height='auto';el.style.height=Math.min(el.scrollHeight,80)+'px';}
 
-function appendMsg(txt,side){
+function appendMsg(txt,side,highlight){
   const msgs=document.getElementById('msgs');
   const typing=document.getElementById('typing');
+  if(highlight){
+    const h=document.createElement('div');
+    h.className='turning-point'+(highlight==='win'?' win':'');
+    h.textContent=highlight==='win'?'↑ This is where you won them':'↑ This is where you lost them';
+    msgs.insertBefore(h,typing);
+  }
   const d=document.createElement('div');
   d.className='msg '+side;
   d.innerHTML=`<div class="bubble">${esc(txt)}</div><div class="msg-time">${time()}</div>`;
@@ -392,27 +610,49 @@ function appendMsg(txt,side){
   msgs.scrollTop=99999;
 }
 
+function playWinSound(){
+  try{
+    const ctx=new(window.AudioContext||window.webkitAudioContext)();
+    const notes=[523,659,784,1047];
+    notes.forEach((freq,i)=>{
+      const o=ctx.createOscillator();const g=ctx.createGain();
+      o.connect(g);g.connect(ctx.destination);
+      o.frequency.value=freq;o.type='sine';
+      g.gain.setValueAtTime(0,ctx.currentTime+i*0.1);
+      g.gain.linearRampToValueAtTime(0.15,ctx.currentTime+i*0.1+0.02);
+      g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+i*0.1+0.3);
+      o.start(ctx.currentTime+i*0.1);o.stop(ctx.currentTime+i*0.1+0.3);
+    });
+  }catch(e){}
+}
+
+function showStreakToast(n){
+  const t=document.getElementById('streakToast');
+  t.textContent=`🔥 ${n} in a row!`;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2500);
+}
+
 function launchConfetti(){
   const canvas=document.getElementById('confettiCanvas');
   const ctx=canvas.getContext('2d');
-  canvas.width=canvas.offsetWidth||340;
-  canvas.height=canvas.offsetHeight||600;
+  canvas.width=canvas.offsetWidth||340;canvas.height=canvas.offsetHeight||600;
   const colors=['#C9A84C','#F0C040','#8B6914','#FFD700','#FFF8DC','#E8D5A3','#FFFFFF'];
-  confettiParticles=Array.from({length:140},()=>({
+  confettiParticles=Array.from({length:150},()=>({
     x:Math.random()*canvas.width,y:-10,
-    vx:(Math.random()-.5)*5,vy:Math.random()*5+2,
+    vx:(Math.random()-.5)*6,vy:Math.random()*6+2,
     color:colors[Math.floor(Math.random()*colors.length)],
-    size:Math.random()*7+3,rotation:Math.random()*360,
-    rotSpeed:(Math.random()-.5)*10,alpha:1
+    size:Math.random()*8+3,rotation:Math.random()*360,
+    rotSpeed:(Math.random()-.5)*12,alpha:1
   }));
   function draw(){
     ctx.clearRect(0,0,canvas.width,canvas.height);
     confettiParticles.forEach(p=>{
       ctx.save();ctx.globalAlpha=p.alpha;ctx.fillStyle=p.color;
       ctx.translate(p.x,p.y);ctx.rotate(p.rotation*Math.PI/180);
-      ctx.fillRect(-p.size/2,-p.size/2,p.size,p.size*0.6);
+      ctx.fillRect(-p.size/2,-p.size/2,p.size,p.size*.6);
       ctx.restore();
-      p.x+=p.vx;p.y+=p.vy;p.rotation+=p.rotSpeed;p.vy+=0.06;p.alpha-=0.007;
+      p.x+=p.vx;p.y+=p.vy;p.rotation+=p.rotSpeed;p.vy+=.07;p.alpha-=.006;
     });
     confettiParticles=confettiParticles.filter(p=>p.alpha>0);
     if(confettiParticles.length>0)confettiFrame=requestAnimationFrame(draw);
@@ -420,14 +660,43 @@ function launchConfetti(){
   draw();
 }
 
+function showReplay(){
+  document.getElementById('resultOverlay').classList.remove('show');
+  const msgs=document.getElementById('msgs');
+  const typing=document.getElementById('typing');
+  msgs.innerHTML='<div class="typing-row" id="typing"><div class="typing-bubble"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div></div>';
+  replayHistory.forEach((m,i)=>{
+    const isLast=i===replayHistory.length-2;
+    appendMsg(m.content,m.role==='user'?'me':'them',isLast&&!state.lastWon?'loss':isLast&&state.lastWon?'win':null);
+  });
+  msgs.scrollTop=99999;
+}
+
+function copyFollowup(){
+  const txt=document.getElementById('followupText').textContent;
+  navigator.clipboard.writeText(txt).catch(()=>{});
+  document.querySelector('.followup-copy').textContent='Copied!';
+  setTimeout(()=>document.querySelector('.followup-copy').textContent='Copy',2000);
+}
+
 async function showResult(won,fullConvo){
   state.ended=true;
+  state.lastWon=won;
   document.getElementById('sendBtn').disabled=true;
   document.getElementById('inp').disabled=true;
 
-  const c=state.contact;
-  const overlay=document.getElementById('resultOverlay');
+  stats.played++;
+  if(won){
+    stats.wins++;stats.streak++;
+    if(stats.streak>stats.bestStreak)stats.bestStreak=stats.streak;
+    if(state.dailyMode){try{localStorage.setItem('ge_daily_date',todayStr());}catch(e){}}
+  }else{
+    stats.losses++;stats.streak=0;
+  }
+  saveStats();updateStats();
+  if(won&&stats.streak>=3)showStreakToast(stats.streak);
 
+  const c=state.contact;
   document.getElementById('resultIcon').textContent=won?'🏆':'📵';
   document.getElementById('resultTitle').textContent=won?'Deal Closed!':'No Deal';
   document.getElementById('resultTitle').style.color=won?'#C9A84C':'#F5F0E8';
@@ -435,34 +704,49 @@ async function showResult(won,fullConvo){
   document.getElementById('resultHeader').className=won?'result-header-win':'result-header-loss';
   document.getElementById('scoreNum').style.color=won?'#C9A84C':'#E8735A';
   document.getElementById('scoreNum').textContent='...';
-  document.getElementById('goodText').textContent='Analyzing your pitch...';
+  document.getElementById('goodText').textContent='Analyzing...';
   document.getElementById('badText').textContent='...';
   document.getElementById('nextText').textContent='...';
+  document.getElementById('followupSection').style.display=won?'block':'none';
+  document.getElementById('replayBtn').style.display=won?'none':'block';
 
-  overlay.classList.add('show');
-  if(won)setTimeout(launchConfetti,200);
+  document.getElementById('resultOverlay').classList.add('show');
+  if(won){launchConfetti();playWinSound();}
 
   try{
-    const res=await fetch(API,{
-      method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({
-        model:'claude-haiku-4-5-20251001',max_tokens:1000,
-        system:`You are a Greek Empire sales coach. Analyze this pitch and return ONLY valid JSON, no markdown, no extra text:\n{"score":7,"good":"what worked in one sentence under 15 words","bad":"what didn't work under 15 words","next":"one actionable tip under 15 words"}\nBe honest, specific, direct.`,
-        messages:[{role:'user',content:`Outcome: ${won?'WIN':'LOSS'}\nContact: ${c.firstName} ${c.lastName}, ${c.year.label}, ${c.school.name}, ${c.role} for ${c.org}\nScenario: ${SCENARIOS[c.scenarioId].label}, Competitor: ${c.competitor.name}\n\nConversation:\n${fullConvo}`}]
-      })
-    });
-    const data=await res.json();
-    let txt=(data.content?.[0]?.text||'{}').replace(/```json|```/g,'').trim();
+    const calls=[
+      fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',max_tokens:1000,
+        system:`Greek Empire sales coach. Return ONLY valid JSON no markdown:\n{"score":7,"good":"what worked under 15 words","bad":"what didn't under 15 words","next":"one tip under 15 words"}\nBe honest and specific.`,
+        messages:[{role:'user',content:`Outcome:${won?'WIN':'LOSS'}\nContact:${c.firstName},${c.year.label},${c.school.name},${c.role}\nScenario:${SCENARIOS[c.scenarioId].label},Competitor:${c.competitor.name}\nDifficulty:${state.difficulty}\n\n${fullConvo}`}]
+      })}),
+    ];
+    if(won){
+      calls.push(fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',max_tokens:1000,
+        system:`Write a short follow-up text message (2-3 sentences) from a Greek Empire ambassador to ${c.firstName} at ${c.org}, ${c.school.name}. They just agreed to connect. Casual, confident, not salesy. Reference Greek Empire as a culture brand. End with a soft CTA like sending the lookbook or scheduling a quick call. No quotes, just the message.`,
+        messages:[{role:'user',content:`Write the follow-up text to send now.`}]
+      })}))
+    }
+    const results=await Promise.all(calls);
+    const scoreData=await results[0].json();
+    let txt=(scoreData.content?.[0]?.text||'{}').replace(/```json|```/g,'').trim();
     const j=JSON.parse(txt);
     document.getElementById('scoreNum').textContent=j.score||'—';
     document.getElementById('goodText').textContent=j.good||'Good effort.';
     document.getElementById('badText').textContent=j.bad||'Keep practicing.';
-    document.getElementById('nextText').textContent=j.next||'Lead with culture next time.';
+    document.getElementById('nextText').textContent=j.next||'Lead with culture.';
+    if(won&&results[1]){
+      const fuData=await results[1].json();
+      const fu=fuData.content?.[0]?.text||'Hey! Great chatting — sending you our lookbook now. Let me know what works for your chapter.';
+      document.getElementById('followupText').textContent=fu;
+    }
   }catch(e){
     document.getElementById('scoreNum').textContent=won?'7':'4';
     document.getElementById('goodText').textContent=won?'You built real rapport.':'You made contact.';
     document.getElementById('badText').textContent=won?'Push harder on the culture angle.':'Didn\'t land the hook.';
     document.getElementById('nextText').textContent='Lead with identity, not product specs.';
+    if(won)document.getElementById('followupText').textContent=`Hey ${c.firstName}! Great connecting — sending you our lookbook now so you can see what Greek Empire has done for other chapters. Let me know what vibes with ${c.org}.`;
   }
 }
 
@@ -474,6 +758,7 @@ async function send(){
   inp.value='';inp.style.height='auto';
   appendMsg(txt,'me');
   state.history.push({role:'user',content:txt});
+  replayHistory.push({role:'user',content:txt});
 
   const typing=document.getElementById('typing');
   typing.classList.add('show');
@@ -485,28 +770,22 @@ async function send(){
 
   try{
     const[botRes,coachRes]=await Promise.all([
-      fetch(API,{
-        method:'POST',headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({
-          model:'claude-haiku-4-5-20251001',max_tokens:1000,
-          system:buildSystemPrompt(c,state.scenario),
-          messages:[{role:'user',content:opening},...state.history]
-        })
-      }),
-      fetch(API,{
-        method:'POST',headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({
-          model:'claude-haiku-4-5-20251001',max_tokens:1000,
-          system:`Greek Empire sales coach. One coaching tip, max 10 words, no quotes. Specific and direct. Examples: "Good — now find their timeline." / "Too salesy. One line. Let them respond." / "Push to a quote — they're warming up."`,
-          messages:[{role:'user',content:`Contact: ${c.firstName}, ${c.year.label}, ${c.school.name}, scenario: ${SCENARIOS[c.scenarioId].label}. Ambassador said: "${txt}". One tip:`}]
-        })
-      })
+      fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',max_tokens:1000,
+        system:buildSystemPrompt(c,state.scenario),
+        messages:[{role:'user',content:opening},...state.history]
+      })}),
+      fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',max_tokens:1000,
+        system:`Greek Empire sales coach. One tip max 10 words, no quotes. Specific. Examples: "Good — find their timeline now." / "Too salesy. One line. Let them respond." / "Push to quote — they're warming."`,
+        messages:[{role:'user',content:`Contact:${c.firstName},${c.year.label},${c.school.name},scenario:${SCENARIOS[c.scenarioId].label},diff:${state.difficulty}. Ambassador:"${txt}". Tip:`}]
+      })}),
     ]);
 
     const botData=await botRes.json();
     const coachData=await coachRes.json();
     let reply=botData.content?.[0]?.text||'yeah idk';
-    const coach=coachData.content?.[0]?.text||'Keep the conversation moving.';
+    const coach=coachData.content?.[0]?.text||'Keep going.';
 
     const won=reply.includes('[WIN]');
     const lost=reply.includes('[LOSS]');
@@ -515,22 +794,19 @@ async function send(){
     typing.classList.remove('show');
     appendMsg(reply,'them');
     state.history.push({role:'assistant',content:reply});
+    replayHistory.push({role:'assistant',content:reply});
     document.getElementById('coachTxt').textContent=coach;
 
     if(won||lost){
       const fullConvo=state.history.map(m=>`${m.role==='user'?'Ambassador':'Contact'}: ${m.content}`).join('\n');
       setTimeout(()=>showResult(won,fullConvo),1400);
     }
-
   }catch(e){
     typing.classList.remove('show');
     appendMsg('bad signal, try again','them');
     document.getElementById('coachTxt').textContent='Connection issue — try again.';
   }
 }
-
-initScenarioBar();
-reroll();
 </script>
 </body>
 </html>
