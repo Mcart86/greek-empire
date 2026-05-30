@@ -589,6 +589,7 @@ function reroll(){
   document.getElementById('varLabel').textContent=`${c.variant} • ${DIFF_SETTINGS[state.difficulty].label}`;
 
   const opening=getOpening(c,state.scenario);
+  state.history.push({role:'assistant',content:opening});
   document.getElementById('msgs').innerHTML=`<div class="msg them"><div class="bubble">${esc(opening)}</div><div class="msg-time">${time()}</div></div><div class="typing-row" id="typing"><div class="typing-bubble"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div></div>`;
 
   const coachLines=[
@@ -768,7 +769,6 @@ async function send(){
   document.getElementById('coachTxt').textContent='...';
 
   const c=state.contact;
-  const opening=document.querySelector('.msg.them .bubble')?.textContent||'';
 
   try{
     const[botRes,coachRes]=await Promise.all([
@@ -776,7 +776,7 @@ async function send(){
         body:JSON.stringify({
           model:'claude-sonnet-4-20250514',max_tokens:1000,
           system:buildSystemPrompt(c,state.scenario,state.difficulty),
-          messages:[{role:'user',content:opening},...state.history]
+          messages:state.history.length>0?state.history:[{role:'user',content:'hey'}]
         })
       }),
       fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},
