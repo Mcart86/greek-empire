@@ -675,7 +675,7 @@ function renderTemplates(){
     html+=`<div class="template-card">
       <div class="template-scenario">${SCENARIOS[parseInt(sid)]?.label||'Scenario'}</div>`;
     tmpls.forEach(t=>{
-      html+=`<div class="template-text" onclick="hint('${t.opener}')" title="Click to add to input">${t.opener}</div>
+      html+=`<div class="template-text" onclick="hint(\`${t.opener.replace(/`/g,'\\`')}\`)" title="Click to add to input">${t.opener}</div>
         <div class="template-tip">💡 ${t.tip}</div>`;
     });
     html+=`</div>`;
