@@ -1131,16 +1131,24 @@ function analyzeConversation(history,contact,scenario){
 async function send(){
   if(state.ended)return;
   const inp=document.getElementById('inp');
+  const sendBtn=document.querySelector('.send-btn');
   const txt=inp.value.trim();
   if(!txt||!state.contact)return;
+  
+  // OPTIMIZATION #1: Disable button + show loading state
   inp.value='';inp.style.height='auto';
+  inp.disabled=true;
+  sendBtn.disabled=true;
+  sendBtn.textContent='Sending...';
+  sendBtn.style.opacity='0.6';
+  
   appendMsg(txt,'me');
   state.history.push({role:'user',content:txt});
 
   const typing=document.getElementById('typing');
   typing.classList.add('show');
   document.getElementById('msgs').scrollTop=99999;
-  document.getElementById('coachTxt').textContent='...';
+  document.getElementById('coachTxt').textContent='Coach thinking...';
 
   const c=state.contact;
 
@@ -1164,13 +1172,17 @@ async function send(){
 
     const botData=await botRes.json();
     const coachData=await coachRes.json();
-    console.log('BOT RESPONSE:', botData);
-    console.log('COACH RESPONSE:', coachData);
     
     if(botData.error){
-      appendMsg(`API Error: ${botData.error.message||JSON.stringify(botData.error)}`, 'them');
-      document.getElementById('coachTxt').textContent='API error — check browser console';
+      appendMsg(`API Error: ${botData.error.message||'Unknown error'}`, 'them');
+      document.getElementById('coachTxt').textContent='Try again';
       typing.classList.remove('show');
+      
+      // Re-enable button on error
+      inp.disabled=false;
+      sendBtn.disabled=false;
+      sendBtn.textContent='Send';
+      sendBtn.style.opacity='1';
       return;
     }
     
@@ -1197,10 +1209,22 @@ async function send(){
       const fullConvo=state.history.map(m=>`${m.role==='user'?'Ambassador':'Contact'}: ${m.content}`).join('\n');
       setTimeout(()=>showResult(won,fullConvo),1400);
     }
+    
+    // OPTIMIZATION #1: Re-enable button
+    inp.disabled=false;
+    sendBtn.disabled=false;
+    sendBtn.textContent='Send';
+    sendBtn.style.opacity='1';
   }catch(e){
     typing.classList.remove('show');
     appendMsg('bad signal, try again','them');
     document.getElementById('coachTxt').textContent='Connection issue — try again.';
+    
+    // OPTIMIZATION #1: Re-enable button on error
+    inp.disabled=false;
+    sendBtn.disabled=false;
+    sendBtn.textContent='Send';
+    sendBtn.style.opacity='1';
   }
 }
 
