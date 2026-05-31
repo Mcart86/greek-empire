@@ -170,21 +170,10 @@ html,body{height:100%;background:#1A1A1A;font-family:-apple-system,BlinkMacSyste
         <div class="ob-title">Welcome to<br><span>Greek Empire</span><br>Pitch Trainer</div>
         <div class="ob-body">The only way to get good at selling is to practice. This is your training ground — real scenarios, real objections, AI-powered contacts that respond like actual chapter members.</div>
       </div>
-      <div class="ob-slide">
-        <div class="ob-icon">💬</div>
-        <div class="ob-title">Train like it's<br><span>a real text</span></div>
-        <div class="ob-body">Every contact is randomized — different school, year, org, competitor loyalty. You never get the same conversation twice. Build rapport, handle objections, close the meeting.</div>
-      </div>
-      <div class="ob-slide">
-        <div class="ob-icon">🏆</div>
-        <div class="ob-title">Win the meeting.<br><span>Close the chapter.</span></div>
-        <div class="ob-body">Lead with culture, not product. Sound like a person, not a vendor. The AI judges your full conversation — score, breakdown, and a ready-to-send follow-up when you win.</div>
-      </div>
+
     </div>
     <div class="ob-dots" id="obDots">
       <div class="ob-dot active"></div>
-      <div class="ob-dot"></div>
-      <div class="ob-dot"></div>
     </div>
     <button class="ob-btn" id="obBtn" onclick="obNext()">Next</button>
     <button class="ob-skip" onclick="startApp()">Skip intro</button>
@@ -590,7 +579,7 @@ function reroll(){
 
   const opening=getOpening(c,state.scenario);
   state.history.push({role:'assistant',content:opening});
-  document.getElementById('msgs').innerHTML=`<div class="msg them"><div class="bubble">${esc(opening)}</div><div class="msg-time">${time()}</div></div><div class="typing-row" id="typing"><div class="typing-bubble"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div></div>`;
+  document.getElementById('msgs').innerHTML=`<div class="typing-row" id="typing" style="display:none;"><div class="typing-bubble"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div></div>`;
 
   const coachLines=[
     `${c.competitor.name} loyal ${c.year.label} at ${c.school.name}. Lead with culture — not product.`,
