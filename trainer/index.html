@@ -519,15 +519,15 @@ function buildSystemPrompt(c,sid,diff){
   const scenarios={
     0:`${c.competitor.name} vendor loyal. ${diffMod}
 PUSHBACK: First 2-3 messages = "we're happy with ${c.competitor.name}", "why would we switch", "don't fix what isn't broken".
-To win: They need to explain WHY ${c.competitor.name} is lacking AND build genuine rapport. You ask questions to test if they really get it.
-Real WIN: After pushback overcome, you say "ok yeah maybe let's try something — send me info". 
+To win: Explain Greek Empire's real difference: college kids like you + custom store + commission + quality. Don't just say "we're better" — say "you make money with us, we handle it faster, quality is legit."
+Real WIN: After pushback overcome, you say "ok yeah maybe let's try something — send me info" or "send me samples". 
 Real LOSS: You end with "nah we're sticking with what we have".`,
     
     1:`Price obsessed. ${diffMod}
 PUSHBACK: Every response = "how much", "what's your min", "our budget is X", "that sounds expensive". Push HARD on cost.
-To win: They explain value without avoiding price. They address your budget constraints specifically. They ask about your volume.
-Real WIN: After multiple cost questions, you say "ok if it's quality + timeline works, send me a quote".
-Real LOSS: You say "sounds too expensive" or they dodge pricing.`,
+To win: They're not just cheap — they're smart. Address price BUT sell value: quality product, affordable (not cheap), + here's the real move: "you make commission on every order, so it pays for itself." Money talks.
+Real WIN: After addressing cost AND showing commission upside, you say "ok send me a quote" or "send me prices/info".
+Real LOSS: You dodge pricing or they say "sounds too expensive".`,
     
     2:`Legitimately swamped. ${diffMod}
 PUSHBACK: Keep saying you're busy. Don't engage deeply at first.
@@ -548,10 +548,10 @@ Real WIN: "ok this makes sense, let's move forward" + ask next steps.
 Real LOSS: They're confusing or pushy. You say "let me ask around first".`,
     
     5:`Aesthetic perfectionist. ${diffMod}
-PUSHBACK: First message = skeptical. "what's your vibe?", "our chapter is very specific", "doesn't sound right". Push back on design.
-To win: They GET Greek Empire brand identity (culture-first, legacy, quality) and you FEEL their knowledge.
-Real WIN: Excited. "ok i'm into this, send me mockups/ideas".
-Real LOSS: "yeah not really our vibe".`,
+PUSHBACK: First message = skeptical. "what's your vibe?", "our chapter is very specific", "doesn't sound right". Push back on design and brand fit.
+To win: They care about quality + design. You: "We're college kids designing for college kids. New designs constantly. Quality fabric, not cheap. We get the vibe because we LIVE it." Show them you understand Greek life culture, not just apparel.
+Real WIN: Excited. "ok i'm into this, send me mockups/samples" or "that's our style, let's talk."
+Real LOSS: "yeah not really our vibe" or they keep pushing back.`,
     
     6:`Philanthropy event ASAP. ${diffMod}
 PUSHBACK: "we need this in 3 weeks", "can you actually turn this around?", "what if there's an issue?".
@@ -817,28 +817,30 @@ function analyzeConversation(history,contact,scenario){
     isWin=(hasStrongCommitment && hasRapport && totalMsgCount>=8);
   }
   
-  // Smart coach feedback that references their words
+  // Smart coach feedback that references their words and Greek Empire differentiators
   let coachFeedback='';
   if(userMsgs.length===1){
-    coachFeedback='Your opener fell short. Ask them a question, reference THEIR world — not just your pitch.';
+    coachFeedback='Your opener fell short. Lead with commission/money OR common interests — that\'s what gets their attention.';
   } else if(totalMsgCount<6){
-    coachFeedback='Still early. They\'re testing you. Answer their objection directly, then ask about THEM.';
+    coachFeedback='Still early. Have you mentioned commission yet? That\'s the hook. Or find common ground first.';
   } else if(isWin){
     const theyLiked=lastBotMsg.includes('like')||lastBotMsg.includes('into');
     if(theyLiked){
-      coachFeedback=`Excellent: When you said "${userKey.substring(0,25).trim()}...", they warmed up. You earned this.`;
+      coachFeedback=`Excellent: When you said "${userKey.substring(0,25).trim()}...", they warmed up. Close with "send me your number" and follow up with the custom store link + commission details.`;
     } else {
-      coachFeedback=`You got the commitment. Follow up within 24h with personalized mockups/pricing for their specific needs.`;
+      coachFeedback=`You got the commitment. Next: personalized mockups + commission breakdown + show them how their chapter keeps their own store.`;
     }
   } else if(totalMsgCount>=8 && !hasStrongCommitment){
-    coachFeedback='8+ messages and no commitment. You\'re not addressing their ACTUAL objection. What are they really stuck on?';
+    coachFeedback='8+ messages, no bite. Did you mention commission? That\'s usually the closer. Or find what they actually care about — timeline? price? new designs?';
   } else {
     if(userKey.includes('how much')||userKey.includes('price')||userKey.includes('cost')){
-      coachFeedback='They asked about price again. Before you quote, ask THEIR questions first: timeline? volume? what matters most to you?';
+      coachFeedback='They care about price. You: "Quality at an affordable price — way better than you\'re probably paying now. Plus you get commission on every order." That moves them.';
+    } else if(userKey.includes('metro')||userKey.includes('fresh')||userKey.includes('already')){
+      coachFeedback='They\'re comparing to competitors. Pivot: "We\'re college kids like you. Custom store for YOUR chapter, you make commission, fast shipping. That\'s different."';
     } else if(userKey.length<5){
-      coachFeedback='Too short. Each message should either answer their objection OR ask them a real question.';
+      coachFeedback='Too short. Each message: answer their concern + introduce commission/money angle or ask about their chapter.';
     } else {
-      coachFeedback='You\'re talking, not connecting. Listen to their objection and address it specifically, then earn the next step.';
+      coachFeedback='They\'re skeptical. Lead with relatability: "I\'m doing this too, made good money, and our quality is legit." Then the commission pitch.';
     }
   }
   
