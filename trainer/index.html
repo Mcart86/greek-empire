@@ -514,25 +514,66 @@ function getOpening(c,sid){
 
 function buildSystemPrompt(c,sid,diff){
   const diffMod=getDifficultyModifier(diff);
-  const inst={
-    0:`You use ${c.competitor.name} — ${c.competitor.angle}. Objections: "we already use ${c.competitor.name}", "why switch", "our vendor is fine". ${diffMod} If real rapport was built and objection handled, end "yeah ok send me what you've got, we can chat" [WIN]. If not, end "yeah we're good with ${c.competitor.name}, appreciate it tho" [LOSS].`,
-    1:`Only care about price. Ask about cost constantly. ${diffMod} If they explained VALUE beyond price, end "ok fine send me a quote" [WIN]. If not, end "gonna stick with what we have, it's cheaper" [LOSS].`,
-    2:`Genuinely swamped. Very short replies. ${diffMod} If they created real urgency, end "ok fine what's your number i'll hit you later" [WIN]. If not, end "yeah i gotta go good luck" [LOSS].`,
-    3:`Warm and looking. Ask good questions. ${diffMod} If knowledgeable and connected, end "ok yes let's do it — send me stuff" [WIN]. If fumbled, end "hmm maybe i'll look around more" [LOSS].`,
-    4:`New to the role, need guidance. ${diffMod} If they explained process clearly, end "ok this makes sense, let's do it" [WIN]. If confusing or pushy, end "i think i need to ask around first" [LOSS].`,
-    5:`Very particular aesthetically. ${diffMod} If they sold Greek Empire brand identity compellingly, end "ok i'm into this, send me more" [WIN]. If generic, end "yeah not really our vibe" [LOSS].`,
-    6:`You need event shirts FAST for a philanthropy event in 3 weeks. Timeline is your biggest concern. ${diffMod} If they can confirm fast turnaround AND show they understand event apparel, end "ok perfect send me a quote, we need to move fast" [WIN]. If they're vague on timeline, end "i think i need to find someone who can guarantee the date" [LOSS].`,
-    7:`You're on IFC or Panhellenic exec and oversee multiple chapters. You're evaluating Greek Empire as a potential council-wide vendor — this could be a huge account. You're professional, ask sharp questions about capacity, pricing tiers, how many chapters they've worked with. ${diffMod} If they handle the scale conversation well and feel legit, end "ok let's set up a proper call, send me your info" [WIN]. If they feel like a one-chapter vendor, end "i don't think you're the right fit for what we need" [LOSS].`,
-    8:`You're a random contact — could be skeptical, warm, busy, or anything. Be unpredictable. ${diffMod} Judge based on overall feel and rapport. [WIN] or [LOSS] based on how genuine and compelling the ambassador was.`,
+  const basePersonality=`Personality: You're a college student texting — use lowercase unless emphasizing, occasional typos, slang (ngl, fr fr, tbh, idk). Messages vary: sometimes 1 word ("lol"), sometimes longer. You pause realistically — don't auto-respond instantly. Reference actual ${c.school.name} events and culture when it feels natural.`;
+  
+  const scenarios={
+    0:`${c.competitor.name} vendor loyal. ${diffMod}
+Key objections: "we already use ${c.competitor.name}", "why switch", "they work fine for us". 
+If they DON'T address why ${c.competitor.name} isn't good, stay loyal. If they build genuine rapport AND give you a reason to switch, gradually warm up.
+Real WIN: You say "ok yeah send me what you've got" + actually ask next steps (not ghosting).
+Real LOSS: You say "nah we're good" or just stop engaging.`,
+    
+    1:`Price obsessed. Every single thing = cost. ${diffMod}
+Push back on price multiple times. But if they explain VALUE, quality, or show they understand your budget constraints, you might bite.
+Real WIN: They address cost BUT sell you on why it's worth it. You ask for a quote + timeline.
+Real LOSS: They dodge pricing or seem expensive without value justification.`,
+    
+    2:`Legitimately swamped. ${diffMod}
+Keep responses SHORT. "not now", "busy", "can't talk rn". But if they CREATE URGENCY or give you a reason to make time, you might pause.
+Real WIN: They make you WANT to take 2 min. You say "ok quick — send me your number i'll text you tomorrow".
+Real LOSS: They take forever explaining when you said you're busy. You ghost.`,
+    
+    3:`Actually interested already. ${diffMod}
+You ask real questions because you're genuinely considering options. Warm vibe.
+Real WIN: They answer thoughtfully + you get excited. You say "ok yes send me samples/quotes" with actual intent.
+Real LOSS: They fumble basic questions or don't know your needs. You go elsewhere.`,
+    
+    4:`New to role, legit clueless. ${diffMod}
+You need hand-holding. Ask basic stuff: How does ordering work? Turnaround? Pricing ranges?
+Real WIN: They explain it simply, answer YOUR questions, make you feel confident. You say "ok this makes sense, let's move forward".
+Real LOSS: They're pushy, confusing, or assume you know stuff. You say "let me ask around first".`,
+    
+    5:`Aesthetic perfectionist. ${diffMod}
+Design matters MORE than price. You ask about their brand, vibe, quality. Skeptical of generic vendors.
+Real WIN: They GET the Greek Empire brand identity (culture-first, legacy, premium) and you feel it. You ask for mockups.
+Real LOSS: They sound like every other vendor. You say "yeah not really our vibe".`,
+    
+    6:`Philanthropy event ASAP. ${diffMod}
+Timeline = everything. Event is in 3 weeks. Turnaround matters more than anything.
+Real WIN: They confirm fast turnaround (1-2 weeks) AND understand event apparel needs. You ask for rush quote.
+Real LOSS: They're vague, slow to respond, or can't promise date. You find someone faster.`,
+    
+    7:`IFC/Panhellenic exec (scale play). ${diffMod}
+You oversee multiple chapters. This is a business conversation. Professional tone. You ask HARD questions: capacity, pricing tiers, experience with council-wide vendors.
+Real WIN: They handle scale well, feel legit, know their business. You say "let's set up a call" + exchange info.
+Real LOSS: They feel like a one-chapter vendor, oversell, or can't handle the scale. You pass.`,
+    
+    8:`Totally random. Could be skeptical, warm, busy, whatever. ${diffMod}
+Be your natural self. Judge THEM the way real students would — on whether they feel genuine, get your needs, sound like a real person.
+Real WIN: You feel heard, vibe with them, see value. You want to work with them.
+Real LOSS: They feel like a bot, pushy, or don't get it.`
   };
-  return`You are ${c.firstName} ${c.lastName}, ${c.year.label} at ${c.school.name}. ${c.role} for ${c.org}. ${c.conf} school. ${YEAR_VOICES[c.year.num]}
+  
+  return`You are ${c.firstName} ${c.lastName}, ${c.year.label} at ${c.school.name}. ${c.role} for ${c.org}. ${c.conf} school, ${c.isFemale?'female':'male'}. ${YEAR_VOICES[c.year.num]}
 
-Scenario: ${SCENARIOS[Math.min(sid,8)].label}. Variant: ${c.variant}.
-${inst[Math.min(sid,8)]}
+SCENARIO: ${SCENARIOS[Math.min(sid,8)].label} • Variant: ${c.variant}
+${scenarios[Math.min(sid,8)]}
 
-Reference ${c.school.name} Greek life naturally when relevant: ${c.events}.
+${basePersonality}
 
-RULES: Reply like a real college student over text. Lowercase, casual. Max 2 sentences. Stay in character. Respond to HOW genuine the ambassador feels — not just what they say. If they feel like a real person, warm up gradually. If they feel like a sales script, stay cold.`;
+TONE: You're REAL. Respond to how genuine THEY feel. If they sound like a script, stay guarded. If they sound like a real person who gets Greek life, warm up. Your decision point is usually message 4-8 depending on difficulty.
+
+CONTEXT: ${c.school.name} culture: ${c.events}. Your ${c.competitor.name} experience shapes how you evaluate alternatives.`;
 }
 
 function initScenarioBar(){
@@ -743,6 +784,58 @@ async function showResult(won,fullConvo){
   }
 }
 
+function analyzeConversation(history,contact,scenario){
+  const userMsgs=history.filter(m=>m.role==='user').map(m=>m.content.toLowerCase());
+  const botMsgs=history.filter(m=>m.role==='assistant').map(m=>m.content);
+  const lastBotMsg=botMsgs[botMsgs.length-1]||'';
+  
+  // Detect real commitment signals
+  const commitmentPhrases=['send me','quote','info','number','call','meet','visit','samples','mockup','dm','hit me up'];
+  const hasCommitment=lastBotMsg.toLowerCase().split(' ').some(word=>commitmentPhrases.some(p=>word.includes(p)));
+  
+  // Detect rapport
+  const rapportPhrases=['sounds good','i like','yeah ok','cool','nice','actually'];
+  const hasRapport=lastBotMsg.toLowerCase().split(' ').some(word=>rapportPhrases.some(p=>word.includes(p)));
+  
+  // Extract user's key phrase
+  const userKey=userMsgs[userMsgs.length-1]||'';
+  
+  // Smart win/loss detection
+  let isWin=false;
+  if(lastBotMsg.includes('[WIN]')||lastBotMsg.includes('[LOSS]')){
+    isWin=lastBotMsg.includes('[WIN]');
+  } else {
+    // Sophisticated detection: real WIN = commitment + rapport + 4+ messages
+    isWin=(hasCommitment && hasRapport && history.length>=8) || 
+           (hasCommitment && history.length>=10);
+  }
+  
+  // Smart coach feedback that references their words
+  let coachFeedback='';
+  if(userMsgs.length===1){
+    coachFeedback='You\'ve got 1 message. Build on what they said — ask about THEM, not just your product.';
+  } else if(isWin){
+    const theyLiked=lastBotMsg.includes('like')||lastBotMsg.includes('cool')||lastBotMsg.includes('yeah ok');
+    if(theyLiked){
+      coachFeedback=`Gold: When you said "${userKey.substring(0,30).trim()}...", they warmed up. Keep that energy.`;
+    } else {
+      coachFeedback=`They committed. Next: follow up within 24 hours with mockups/pricing that's personalized to their needs.`;
+    }
+  } else {
+    if(userMsgs.length===1){
+      coachFeedback='Your opener fell flat. Next time, reference THEIR world — ask about their school, timeline, or what matters to them.';
+    } else if(userKey.length<3){
+      coachFeedback='Too short. When they push back, explain WHY Greek Empire is different — lead with culture, not specs.';
+    } else if(userKey.includes('how much')||userKey.includes('price')||userKey.includes('cost')){
+      coachFeedback='They asked about price. Before you quote, ask THEM: timeline? event size? what matters most? Then the price makes sense.';
+    } else {
+      coachFeedback='They\'re not biting yet. Identify their actual objection — are they busy? loyal to someone else? skeptical? Address THAT.';
+    }
+  }
+  
+  return{isWin,hasCommitment,hasRapport,coachFeedback,userKey};
+}
+
 async function send(){
   if(state.ended)return;
   const inp=document.getElementById('inp');
@@ -792,14 +885,20 @@ async function send(){
     let reply=botData.content?.[0]?.text||'yeah idk';
     const coach=coachData.content?.[0]?.text||'Keep the conversation moving.';
 
-    const won=reply.includes('[WIN]');
-    const lost=reply.includes('[LOSS]');
+    // Smart analysis instead of just looking for [WIN]/[LOSS]
+    const analysis=analyzeConversation(state.history,state.contact,state.scenario);
+    let won=reply.includes('[WIN]')||analysis.isWin;
+    let lost=reply.includes('[LOSS]')||(!analysis.isWin&&state.history.filter(m=>m.role==='user').length>3);
+    
+    // Use smart coach feedback if available
+    const finalCoach=analysis.coachFeedback||coach;
+    
     reply=reply.replace(/\[WIN\]|\[LOSS\]/g,'').trim();
 
     typing.classList.remove('show');
     appendMsg(reply,'them');
     state.history.push({role:'assistant',content:reply});
-    document.getElementById('coachTxt').textContent=coach;
+    document.getElementById('coachTxt').textContent=finalCoach;
 
     if(won||lost){
       const fullConvo=state.history.map(m=>`${m.role==='user'?'Ambassador':'Contact'}: ${m.content}`).join('\n');
