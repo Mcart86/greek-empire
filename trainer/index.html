@@ -13,6 +13,25 @@
 html,body{height:100%;background:#1A1A1A;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
 .app{background:#1A1A1A;height:100dvh;display:flex;flex-direction:column;max-width:480px;margin:0 auto;position:relative;overflow:hidden;}
 
+/* ONBOARDING */
+.onboard{position:absolute;inset:0;background:linear-gradient(135deg,#1A1A1A 0%,#0D0D0D 50%,#1A1A1A 100%);z-index:50;display:flex;flex-direction:column;}
+.onboard.hide{display:none;}
+.ob-slides{flex:1;display:flex;overflow:hidden;}
+.ob-slide{min-width:100%;padding:48px 28px 24px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;}
+.ob-icon{font-size:56px;margin-bottom:24px;width:140px;height:140px;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle at 30% 30%,#C9A84C33,transparent);border-radius:50%;animation:float 3s ease-in-out infinite;}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.ob-icon img{max-width:100%;max-height:100%;filter:drop-shadow(0 4px 12px #C9A84C44);}
+.ob-title{font-size:28px;font-weight:700;color:#F5F0E8;margin-bottom:8px;line-height:1.2;letter-spacing:-.5px;}
+.ob-title span{background:linear-gradient(90deg,#C9A84C,#E8C547);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.ob-body{font-size:14px;color:#999;line-height:1.7;max-width:300px;font-weight:400;letter-spacing:.3px;}
+.ob-dots{display:flex;gap:6px;justify-content:center;padding:16px;}
+.ob-dot{width:6px;height:6px;border-radius:50%;background:#333;transition:background .2s,width .2s;}
+.ob-dot.active{background:#C9A84C;width:18px;border-radius:3px;}
+.ob-btn{margin:0 24px 32px;padding:14px;background:linear-gradient(135deg,#D4AF37 0%,#F0C040 50%,#D4AF37 100%);border:none;border-radius:14px;font-size:15px;font-weight:700;color:#1A1A1A;cursor:pointer;letter-spacing:.3px;box-shadow:0 12px 32px #C9A84C33;transition:all .2s;}
+.ob-btn:active{opacity:.9;transform:scale(.98);box-shadow:0 6px 16px #C9A84C55;}
+.ob-skip{background:transparent;border:none;color:#666;font-size:12px;padding:8px;cursor:pointer;text-align:center;margin-bottom:8px;letter-spacing:.3px;transition:color .2s;}
+.ob-skip:active{color:#C9A84C;}
+
 /* TOP BAR */
 .top-bar{background:#111;padding:11px 14px;padding-top:max(11px,env(safe-area-inset-top));border-bottom:1px solid #C9A84C33;display:flex;align-items:center;gap:10px;flex-shrink:0;}
 .avatar-wrap{position:relative;flex-shrink:0;}
@@ -188,6 +207,22 @@ html,body{height:100%;background:#1A1A1A;font-family:-apple-system,BlinkMacSyste
 </head>
 <body>
 <div class="app" id="mainApp">
+
+  <!-- ONBOARDING -->
+  <div class="onboard" id="onboard">
+    <div class="ob-slides" id="obSlides">
+      <div class="ob-slide">
+        <div class="ob-icon"><img src="https://greek-empire.vercel.app/logo-shield.png" alt="Greek Empire" onerror="this.style.display='none'"/></div>
+        <div class="ob-title">Welcome to<br><span>Greek Empire</span><br>Pitch Trainer</div>
+        <div class="ob-body">This is your gym. Some chapters crack with one text. Others will test you hard. That's the point — real chapters don't fold easy. Build actual sales skills on contacts that push back like ones waiting for you. Pick your difficulty. Learn to close. Get the ambassador gig and real money, or keep grinding.</div>
+      </div>
+    </div>
+    <div class="ob-dots" id="obDots">
+      <div class="ob-dot active"></div>
+    </div>
+    <button class="ob-btn" id="obBtn" onclick="obNext()">Next</button>
+    <button class="ob-skip" onclick="startApp()">Skip intro</button>
+  </div>
 
   <!-- MAIN UI -->
   <div class="top-bar">
