@@ -155,8 +155,51 @@ html,body{height:100%;background:#1A1A1A;font-family:-apple-system,BlinkMacSyste
 .toast{position:absolute;bottom:100px;left:50%;transform:translateX(-50%);background:#C9A84C;color:#1A1A1A;padding:8px 16px;border-radius:20px;font-size:12px;font-weight:700;opacity:0;pointer-events:none;transition:opacity .3s;z-index:99;white-space:nowrap;}
 .toast.show{opacity:1;}
 
-/* DAILY BADGE */
-.daily-badge{background:#7B68EE22;border:1px solid #7B68EE44;color:#7B68EE;font-size:9px;padding:2px 7px;border-radius:8px;font-weight:600;letter-spacing:.3px;}
+/* NAV TABS */
+.nav-tabs{background:#0D0D0D;border-bottom:1px solid #C9A84C1A;display:flex;gap:0;flex-shrink:0;}
+.nav-tab{flex:1;padding:10px;text-align:center;font-size:11px;font-weight:600;border:none;background:transparent;color:#555;cursor:pointer;letter-spacing:.5px;text-transform:uppercase;border-bottom:2px solid transparent;transition:all .2s;}
+.nav-tab.active{color:#C9A84C;border-bottom-color:#C9A84C;}
+
+/* ANALYTICS SCREEN */
+.analytics-screen{display:none;position:absolute;inset:0;background:#1A1A1A;z-index:40;flex-direction:column;overflow:hidden;}
+.analytics-screen.show{display:flex;}
+.analytics-header{background:#111;padding:14px;border-bottom:1px solid #C9A84C22;display:flex;align-items:center;gap:8px;}
+.analytics-title{font-size:14px;font-weight:600;color:#F5F0E8;flex:1;}
+.close-btn{background:transparent;border:none;color:#666;font-size:18px;cursor:pointer;padding:4px;}
+.analytics-content{flex:1;padding:14px;overflow-y:auto;display:flex;flex-direction:column;gap:12px;}
+.scenario-stat{background:#0D0D0D;border:1px solid #C9A84C1A;border-radius:12px;padding:12px;}
+.scenario-stat-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
+.scenario-stat-name{font-size:12px;font-weight:600;color:#F5F0E8;}
+.scenario-stat-rate{font-size:11px;color:#C9A84C;font-weight:700;}
+.stat-bar{width:100%;height:6px;background:#252525;border-radius:3px;overflow:hidden;}
+.stat-bar-fill{height:100%;background:linear-gradient(90deg,#50C878,#C9A84C);border-radius:3px;transition:width .3s;}
+.stat-row{display:flex;gap:8px;justify-content:space-between;margin-top:6px;font-size:10px;color:#777;}
+
+/* LEADERBOARD SCREEN */
+.leaderboard-screen{display:none;position:absolute;inset:0;background:#1A1A1A;z-index:40;flex-direction:column;overflow:hidden;}
+.leaderboard-screen.show{display:flex;}
+.leaderboard-content{flex:1;padding:14px;overflow-y:auto;}
+.leaderboard-item{background:#0D0D0D;border:1px solid #C9A84C1A;border-radius:12px;padding:12px;margin-bottom:10px;display:flex;align-items:center;gap:10px;}
+.leaderboard-rank{width:32px;height:32px;background:#C9A84C;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#1A1A1A;flex-shrink:0;}
+.leaderboard-info{flex:1;min-width:0;}
+.leaderboard-name{font-size:12px;font-weight:600;color:#F5F0E8;}
+.leaderboard-meta{font-size:10px;color:#777;margin-top:2px;}
+.leaderboard-wins{text-align:right;flex-shrink:0;}
+.leaderboard-wins-num{font-size:14px;font-weight:700;color:#C9A84C;}
+.leaderboard-wins-label{font-size:9px;color:#555;margin-top:2px;}
+
+/* TEMPLATES SCREEN */
+.templates-screen{display:none;position:absolute;inset:0;background:#1A1A1A;z-index:40;flex-direction:column;overflow:hidden;}
+.templates-screen.show{display:flex;}
+.templates-content{flex:1;padding:14px;overflow-y:auto;display:flex;flex-direction:column;gap:12px;}
+.template-card{background:#0D0D0D;border:1px solid #C9A84C1A;border-radius:12px;padding:12px;}
+.template-scenario{font-size:11px;color:#C9A84C;font-weight:600;letter-spacing:.5px;text-transform:uppercase;margin-bottom:6px;}
+.template-text{font-size:12px;color:#EDE8DC;line-height:1.6;padding:8px;background:#1A1A1A;border-radius:8px;border-left:2px solid #C9A84C;margin-bottom:8px;cursor:pointer;position:relative;}
+.template-text:active{opacity:.7;}
+.template-tip{font-size:10px;color:#777;font-style:italic;line-height:1.5;}
+
+.no-data{text-align:center;padding:40px 20px;color:#555;font-size:12px;}
+.no-data-icon{font-size:32px;margin-bottom:8px;}
 </style>
 </head>
 <body>
@@ -191,8 +234,17 @@ html,body{height:100%;background:#1A1A1A;font-family:-apple-system,BlinkMacSyste
     </div>
     <div class="top-right">
       <div class="online"><div class="online-dot"></div><span style="font-size:9px;color:#4CAF50;">active</span></div>
+      <button class="reroll-btn" onclick="toggleMenu()" style="margin-right:4px;">⋮</button>
       <button class="reroll-btn" onclick="reroll()">new contact ↺</button>
     </div>
+  </div>
+
+  <!-- NAV TABS -->
+  <div class="nav-tabs" id="navTabs" style="display:none;">
+    <button class="nav-tab active" onclick="showTab('training')">Training</button>
+    <button class="nav-tab" onclick="showTab('analytics')">Analytics</button>
+    <button class="nav-tab" onclick="showTab('leaderboard')">Leaderboard</button>
+    <button class="nav-tab" onclick="showTab('templates')">Templates</button>
   </div>
 
   <div class="stats-bar">
@@ -304,6 +356,43 @@ html,body{height:100%;background:#1A1A1A;font-family:-apple-system,BlinkMacSyste
       <button class="replay-close" onclick="hideReplay()">✕</button>
     </div>
     <div class="replay-messages" id="replayMessages"></div>
+  </div>
+
+  <!-- ANALYTICS SCREEN -->
+  <div class="analytics-screen" id="analyticsScreen">
+    <div class="analytics-header">
+      <div class="analytics-title">📊 Your Analytics</div>
+      <button class="close-btn" onclick="showTab('training')">✕</button>
+    </div>
+    <div class="analytics-content" id="analyticsContent">
+      <div class="no-data"><div class="no-data-icon">📈</div>Complete conversations to see your stats</div>
+    </div>
+  </div>
+
+  <!-- LEADERBOARD SCREEN -->
+  <div class="leaderboard-screen" id="leaderboardScreen">
+    <div class="analytics-header">
+      <div class="analytics-title">🏆 Leaderboard</div>
+      <button class="close-btn" onclick="showTab('training')">✕</button>
+    </div>
+    <div class="leaderboard-content" id="leaderboardContent">
+      <div class="no-data"><div class="no-data-icon">🏆</div>Build your wins — you'll appear here soon</div>
+    </div>
+  </div>
+
+  <!-- TEMPLATES SCREEN -->
+  <div class="templates-screen" id="templatesScreen">
+    <div class="analytics-header">
+      <div class="analytics-title">💬 Pitch Templates</div>
+      <button class="close-btn" onclick="showTab('training')">✕</button>
+    </div>
+    <div class="templates-content" id="templatesContent">
+      <div class="template-card">
+        <div class="template-scenario">🎯 Generic Opener</div>
+        <div class="template-text" onclick="hint(this.textContent)">Hey it's [name] from Greek Empire — you guys still using [current vendor] for your gear?</div>
+        <div class="template-tip">Gets them talking about their current situation. Leads into why you're calling.</div>
+      </div>
+    </div>
   </div>
 
   <div class="toast" id="toast">Copied!</div>
@@ -438,6 +527,157 @@ function setDiff(d){
   document.getElementById('dEasy').className='diff-btn'+(d==='easy'?' active-easy':'');
   document.getElementById('dMed').className='diff-btn'+(d==='medium'?' active-medium':'');
   document.getElementById('dHard').className='diff-btn'+(d==='hard'?' active-hard':'');
+}
+
+// SCREEN SWITCHING
+function toggleMenu(){
+  showTab('analytics');
+}
+  // Hide all screens
+  document.getElementById('analyticsScreen').classList.remove('show');
+  document.getElementById('leaderboardScreen').classList.remove('show');
+  document.getElementById('templatesScreen').classList.remove('show');
+  document.getElementById('resultOverlay').classList.remove('show');
+  document.getElementById('replayOverlay').classList.remove('show');
+  
+  // Remove all nav tabs active state
+  Array.from(document.querySelectorAll('.nav-tab')).forEach(t=>t.classList.remove('active'));
+  
+  if(tab==='training'){
+    // Show training UI, hide nav tabs
+    document.querySelectorAll('.stats-bar,.scenario-bar,.persona-tag,.messages,.coach-bar,.hint-row,.input-row').forEach(el=>el.style.display='');
+    document.getElementById('navTabs').style.display='none';
+  } else if(tab==='analytics'){
+    document.querySelectorAll('.stats-bar,.scenario-bar,.persona-tag,.messages,.coach-bar,.hint-row,.input-row').forEach(el=>el.style.display='none');
+    document.getElementById('navTabs').style.display='flex';
+    document.querySelector('[onclick="showTab(\'analytics\')"]').classList.add('active');
+    document.getElementById('analyticsScreen').classList.add('show');
+    renderAnalytics();
+  } else if(tab==='leaderboard'){
+    document.querySelectorAll('.stats-bar,.scenario-bar,.persona-tag,.messages,.coach-bar,.hint-row,.input-row').forEach(el=>el.style.display='none');
+    document.getElementById('navTabs').style.display='flex';
+    document.querySelector('[onclick="showTab(\'leaderboard\')"]').classList.add('active');
+    document.getElementById('leaderboardScreen').classList.add('show');
+    renderLeaderboard();
+  } else if(tab==='templates'){
+    document.querySelectorAll('.stats-bar,.scenario-bar,.persona-tag,.messages,.coach-bar,.hint-row,.input-row').forEach(el=>el.style.display='none');
+    document.getElementById('navTabs').style.display='flex');
+    document.querySelector('[onclick="showTab(\'templates\')"]').classList.add('active');
+    document.getElementById('templatesScreen').classList.add('show');
+    renderTemplates();
+  }
+}
+
+// ANALYTICS
+function renderAnalytics(){
+  const history=JSON.parse(localStorage.getItem('conversationHistory')||'{}');
+  const stats=calculateStats(history);
+  const container=document.getElementById('analyticsContent');
+  
+  if(Object.keys(stats).length===0){
+    container.innerHTML='<div class="no-data"><div class="no-data-icon">📈</div>Complete conversations to see your stats</div>';
+    return;
+  }
+  
+  let html='';
+  Object.entries(stats).forEach(([scenario,data])=>{
+    const rate=Math.round((data.wins/(data.wins+data.losses||1))*100);
+    html+=`<div class="scenario-stat">
+      <div class="scenario-stat-header">
+        <div class="scenario-stat-name">${SCENARIOS[parseInt(scenario)]?.label||'Scenario '+scenario}</div>
+        <div class="scenario-stat-rate">${rate}%</div>
+      </div>
+      <div class="stat-bar"><div class="stat-bar-fill" style="width:${rate}%"></div></div>
+      <div class="stat-row">
+        <span>✓ ${data.wins} wins</span>
+        <span>✕ ${data.losses} losses</span>
+        <span>Avg score: ${Math.round(data.totalScore/((data.wins+data.losses)||1))}</span>
+      </div>
+    </div>`;
+  });
+  container.innerHTML=html;
+}
+
+function calculateStats(history){
+  const stats={};
+  Object.entries(history).forEach(([key,conv])=>{
+    if(conv.scenario!==undefined){
+      const s=conv.scenario+'';
+      if(!stats[s])stats[s]={wins:0,losses:0,totalScore:0};
+      if(conv.won){
+        stats[s].wins++;
+        stats[s].totalScore+=(conv.score||7);
+      } else {
+        stats[s].losses++;
+        stats[s].totalScore+=(conv.score||3);
+      }
+    }
+  });
+  return stats;
+}
+
+// LEADERBOARD
+function renderLeaderboard(){
+  const ambassadors=JSON.parse(localStorage.getItem('ambassadors')||'[{"name":"You","wins":0,"winRate":0}]');
+  ambassadors.sort((a,b)=>b.wins-a.wins);
+  
+  const container=document.getElementById('leaderboardContent');
+  if(ambassadors.filter(a=>a.wins>0).length===0){
+    container.innerHTML='<div class="no-data"><div class="no-data-icon">🏆</div>Build your wins — leaderboard coming soon</div>';
+    return;
+  }
+  
+  let html='';
+  ambassadors.forEach((amb,idx)=>{
+    if(amb.wins>0||idx<3){
+      const medal=['🥇','🥈','🥉'][idx]||'#'+(idx+1);
+      html+=`<div class="leaderboard-item">
+        <div class="leaderboard-rank" style="background:${idx===0?'#C9A84C':idx===1?'#888':idx===2?'#B8860B':'#2A2A2A'};color:${idx<3?'#1A1A1A':'#C9A84C'};">${medal}</div>
+        <div class="leaderboard-info">
+          <div class="leaderboard-name">${amb.name}</div>
+          <div class="leaderboard-meta">${amb.winRate||0}% win rate</div>
+        </div>
+        <div class="leaderboard-wins">
+          <div class="leaderboard-wins-num">${amb.wins}</div>
+          <div class="leaderboard-wins-label">wins</div>
+        </div>
+      </div>`;
+    }
+  });
+  container.innerHTML=html;
+}
+
+// TEMPLATES
+function renderTemplates(){
+  const templates={
+    0:[
+      {opener:'Hey it\'s [name] — we\'re ramping up rush and want to work with chapters that get culture first',tip:'Leads with culture positioning, not just apparel'},
+      {opener:'Quick question — what do you use for merch rn?',tip:'Qualifier. Gets them talking about current vendor before you pitch'},
+    ],
+    1:[
+      {opener:'Our quality is legit, and we\'re actually more affordable than you\'d think. Plus commission on every order.',tip:'Price conversation opener + commission hook'},
+    ],
+    3:[
+      {opener:'We\'re college kids like you running this. Custom stores, fast shipping, and you make money per order.',tip:'Lead with relatable angle + commission'},
+    ],
+    5:[
+      {opener:'Design matters — we\'re designing for Greek life, not just apparel vendors. Can I show you our new stuff?',tip:'Aesthetic buyer — show the work, not the spec'},
+    ],
+  };
+  
+  const container=document.getElementById('templatesContent');
+  let html='';
+  
+  Object.entries(templates).forEach(([sid,tmpls])=>{
+    html+=`<div class="template-card">
+      <div class="template-scenario">${SCENARIOS[parseInt(sid)]?.label||'Scenario'}</div>`;
+    tmpls.forEach(t=>{
+      html+=`<div class="template-text" onclick="hint('${t.opener}')" title="Click to add to input">${t.opener}</div>
+        <div class="template-tip">💡 ${t.tip}</div>`;
+    });
+    html+=`</div>`;
+  });
+  container.innerHTML=html;
 }
 
 function rnd(arr){return arr[Math.floor(Math.random()*arr.length)];}
@@ -728,6 +968,22 @@ async function showResult(won,fullConvo){
   if(won){stats.wins++;stats.streak++;if(stats.streak>stats.bestStreak)stats.bestStreak=stats.streak;}
   else{stats.losses++;stats.streak=0;}
   saveStats();updateStatsBar();
+  
+  // SAVE CONVERSATION HISTORY
+  const history=JSON.parse(localStorage.getItem('conversationHistory')||'{}');
+  const convId='conv_'+Date.now();
+  history[convId]={
+    scenario:state.scenario,
+    contact:`${state.contact.firstName} ${state.contact.lastName}`,
+    school:state.contact.school.name,
+    org:state.contact.org,
+    won:won,
+    difficulty:state.difficulty,
+    timestamp:new Date().toISOString(),
+    messageCount:state.history.length,
+    score:0
+  };
+  localStorage.setItem('conversationHistory',JSON.stringify(history));
 
   const c=state.contact;
   document.getElementById('resultIcon').textContent=won?'🏆':'📵';
