@@ -561,7 +561,7 @@ function toggleMenu(){
     renderLeaderboard();
   } else if(tab==='templates'){
     document.querySelectorAll('.stats-bar,.scenario-bar,.persona-tag,.messages,.coach-bar,.hint-row,.input-row').forEach(el=>el.style.display='none');
-    document.getElementById('navTabs').style.display='flex');
+    document.getElementById('navTabs').style.display='flex';
     document.querySelector('[onclick="showTab(\'templates\')"]').classList.add('active');
     document.getElementById('templatesScreen').classList.add('show');
     renderTemplates();
