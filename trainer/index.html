@@ -711,7 +711,7 @@ async function showResult(won,fullConvo){
   const promises=[
     fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},
       body:JSON.stringify({
-        model:'claude-sonnet-4-20250514',max_tokens:1000,
+        model:'claude-sonnet-4-6',max_tokens:1000,
         system:`Greek Empire sales coach. Analyze this pitch and return ONLY valid JSON, no markdown:\n{"score":7,"good":"one sentence under 15 words","bad":"one sentence under 15 words","next":"one actionable tip under 15 words"}\nBe honest and specific.`,
         messages:[{role:'user',content:`Outcome: ${won?'WIN':'LOSS'}\nContact: ${c.firstName}, ${c.year.label}, ${c.school.name}, ${c.role}, ${SCENARIOS[Math.min(state.scenario,8)].label}\nDifficulty: ${state.difficulty}\n\n${fullConvo}`}]
       })
@@ -722,7 +722,7 @@ async function showResult(won,fullConvo){
     promises.push(
       fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},
         body:JSON.stringify({
-          model:'claude-sonnet-4-20250514',max_tokens:1000,
+          model:'claude-sonnet-4-6',max_tokens:1000,
           system:`You write real follow-up text messages for Greek Empire ambassadors to send after getting a warm response from a chapter contact. Write ONE short, natural follow-up text (2-3 sentences max). Sound like a real college student rep, not a vendor. Include a link to the store: greekempire.swagflo.com. Brand: Greek Empire — college apparel for the best years of your life.`,
           messages:[{role:'user',content:`Contact: ${c.firstName} ${c.lastName}, ${c.role} at ${c.org}, ${c.school.name}. They agreed to connect. Write the follow-up text to send right now.`}]
         })
@@ -774,14 +774,14 @@ async function send(){
     const[botRes,coachRes]=await Promise.all([
       fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},
         body:JSON.stringify({
-          model:'claude-sonnet-4-20250514',max_tokens:1000,
+          model:'claude-sonnet-4-6',max_tokens:1000,
           system:buildSystemPrompt(c,state.scenario,state.difficulty),
           messages:state.history.length>0?state.history:[{role:'user',content:'hey'}]
         })
       }),
       fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},
         body:JSON.stringify({
-          model:'claude-sonnet-4-20250514',max_tokens:1000,
+          model:'claude-sonnet-4-6',max_tokens:1000,
           system:`Greek Empire sales coach. One tip max 10 words, no quotes. Specific. Examples: "Good — now find their timeline." / "Too salesy. One line. Let them respond." / "Push to a quote — they're warming."`,
           messages:[{role:'user',content:`Contact: ${c.firstName}, ${c.year.label}, ${c.school.name}, ${SCENARIOS[Math.min(state.scenario,8)].label}. Ambassador: "${txt}". One tip:`}]
         })
