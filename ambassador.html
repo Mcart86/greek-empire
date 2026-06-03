@@ -757,6 +757,7 @@ nav.scrolled { background: rgba(5,5,5,0.96); backdrop-filter: blur(20px); paddin
       <input class="apply-input" type="text" placeholder="University / College" id="a-school" />
       <input class="apply-input" type="text" placeholder="Chapter Name (e.g. Sigma Chi)" id="a-chapter" />
       <input class="apply-input" type="text" placeholder="Instagram Handle (optional)" id="a-ig" />
+      <input class="apply-input" type="tel" placeholder="Phone Number" id="a-phone" />
       <select class="apply-input" id="a-ambassador" style="background:transparent; cursor:pointer; appearance:none; -webkit-appearance:none; color:#000;">
         <option value="" disabled selected>Who recruited you?</option>
         <option value="Alexa">Alexa</option>
@@ -921,7 +922,7 @@ function toggleMenu() {
   document.body.style.overflow = m.classList.contains('open') ? 'hidden' : '';
 }
 function submitApp() {
-  const ids = ['a-first','a-last','a-email','a-school','a-chapter','a-ambassador'];
+  const ids = ['a-first','a-last','a-email','a-school','a-chapter','a-ambassador','a-phone'];
   let ok = true;
   ids.forEach(id => {
     const el = document.getElementById(id);
@@ -940,6 +941,7 @@ function submitApp() {
     school_text:       document.getElementById('a-school').value.trim(),
     chapter_text:      document.getElementById('a-chapter').value.trim(),
     instagram_handle:  document.getElementById('a-ig').value.trim(),
+    phone:             document.getElementById('a-phone').value.trim(),
     referred_by: document.getElementById('a-ambassador').value,
     company:           document.getElementById('a-company').value,
     source:            'website'
