@@ -1,7 +1,6 @@
 {
+  "cleanUrls": true,
   "rewrites": [
-    { "source": "/trainer", "destination": "/trainer/index.html" },
-    { "source": "/ambassador", "destination": "/ambassador.html" },
-    { "source": "/coming-soon", "destination": "/coming-soon.html" }
+    { "source": "/trainer", "destination": "/trainer/index.html" }
   ]
 }
