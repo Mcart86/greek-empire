@@ -270,7 +270,7 @@ nav.scrolled { background: rgba(5,5,5,0.96); backdrop-filter: blur(20px); paddin
 
 /* Earnings number pop */
 @keyframes numPop { 0% { transform: scale(0.85); opacity: 0; } 60% { transform: scale(1.04); } 100% { transform: scale(1); opacity: 1; } }
-.earnings-num { animation: numPop 0.7s cubic-bezier(0.34,1.56,0.64,1) forwards; opacity: 0; }
+.earnings-num { animation: numPop 0.7s cubic-bezier(0.34,1.56,0.64,1) forwards; }
 
 /* Glowing gold border sweep on perk cards on scroll-in */
 @keyframes borderGlow { 0% { box-shadow: none; } 50% { box-shadow: 0 0 18px rgba(201,168,76,0.25); } 100% { box-shadow: none; } }
@@ -571,11 +571,11 @@ nav.scrolled { background: rgba(5,5,5,0.96); backdrop-filter: blur(20px); paddin
     <div style="margin-top:3rem; background:#050505; padding:4rem 2rem; text-align:center; position:relative; overflow:hidden;">
       <div style="position:absolute; inset:0; background:radial-gradient(ellipse 70% 80% at 50% 50%, rgba(201,168,76,0.1) 0%, transparent 70%); pointer-events:none;"></div>
       <div style="position:relative; z-index:1;">
-        <p class="section-tag" style="justify-content:center; color:rgba(201,168,76,0.7);">What Can You Earn</p>
-        <p class="section-heading earnings-num" style="color:#fff; font-size:clamp(3.5rem,10vw,7rem); line-height:0.95; margin-bottom:0.75rem; letter-spacing:0.02em;"><em>$500 – $25,000</em></p>
-        <div style="width:60px; height:2px; background:linear-gradient(90deg,#8B6914,#F0C040,#8B6914); margin:0 auto 1.25rem;"></div>
-        <p style="font-family:var(--font-display); font-size:1rem; letter-spacing:0.3em; text-transform:uppercase; color:rgba(255,255,255,0.6); margin-bottom:0.5rem;">Per Semester</p>
-        <p style="font-family:var(--font-display); font-size:clamp(1rem,2.5vw,1.4rem); letter-spacing:0.15em; text-transform:uppercase; color:#C9A84C;">No limit. Your campus, your grind, your earnings.</p>
+        <p class="section-tag" style="justify-content:center; color:rgba(201,168,76,0.9); font-size:0.75rem; letter-spacing:0.4em;">What Can You Earn</p>
+        <p class="section-heading earnings-num" style="color:#fff; font-size:clamp(4rem,12vw,9rem); line-height:0.9; margin-bottom:1rem; letter-spacing:0.02em; opacity:1;"><em>$500 – $25,000</em></p>
+        <div style="width:80px; height:2px; background:linear-gradient(90deg,#8B6914,#F0C040,#8B6914); margin:0 auto 1.5rem;"></div>
+        <p style="font-family:var(--font-display); font-size:1.2rem; letter-spacing:0.35em; text-transform:uppercase; color:rgba(255,255,255,0.6); margin-bottom:0.75rem;">Per Semester</p>
+        <p style="font-family:var(--font-display); font-size:clamp(1.1rem,3vw,1.6rem); letter-spacing:0.15em; text-transform:uppercase; color:#C9A84C;">No limit. Your campus, your grind, your earnings.</p>
       </div>
     </div>
   </div>
