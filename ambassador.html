@@ -202,11 +202,10 @@ nav.scrolled { background: rgba(5,5,5,0.96); backdrop-filter: blur(20px); paddin
 .ambassador-header .section-tag { justify-content: center; position: relative; z-index: 1; }
 .ambassador-header .section-tag::before, .ambassador-header .section-tag::after { content: ''; display: block; width: 28px; height: 1px; background: var(--gold); }
 .ambassador-perks { display: grid; grid-template-columns: repeat(4,1fr); gap: 1.25rem; margin-bottom: 4rem; }
-.perk-card { background: #0f0f0f; border: 1px solid rgba(201,168,76,0.12); padding: 2.25rem 1.75rem; position: relative; overflow: hidden; transition: border-color 0.3s, transform 0.3s; z-index: 1; }
-.perk-card:hover { border-color: rgba(201,168,76,0.4); transform: translateY(-3px); }
+.perk-card { background: #0f0f0f; border: 1px solid rgba(201,168,76,0.12); border-left: 3px solid rgba(201,168,76,0.6); padding: 2.25rem 1.75rem; position: relative; overflow: hidden; transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s; z-index: 1; }
+.perk-card:hover { border-color: rgba(201,168,76,0.5); border-left-color: #F0C040; transform: translateY(-4px); box-shadow: 0 8px 32px rgba(201,168,76,0.15), inset 0 0 40px rgba(201,168,76,0.03); }
 .perk-title { font-family: var(--font-display); font-size: 0.8rem; letter-spacing: 0.2em; text-transform: uppercase; color: #fff; margin-bottom: 0.6rem; }
 .perk-text { font-family: var(--font-sans); font-size: 0.88rem; color: #ffffff; line-height: 1.7; text-transform: uppercase; letter-spacing: 0.06em; }
-.perk-card:hover { border-color: var(--gold-dim); transform: translateY(-4px); }
 /* 6. Scroll progress bar */
 .scroll-progress { position: fixed; top: 0; left: 0; height: 2px; background: linear-gradient(90deg, #8B6914, #F0C040, #8B6914); z-index: 9999; width: 0%; transition: width 0.1s linear; }
 
