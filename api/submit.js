@@ -56,35 +56,7 @@ export default async function handler(req, res) {
       console.error('Missing SUPABASE_URL or SUPABASE_ANON_KEY');
     }
 
-    // Send notification email to team via Resend
-    const resendKey = process.env.RESEND_API_KEY;
-    if (resendKey) {
-      await fetch('https://api.resend.com/emails', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${resendKey}`
-        },
-        body: JSON.stringify({
-          from: 'Greek Empire <noreply@greekempire.com>',
-          to: ['mike@empirepromos.com', 'brett@empirepromos.com'],
-          subject: `New Ambassador Application — ${name_first} ${name_last} @ ${school_text || 'Unknown School'}`,
-          html: `
-            <h2>New Ambassador Application</h2>
-            <table style="font-family:sans-serif; font-size:14px; border-collapse:collapse;">
-              <tr><td style="padding:6px 12px; font-weight:bold;">Name</td><td style="padding:6px 12px;">${name_first} ${name_last}</td></tr>
-              <tr><td style="padding:6px 12px; font-weight:bold;">Email</td><td style="padding:6px 12px;"><a href="mailto:${email}">${email}</a></td></tr>
-              <tr><td style="padding:6px 12px; font-weight:bold;">School</td><td style="padding:6px 12px;">${school_text || '—'}</td></tr>
-              <tr><td style="padding:6px 12px; font-weight:bold;">Chapter</td><td style="padding:6px 12px;">${chapter_text || '—'}</td></tr>
-              <tr><td style="padding:6px 12px; font-weight:bold;">Instagram</td><td style="padding:6px 12px;">${instagram_handle || '—'}</td></tr>
-              <tr><td style="padding:6px 12px; font-weight:bold;">Referred By</td><td style="padding:6px 12px;">${referred_by || recruited_by_text || '—'}</td></tr>
-              <tr><td style="padding:6px 12px; font-weight:bold;">Message</td><td style="padding:6px 12px;">${message || '—'}</td></tr>
-              <tr><td style="padding:6px 12px; font-weight:bold;">Source</td><td style="padding:6px 12px;">${source || '—'}</td></tr>
-            </table>
-          `
-        })
-      }).catch(e => errors.push(`Team email: ${e.message}`));
-    }
+
 
     if (errors.length) console.error('Submit errors:', errors);
 
