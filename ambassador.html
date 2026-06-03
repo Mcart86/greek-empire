@@ -205,6 +205,7 @@ nav.scrolled { background: rgba(5,5,5,0.96); backdrop-filter: blur(20px); paddin
 .ambassador-header .section-tag { justify-content: center; position: relative; z-index: 1; }
 .ambassador-header .section-tag::before, .ambassador-header .section-tag::after { content: ''; display: block; width: 28px; height: 1px; background: var(--gold); }
 .ambassador-perks { display: grid; grid-template-columns: repeat(4,1fr); gap: 1.25rem; margin-bottom: 4rem; }
+.perk-grid { grid-template-columns: repeat(3,1fr) !important; }
 .perk-card { background: #0f0f0f; border: 1px solid rgba(201,168,76,0.12); border-left: 3px solid rgba(201,168,76,0.6); padding: 2.25rem 1.75rem; position: relative; overflow: hidden; transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s; z-index: 1; }
 .perk-card:hover { border-color: rgba(201,168,76,0.5); border-left-color: #F0C040; transform: translateY(-4px); box-shadow: 0 8px 32px rgba(201,168,76,0.15), inset 0 0 40px rgba(201,168,76,0.03); }
 .perk-title { font-family: var(--font-display); font-size: 0.8rem; letter-spacing: 0.2em; text-transform: uppercase; color: #fff; margin-bottom: 0.6rem; }
@@ -286,8 +287,7 @@ nav.scrolled { background: rgba(5,5,5,0.96); backdrop-filter: blur(20px); paddin
 }
 @media (max-width: 600px) {
   .ambassador-perks { grid-template-columns: 1fr !important; }
-  [style*="grid-template-columns:repeat(3"] { grid-template-columns: 1fr !important; }
-  [style*="grid-template-columns:1fr 1fr"] { grid-template-columns: 1fr !important; }
+  .perk-grid { grid-template-columns: 1fr !important; }
   [style*="max-width:66%"] { max-width:100% !important; grid-template-columns: 1fr !important; }
 }
 @media (max-width: 900px) {
@@ -491,7 +491,7 @@ nav.scrolled { background: rgba(5,5,5,0.96); backdrop-filter: blur(20px); paddin
       <p style="font-family:var(--font-sans); font-size:1rem; color:rgba(255,255,255,0.55); line-height:1.85; max-width:600px; margin:1.5rem auto 0;">Greek Empire ambassadors are active — building relationships, generating orders, posting content, and growing the network. The more you put in, the more you earn.</p>
       <p style="font-family:var(--font-display); font-size:clamp(1.4rem,3vw,2rem); letter-spacing:0.12em; text-transform:uppercase; color:#fff; margin:2rem auto 0; max-width:600px;">What Campus <em style="font-family:var(--font-script); font-style:italic; text-transform:none; background:linear-gradient(90deg,#8B6914,#F0C040,#8B6914); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;">Ambassadors</em> Receive</p>
     </div>
-    <div class="ambassador-perks" style="grid-template-columns:repeat(3,1fr); margin-bottom:0; justify-items:center;">
+    <div class="ambassador-perks perk-grid" style="margin-bottom:0; justify-items:center;">
       <div class="perk-card reveal reveal-delay-1">
         <div class="perk-number">01</div>
         <div class="perk-title">Earn Commissions</div>
