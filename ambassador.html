@@ -313,6 +313,7 @@ nav.scrolled { background: rgba(5,5,5,0.96); backdrop-filter: blur(20px); paddin
   /* Marquee */
   .marquee-item { white-space: nowrap; }
 
+  /* Products */
   .products .section-heading { font-size: clamp(1.8rem, 7.5vw, 3.2rem); }
   .products .section-heading em { font-size: 1em !important; display: inline !important; }
   .products-grid { grid-template-columns: 1fr 1fr; }
@@ -321,26 +322,34 @@ nav.scrolled { background: rgba(5,5,5,0.96); backdrop-filter: blur(20px); paddin
   /* About */
   #about { padding: 3rem 1.25rem !important; grid-template-columns: 1fr !important; }
 
-  /* Manifesto - stack video below copy */
+  /* Manifesto */
   .manifesto-grid { grid-template-columns: 1fr !important; gap: 2rem !important; }
   .manifesto { padding: 0 1.25rem; text-align: center !important; }
   .manifesto-quote { font-size: clamp(1.2rem, 5vw, 2rem); text-align: center !important; }
 
-  /* Show up / Know your audience - stack to 1 col */
-  .show-up-grid { grid-template-columns: 1fr !important; gap: 2.5rem !important; }
+  /* Signing up section */
+  .signing-up-section { padding: 3rem 1rem !important; }
+  .ambassador-header.reveal { padding: 0 0.5rem; }
 
-  /* Signing up for - stack role cards to 2 cols */
-  .signing-up-grid { grid-template-columns: 1fr 1fr !important; gap: 2px !important; }
-  .signing-up-grid > div { padding: 1.5rem 1rem !important; }
-  .signing-up-section { padding: 3rem 0.5rem !important; }
-
-  /* Ambassador perks */
-  .ambassador { padding: 3rem 1.25rem; }
-  .ambassador-perks { grid-template-columns: 1fr; }
-  .ambassador-header .section-heading { font-size: clamp(2rem, 8vw, 3.5rem) !important; }
+  /* ALL card grids → 1 col on mobile */
+  .ambassador-perks,
+  [style*="grid-template-columns:repeat(3"] { grid-template-columns: 1fr !important; }
+  .perk-card { animation: none !important; padding: 1.5rem 1.25rem; }
+  .perk-card:nth-child(3n+1),
+  .perk-card:nth-child(3n+2),
+  .perk-card:nth-child(3n+3) { animation: none !important; }
+  .perk-card[style*="grid-column"] { grid-column: auto !important; }
 
   /* Section headings */
   .section-heading { font-size: clamp(1.8rem, 7.5vw, 3.2rem); }
+  .ambassador-header .section-heading { font-size: clamp(2rem, 8vw, 3.5rem) !important; }
+
+  /* What Makes Us Different inline grid */
+  .ambassador { padding: 3rem 1.25rem; }
+
+  /* All white/dark sections with inline padding */
+  section[style*="padding:6rem"],
+  section[style*="padding:5rem"] { padding: 3rem 1.25rem !important; }
 
   /* Apply */
   .apply-section { padding: 3rem 1.25rem; }
@@ -356,7 +365,7 @@ nav.scrolled { background: rgba(5,5,5,0.96); backdrop-filter: blur(20px); paddin
   #join-btn { margin-top: 0.75rem !important; font-size: 0.935rem !important; padding: 1.05rem 2.625rem !important; }
   #play-btn, #mute-btn { display: none !important; }
 
-  /* Hide cursor + scroll hint */
+  /* Hide cursor */
   .cursor, .cursor-ring, .scroll-hint { display: none; }
 }
 </style>
