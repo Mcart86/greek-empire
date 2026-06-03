@@ -25,7 +25,7 @@ export default async function handler(req, res) {
     const errors = [];
 
     // 1. Send to Supabase with anon key
-    const supabaseUrl = process.env.SUPABASE_URL;
+    const supabaseUrl = process.env.SUPABASE_URL || 'https://uuyyaymtogcvnhuobkyj.supabase.co';
     const supabaseKey = process.env.SUPABASE_ANON_KEY;
 
     if (supabaseUrl && supabaseKey) {
