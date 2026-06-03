@@ -887,14 +887,28 @@ function submitApp() {
     company:          document.getElementById('a-company').value,
     source:           'contact'
   };
-  fetch('https://gxglrktbvumrpzhlogno.supabase.co/functions/v1/apply', {
+  const btn = document.querySelector('.apply-submit');
+  btn.textContent = 'SENDING...';
+  btn.disabled = true;
+
+  fetch('/api/submit', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload)
-  }).catch(function(){ /* never block the applicant on a network hiccup */ });
-
-  document.getElementById('apply-form').style.display = 'none';
-  document.getElementById('apply-success').style.display = 'block';
+  })
+  .then(() => {
+    document.getElementById('apply-form').style.display = 'none';
+    document.getElementById('apply-success').style.display = 'block';
+  })
+  .catch(() => {
+    // Still show success — don't block the applicant
+    document.getElementById('apply-form').style.display = 'none';
+    document.getElementById('apply-success').style.display = 'block';
+  })
+  .finally(() => {
+    btn.textContent = 'SEND MESSAGE';
+    btn.disabled = false;
+  });
 }
 </script>
 </body>

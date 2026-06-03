@@ -757,7 +757,7 @@ nav.scrolled { background: rgba(5,5,5,0.96); backdrop-filter: blur(20px); paddin
       <input class="apply-input" type="text" placeholder="University / College" id="a-school" />
       <input class="apply-input" type="text" placeholder="Chapter Name (e.g. Sigma Chi)" id="a-chapter" />
       <input class="apply-input" type="text" placeholder="Instagram Handle (optional)" id="a-ig" />
-      <select class="apply-input" id="a-recruited" style="background:transparent; cursor:pointer; appearance:none; -webkit-appearance:none; color:#000;">
+      <select class="apply-input" id="a-ambassador" style="background:transparent; cursor:pointer; appearance:none; -webkit-appearance:none; color:#000;">
         <option value="" disabled selected>Who recruited you?</option>
         <option value="Alexa">Alexa</option>
         <option value="Avry">Avry</option>
@@ -921,7 +921,7 @@ function toggleMenu() {
   document.body.style.overflow = m.classList.contains('open') ? 'hidden' : '';
 }
 function submitApp() {
-  const ids = ['a-first','a-last','a-email','a-school','a-chapter','a-recruited'];
+  const ids = ['a-first','a-last','a-email','a-school','a-chapter','a-ambassador'];
   let ok = true;
   ids.forEach(id => {
     const el = document.getElementById(id);
@@ -940,18 +940,31 @@ function submitApp() {
     school_text:       document.getElementById('a-school').value.trim(),
     chapter_text:      document.getElementById('a-chapter').value.trim(),
     instagram_handle:  document.getElementById('a-ig').value.trim(),
-    recruited_by_text: document.getElementById('a-recruited').value,
+    referred_by: document.getElementById('a-ambassador').value,
     company:           document.getElementById('a-company').value,
     source:            'website'
   };
-  fetch('https://gxglrktbvumrpzhlogno.supabase.co/functions/v1/apply', {
+  const btn = document.querySelector('.apply-submit');
+  btn.textContent = 'SENDING...';
+  btn.disabled = true;
+
+  fetch('/api/submit', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload)
-  }).catch(function(){ /* never block the applicant on a network hiccup */ });
-
-  document.getElementById('apply-form').style.display = 'none';
-  document.getElementById('apply-success').style.display = 'block';
+  })
+  .then(() => {
+    document.getElementById('apply-form').style.display = 'none';
+    document.getElementById('apply-success').style.display = 'block';
+  })
+  .catch(() => {
+    document.getElementById('apply-form').style.display = 'none';
+    document.getElementById('apply-success').style.display = 'block';
+  })
+  .finally(() => {
+    btn.textContent = 'SUBMIT APPLICATION';
+    btn.disabled = false;
+  });
 }
 </script>
 </body>
