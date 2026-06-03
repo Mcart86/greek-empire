@@ -206,6 +206,8 @@ nav.scrolled { background: rgba(5,5,5,0.96); backdrop-filter: blur(20px); paddin
 .ambassador-header .section-tag::before, .ambassador-header .section-tag::after { content: ''; display: block; width: 28px; height: 1px; background: var(--gold); }
 .ambassador-perks { display: grid; grid-template-columns: repeat(4,1fr); gap: 1.25rem; margin-bottom: 4rem; }
 .perk-grid { grid-template-columns: repeat(3,1fr) !important; }
+.last-two-cards { grid-column: 1 / 4; display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; max-width: 66%; margin: 0 auto; width: 100%; }
+.diff-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.25rem; margin-bottom: 3rem; }
 .perk-card { background: #0f0f0f; border: 1px solid rgba(201,168,76,0.12); border-left: 3px solid rgba(201,168,76,0.6); padding: 2.25rem 1.75rem; position: relative; overflow: hidden; transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s; z-index: 1; }
 .perk-card:hover { border-color: rgba(201,168,76,0.5); border-left-color: #F0C040; transform: translateY(-4px); box-shadow: 0 8px 32px rgba(201,168,76,0.15), inset 0 0 40px rgba(201,168,76,0.03); }
 .perk-title { font-family: var(--font-display); font-size: 0.8rem; letter-spacing: 0.2em; text-transform: uppercase; color: #fff; margin-bottom: 0.6rem; }
@@ -288,7 +290,8 @@ nav.scrolled { background: rgba(5,5,5,0.96); backdrop-filter: blur(20px); paddin
 @media (max-width: 600px) {
   .ambassador-perks { grid-template-columns: 1fr !important; }
   .perk-grid { grid-template-columns: 1fr !important; }
-  [style*="max-width:66%"] { max-width:100% !important; grid-template-columns: 1fr !important; }
+  .last-two-cards { grid-template-columns: 1fr !important; max-width: 100% !important; grid-column: auto !important; }
+  .diff-grid { grid-template-columns: 1fr !important; }
 }
 @media (max-width: 900px) {
   nav { padding: 1.2rem 1.5rem; }
@@ -522,7 +525,7 @@ nav.scrolled { background: rgba(5,5,5,0.96); backdrop-filter: blur(20px); paddin
         <div class="perk-title">Mentorship & Growth</div>
         <div class="perk-text">Leadership development, mentorship from the Greek Empire team, and real-world sales experience that carries beyond graduation and looks great on a resume.</div>
       </div>
-      <div style="grid-column:1 / 4; display:grid; grid-template-columns:1fr 1fr; gap:1.25rem; max-width:66%; margin:0 auto; width:100%;">
+      <div class="last-two-cards">
         <div class="perk-card reveal reveal-delay-3">
           <div class="perk-number">07</div>
           <div class="perk-title">Free Gear</div>
@@ -545,7 +548,7 @@ nav.scrolled { background: rgba(5,5,5,0.96); backdrop-filter: blur(20px); paddin
       <p class="section-tag" style="justify-content:center;">The Difference</p>
       <h2 class="section-heading" style="color:#000;">Why We're Not <em style="font-size:1em;">Like the Rest</em></h2>
     </div>
-    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:1.25rem; margin-bottom:3rem;">
+    <div class="diff-grid">
       <div class="perk-card reveal reveal-delay-1">
         <div class="perk-title">Built From the Inside</div>
         <div class="perk-text">Run by Greek life members — we're not selling into the community. We're part of it.</div>
