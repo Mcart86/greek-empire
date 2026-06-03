@@ -284,6 +284,12 @@ nav.scrolled { background: rgba(5,5,5,0.96); backdrop-filter: blur(20px); paddin
   .products-grid { grid-template-columns: repeat(2,1fr); }
   .ambassador-perks { grid-template-columns: 1fr 1fr; }
 }
+@media (max-width: 600px) {
+  .ambassador-perks { grid-template-columns: 1fr !important; }
+  [style*="grid-template-columns:repeat(3"] { grid-template-columns: 1fr !important; }
+  [style*="grid-template-columns:1fr 1fr"] { grid-template-columns: 1fr !important; }
+  [style*="max-width:66%"] { max-width:100% !important; grid-template-columns: 1fr !important; }
+}
 @media (max-width: 900px) {
   nav { padding: 1.2rem 1.5rem; }
   nav.scrolled { padding: 0.8rem 1.5rem; }
