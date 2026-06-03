@@ -331,7 +331,9 @@ nav.scrolled { background: rgba(5,5,5,0.96); backdrop-filter: blur(20px); paddin
   .signing-up-section { padding: 3rem 1rem !important; }
   .ambassador-header.reveal { padding: 0 0.5rem; }
 
-  /* ALL card grids → 1 col on mobile */
+  /* Cards 07+08 wrapper on mobile */
+  [style*="padding:0 16.666%"] { padding: 0 !important; }
+  .signing-up-section { padding: 3rem 1rem !important; }
   .ambassador-perks,
   [style*="grid-template-columns:repeat(3"] { grid-template-columns: 1fr !important; }
   .perk-card { animation: none !important; padding: 1.5rem 1.25rem; }
@@ -511,13 +513,13 @@ nav.scrolled { background: rgba(5,5,5,0.96); backdrop-filter: blur(20px); paddin
         <div class="perk-title">Mentorship & Growth</div>
         <div class="perk-text">Leadership development, mentorship from the Greek Empire team, and real-world sales experience that carries beyond graduation and looks great on a resume.</div>
       </div>
-      <div style="grid-column:1 / 4; display:flex; justify-content:center; gap:1.25rem; padding:0 16.666%;">
-        <div class="perk-card reveal reveal-delay-3" style="flex:1;">
+      <div style="grid-column:1 / 4; display:flex; justify-content:center; gap:1.25rem; padding:0 16.666%; flex-wrap:wrap;">
+        <div class="perk-card reveal reveal-delay-3" style="flex:1; min-width:250px;">
           <div class="perk-number">07</div>
           <div class="perk-title">Free Gear</div>
           <div class="perk-text">Greek Empire apparel and product drops sent directly to you. Wear what you represent.</div>
         </div>
-        <div class="perk-card reveal reveal-delay-1" style="flex:1;">
+        <div class="perk-card reveal reveal-delay-1" style="flex:1; min-width:250px;">
           <div class="perk-number">08</div>
           <div class="perk-title">Early Access</div>
           <div class="perk-text">First look at new drops and limited releases before anyone else on your campus sees them.</div>
