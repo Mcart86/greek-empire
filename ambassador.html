@@ -255,6 +255,27 @@ nav.scrolled { background: rgba(5,5,5,0.96); backdrop-filter: blur(20px); paddin
 .reveal-delay-3 { transition-delay: 0.3s; }
 .reveal-delay-4 { transition-delay: 0.4s; }
 
+/* Floating perk cards */
+@keyframes floatA { 0%,100% { transform: translateY(0px); } 50% { transform: translateY(-6px); } }
+@keyframes floatB { 0%,100% { transform: translateY(-4px); } 50% { transform: translateY(4px); } }
+@keyframes floatC { 0%,100% { transform: translateY(-2px); } 50% { transform: translateY(6px); } }
+.perk-card:nth-child(3n+1) { animation: floatA 5s ease-in-out infinite; }
+.perk-card:nth-child(3n+2) { animation: floatB 6s ease-in-out infinite; }
+.perk-card:nth-child(3n+3) { animation: floatC 7s ease-in-out infinite; }
+.perk-card:hover { animation: none; }
+
+/* Gold pulse on section tags */
+@keyframes tagPulse { 0%,100% { opacity: 0.7; } 50% { opacity: 1; } }
+.section-tag { animation: tagPulse 3s ease-in-out infinite; }
+
+/* Earnings number pop */
+@keyframes numPop { 0% { transform: scale(0.85); opacity: 0; } 60% { transform: scale(1.04); } 100% { transform: scale(1); opacity: 1; } }
+.earnings-num { animation: numPop 0.7s cubic-bezier(0.34,1.56,0.64,1) forwards; opacity: 0; }
+
+/* Glowing gold border sweep on perk cards on scroll-in */
+@keyframes borderGlow { 0% { box-shadow: none; } 50% { box-shadow: 0 0 18px rgba(201,168,76,0.25); } 100% { box-shadow: none; } }
+.perk-card.visible-glow { animation: borderGlow 1.2s ease forwards; }
+
 /* RESPONSIVE */
 @media (max-width: 1024px) {
   .products-grid { grid-template-columns: repeat(2,1fr); }
@@ -540,7 +561,7 @@ nav.scrolled { background: rgba(5,5,5,0.96); backdrop-filter: blur(20px); paddin
     <!-- Earnings -->
     <div class="reveal" style="text-align:center; border-top:1px solid rgba(201,168,76,0.3); padding-top:3rem;">
       <p class="section-tag" style="justify-content:center;">What Can You Earn</p>
-      <p class="section-heading" style="color:#000; font-size:clamp(2.8rem,6vw,5rem); line-height:1; margin-bottom:0.5rem;"><em>$500 – $25,000</em></p>
+      <p class="section-heading earnings-num" style="color:#000; font-size:clamp(2.8rem,6vw,5rem); line-height:1; margin-bottom:0.5rem;"><em>$500 – $25,000</em></p>
       <p style="font-family:var(--font-display); font-size:0.88rem; letter-spacing:0.22em; text-transform:uppercase; color:#555; margin-bottom:0.3rem;">Per Semester</p>
       <p style="font-family:var(--font-sans); font-size:0.8rem; letter-spacing:0.1em; color:#888; text-transform:uppercase;">No limit. Your campus, your grind, your earnings.</p>
     </div>
@@ -836,6 +857,22 @@ if (manifestoP) {
 // 7. Word-by-word manifesto animation = new IntersectionObserver(entries => entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); }), { threshold: 0.1 });
 const obs = new IntersectionObserver(entries => entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); }), { threshold: 0.1 });
 document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+// Earnings number pop on scroll into view
+const earningsEl = document.querySelector('.earnings-num');
+if(earningsEl) {
+  const earningsObs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if(e.isIntersecting) { earningsEl.style.animationPlayState = 'running'; earningsObs.disconnect(); } });
+  }, { threshold: 0.5 });
+  earningsEl.style.animationPlayState = 'paused';
+  earningsObs.observe(earningsEl);
+}
+
+// Perk card glow on scroll into view
+const glowObs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) { e.target.classList.add('visible-glow'); glowObs.unobserve(e.target); } });
+}, { threshold: 0.3 });
+document.querySelectorAll('.perk-card').forEach(el => glowObs.observe(el));
 // Count-up animation on scroll
 const statNums = document.querySelectorAll('.about-stat-num[data-target]');
 const countObserver = new IntersectionObserver((entries) => {
