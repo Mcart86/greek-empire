@@ -56,7 +56,7 @@ export default async function handler(req, res) {
       console.error('Missing SUPABASE_URL or SUPABASE_ANON_KEY');
     }
 
-    // 2. Send notification email to team via Resend
+    // Send notification email to team via Resend
     const resendKey = process.env.RESEND_API_KEY;
     if (resendKey) {
       await fetch('https://api.resend.com/emails', {
@@ -84,32 +84,6 @@ export default async function handler(req, res) {
           `
         })
       }).catch(e => errors.push(`Team email: ${e.message}`));
-
-      // 3. Send confirmation email to applicant
-      await fetch('https://api.resend.com/emails', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${resendKey}`
-        },
-        body: JSON.stringify({
-          from: 'Greek Empire <noreply@greekempire.com>',
-          to: [email],
-          subject: `We got your application, ${name_first}.`,
-          html: `
-            <div style="font-family:sans-serif; max-width:560px; margin:0 auto; color:#111;">
-              <img src="https://greek-empire.vercel.app/greek-empire-wordmark.png" alt="Greek Empire" style="width:200px; margin-bottom:24px;" />
-              <h2 style="font-size:22px; margin-bottom:8px;">Application Received</h2>
-              <p style="color:#555; line-height:1.7;">Hey ${name_first} — we got your application and we'll be in touch within 24–48 hours.</p>
-              <p style="color:#555; line-height:1.7;">In the meantime, follow us on Instagram <a href="https://instagram.com/_greekempire_" style="color:#C9A84C;">@_greekempire_</a> to stay up to date.</p>
-              <p style="color:#C9A84C; font-size:13px; margin-top:32px; letter-spacing:0.05em;">GREEK EMPIRE — FOR THE BEST YEARS OF YOUR LIFE</p>
-            </div>
-          `
-        })
-      }).catch(e => errors.push(`Confirmation email: ${e.message}`));
-    } else {
-      errors.push('Resend API key missing');
-      console.error('Missing RESEND_API_KEY');
     }
 
     if (errors.length) console.error('Submit errors:', errors);
