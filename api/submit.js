@@ -11,14 +11,33 @@ export default async function handler(req, res) {
     // Honeypot check
     if (data.company) return res.status(200).json({ ok: true });
 
-    const { name_first, name_last, email } = data;
+    const { name_first, name_last, email, phone, school_text, chapter_text, instagram_handle, referred_by, message, source } = data;
 
     // Basic validation
     if (!name_first || !name_last || !email || !email.includes('@')) {
       return res.status(400).json({ error: 'Missing required fields' });
     }
 
-    // CRM integration goes here
+    // Send to Formspree
+    await fetch('https://formspree.io/f/mykayrnj', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({
+        name: `${name_first} ${name_last}`,
+        email,
+        phone: phone || '',
+        school: school_text || '',
+        chapter: chapter_text || '',
+        instagram: instagram_handle || '',
+        referred_by: referred_by || '',
+        message: message || '',
+        source: source || 'website'
+      })
+    });
+
     return res.status(200).json({ ok: true });
 
   } catch (err) {
