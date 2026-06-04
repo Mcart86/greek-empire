@@ -943,24 +943,22 @@ function submitApp() {
   if (!ok) return;
 
   const payload = {
-    name_first:        document.getElementById('a-first').value.trim(),
-    name_last:         document.getElementById('a-last').value.trim(),
-    email:             document.getElementById('a-email').value.trim(),
-    school_text:       document.getElementById('a-school').value.trim(),
-    chapter_text:      document.getElementById('a-chapter').value.trim(),
-    instagram_handle:  document.getElementById('a-ig').value.trim(),
-    phone:             document.getElementById('a-phone').value.trim(),
+    name:       document.getElementById('a-first').value.trim() + ' ' + document.getElementById('a-last').value.trim(),
+    email:      document.getElementById('a-email').value.trim(),
+    phone:      document.getElementById('a-phone').value.trim(),
+    school:     document.getElementById('a-school').value.trim(),
+    chapter:    document.getElementById('a-chapter').value.trim(),
+    instagram:  document.getElementById('a-ig').value.trim(),
     referred_by: document.getElementById('a-ambassador').value,
-    company:           document.getElementById('a-company').value,
-    source:            'website'
+    source:     'ambassador-page'
   };
   const btn = document.querySelector('.apply-submit');
   btn.textContent = 'SENDING...';
   btn.disabled = true;
 
-  fetch('/api/submit', {
+  fetch('https://formspree.io/f/mykayrnj', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
     body: JSON.stringify(payload)
   })
   .then(() => {
