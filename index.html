@@ -711,6 +711,7 @@ nav.scrolled { background: rgba(5,5,5,0.96); backdrop-filter: blur(20px); paddin
         <input class="apply-input" type="text" placeholder="Last Name" id="a-last" />
       </div>
       <input class="apply-input" type="email" placeholder="Email Address" id="a-email" />
+      <input class="apply-input" type="tel" placeholder="Phone Number" id="a-phone" />
       <input class="apply-input" type="text" placeholder="University / College" id="a-school" />
       <input class="apply-input" type="text" placeholder="Chapter Name (e.g. Sigma Chi)" id="a-chapter" />
       <input class="apply-input" type="text" placeholder="Instagram Handle (optional)" id="a-ig" />
@@ -863,7 +864,7 @@ function toggleMenu() {
   document.body.style.overflow = m.classList.contains('open') ? 'hidden' : '';
 }
 function submitApp() {
-  const ids = ['a-first','a-last','a-email','a-ambassador'];
+  const ids = ['a-first','a-last','a-email','a-phone','a-ambassador'];
   let ok = true;
   ids.forEach(id => {
     const el = document.getElementById(id);
@@ -879,6 +880,7 @@ function submitApp() {
     name_first:       document.getElementById('a-first').value.trim(),
     name_last:        document.getElementById('a-last').value.trim(),
     email:            document.getElementById('a-email').value.trim(),
+    phone:            document.getElementById('a-phone').value.trim(),
     school_text:      document.getElementById('a-school').value.trim(),
     chapter_text:     document.getElementById('a-chapter').value.trim(),
     instagram_handle: document.getElementById('a-ig').value.trim(),
