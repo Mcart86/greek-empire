@@ -893,10 +893,21 @@ function submitApp() {
   btn.textContent = 'SENDING...';
   btn.disabled = true;
 
-  fetch('/api/submit', {
+  fetch('https://gxglrktbvumrpzhlogno.supabase.co/functions/v1/apply', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload)
+    body: JSON.stringify({
+      name_first:        payload.name_first,
+      name_last:         payload.name_last,
+      email:             payload.email,
+      phone:             payload.phone,
+      school_text:       payload.school_text,
+      chapter_text:      payload.chapter_text,
+      instagram_handle:  payload.instagram_handle,
+      recruited_by_text: payload.referred_by,
+      company:           payload.company,
+      source:            payload.source || 'website'
+    })
   })
   .then(() => {
     document.getElementById('apply-form').style.display = 'none';
