@@ -516,35 +516,12 @@
     let image_url = null;
     if (selectedFile) {
       try {
-        // Detect if file is video — skip canvas conversion entirely
-        const rawMime = selectedFile.type || '';
-        const isVideoFile = rawMime.startsWith('video/') ||
-          /\.(mp4|mov|avi|webm|mkv|m4v)$/i.test(selectedFile.name);
-
-        let uploadBlob = selectedFile;
-        let uploadMime = rawMime || 'image/jpeg';
-
-        if (!isVideoFile) {
-          // Convert images (incl HEIC) to JPEG via canvas
-          const needsConvert = !['image/jpeg','image/png','image/webp','image/gif'].includes(uploadMime);
-          if (needsConvert || uploadMime === '') {
-            try {
-              uploadBlob = await convertToJpeg(selectedFile);
-              uploadMime = 'image/jpeg';
-            } catch(e) {
-              console.warn('Canvas convert failed, uploading raw:', e);
-              uploadMime = 'image/jpeg';
-            }
-          }
-        } else {
-          // Video — use raw file, force correct mime
-          uploadMime = rawMime || 'video/mp4';
-        }
-
+        // Send raw file to server — sharp handles all conversion server-side
+        const rawMime = selectedFile.type || 'image/jpeg';
         const uploadRes = await fetch('/api/upload-image', {
           method: 'POST',
-          headers: { 'Content-Type': uploadMime },
-          body: uploadBlob
+          headers: { 'Content-Type': rawMime },
+          body: selectedFile
         });
         if (uploadRes.ok) {
           const uploadData = await uploadRes.json();
