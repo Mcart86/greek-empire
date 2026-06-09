@@ -1,5 +1,3 @@
-import sharp from 'sharp';
-
 export const config = {
   api: {
     bodyParser: false,
@@ -15,54 +13,22 @@ export default async function handler(req, res) {
   const BUCKET       = 'content-submissions';
 
   try {
-    // Read raw body — collect all chunks into a single buffer
     const chunks = [];
     await new Promise((resolve, reject) => {
       req.on('data', chunk => chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk)));
       req.on('end', resolve);
       req.on('error', reject);
     });
-    let buffer = Buffer.concat(chunks);
-
-    console.log('Received buffer size:', buffer.length, 'bytes');
+    const buffer = Buffer.concat(chunks);
 
     const contentType = req.headers['content-type'] || 'image/jpeg';
-    const isVideo = contentType.startsWith('video/');
-
-    let finalBuffer  = buffer;
-    let finalMime    = contentType;
-    let finalExt     = 'jpg';
-
-    if (isVideo) {
-      // Pass video through unchanged
-      const mimeToExt = {
-        'video/mp4': 'mp4', 'video/quicktime': 'mov',
-        'video/x-msvideo': 'avi', 'video/webm': 'webm', 'video/x-m4v': 'm4v'
-      };
-      finalExt  = mimeToExt[contentType] || 'mov';
-      finalMime = contentType;
-      console.log('Video upload, ext:', finalExt, 'size:', buffer.length);
-    } else {
-      // Convert all images (especially HEIC) to JPEG via sharp
-      try {
-        console.log('Converting image with sharp, input size:', buffer.length);
-        finalBuffer = await sharp(buffer, { failOnError: false })
-          .rotate()
-          .jpeg({ quality: 88 })
-          .toBuffer();
-        finalMime   = 'image/jpeg';
-        finalExt    = 'jpg';
-        console.log('Sharp output size:', finalBuffer.length);
-      } catch (convertErr) {
-        console.error('Sharp conversion failed:', convertErr.message);
-        // Upload raw as fallback
-        finalBuffer = buffer;
-        finalMime   = contentType;
-        finalExt    = contentType.split('/')[1] || 'jpg';
-      }
-    }
-
-    const fileName = `${Date.now()}-${Math.random().toString(36).slice(2)}.${finalExt}`;
+    const mimeToExt = {
+      'image/jpeg': 'jpg', 'image/png': 'png', 'image/webp': 'webp', 'image/gif': 'gif',
+      'video/mp4': 'mp4', 'video/quicktime': 'mov', 'video/x-msvideo': 'avi',
+      'video/webm': 'webm', 'video/x-m4v': 'm4v'
+    };
+    const ext = mimeToExt[contentType] || contentType.split('/')[1]?.split(';')[0] || 'jpg';
+    const fileName = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
 
     const uploadRes = await fetch(
       `${SUPABASE_URL}/storage/v1/object/${BUCKET}/${fileName}`,
@@ -71,10 +37,10 @@ export default async function handler(req, res) {
         headers: {
           'Authorization': `Bearer ${SERVICE_KEY}`,
           'apikey': SERVICE_KEY,
-          'Content-Type': finalMime,
+          'Content-Type': contentType,
           'x-upsert': 'true',
         },
-        body: finalBuffer,
+        body: buffer,
       }
     );
 

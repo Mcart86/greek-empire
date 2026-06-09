@@ -6,6 +6,7 @@
   <title>Submit Content — Greek Empire</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/heic2any/0.0.4/heic2any.min.js"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -516,12 +517,31 @@
     let image_url = null;
     if (selectedFile) {
       try {
-        // Send raw file to server — sharp handles all conversion server-side
-        const rawMime = selectedFile.type || 'image/jpeg';
+        // Convert HEIC client-side using heic2any, then upload
+        let uploadFile = selectedFile;
+        let uploadMime = selectedFile.type || 'image/jpeg';
+
+        const isHeic = uploadMime === 'image/heic' || uploadMime === 'image/heif' ||
+          selectedFile.name.toLowerCase().endsWith('.heic') ||
+          selectedFile.name.toLowerCase().endsWith('.heif');
+
+        if (isHeic && typeof heic2any !== 'undefined') {
+          try {
+            btn.textContent = 'Converting image…';
+            const converted = await heic2any({ blob: selectedFile, toType: 'image/jpeg', quality: 0.88 });
+            uploadFile = Array.isArray(converted) ? converted[0] : converted;
+            uploadMime = 'image/jpeg';
+            console.log('HEIC converted to JPEG, size:', uploadFile.size);
+          } catch (heicErr) {
+            console.warn('heic2any failed, uploading raw:', heicErr);
+          }
+          btn.textContent = 'Submitting…';
+        }
+
         const uploadRes = await fetch('/api/upload-image', {
           method: 'POST',
-          headers: { 'Content-Type': rawMime },
-          body: selectedFile
+          headers: { 'Content-Type': uploadMime },
+          body: uploadFile
         });
         if (uploadRes.ok) {
           const uploadData = await uploadRes.json();
