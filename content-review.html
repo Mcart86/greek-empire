@@ -244,6 +244,29 @@
       text-overflow: ellipsis;
     }
 
+    /* ── Text button ── */
+    .btn-text {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      padding: 7px 14px;
+      text-decoration: none;
+      transition: border-color 0.15s, color 0.15s;
+      cursor: pointer;
+    }
+    .btn-text:hover { border-color: var(--gold); color: var(--gold); }
+    .btn-text-approved { border-color: rgba(76,175,125,0.4); color: var(--green); }
+    .btn-text-approved:hover { border-color: var(--green); }
+    .btn-text-revision { border-color: rgba(224,82,82,0.4); color: var(--red); }
+    .btn-text-revision:hover { border-color: var(--red); }
+
     /* Status badge */
     .status-badge {
       font-size: 10px;
@@ -696,9 +719,13 @@
     const time     = formatTime(s.submitted_at);
     const hasImg   = !!s.image_url;
     const long     = (s.caption || '').length > 300;
+    const phone    = s.phone ? s.phone.replace(/\D/g, '') : null;
 
     const statusLabel = { pending: 'Pending', approved: 'Approved', revision: 'Needs Revision' };
     const statusClass = { pending: 'status-pending', approved: 'status-approved', revision: 'status-revision' };
+
+    const approvedMsg  = encodeURIComponent(`Hey ${(s.ambassador_name||'').split(' ')[0]} — your post is approved! Go ahead and post it. 🔥 — Greek Empire`);
+    const revisionMsg  = encodeURIComponent(`Hey ${(s.ambassador_name||'').split(' ')[0]} — we reviewed your post and need a few changes before you go live. Check your email or DM for feedback. — Greek Empire`);
 
     return `
     <div class="submission-card" data-id="${s.id}">
@@ -707,7 +734,7 @@
           <div class="avatar">${initials}</div>
           <div class="card-info">
             <div class="ambassador-name">${esc(s.ambassador_name || 'Unknown')}</div>
-            <div class="card-sub">${esc(s.instagram_handle || '')}${s.chapter ? ' · ' + esc(s.chapter) : ''}</div>
+            <div class="card-sub">${esc(s.instagram_handle || '')}${s.chapter ? ' · ' + esc(s.chapter) : ''}${s.college ? ' · ' + esc(s.college) : ''}${phone ? ' · ' + esc(s.phone) : ''}</div>
           </div>
         </div>
         <span class="platform-tag">${platform}</span>
@@ -738,6 +765,7 @@
 
       <div class="card-actions">
         <span class="timestamp">${time}</span>
+        ${phone ? `<a class="btn-text" href="sms:${phone}">💬 Text</a>` : ''}
         ${s.status !== 'approved' ? `<button class="btn btn-approve" data-id="${s.id}">✓ Approve</button>` : ''}
         ${s.status !== 'revision' ? `<button class="btn btn-revision" data-id="${s.id}">Request Revision</button>` : ''}
       </div>

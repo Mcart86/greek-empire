@@ -344,6 +344,11 @@
     </div>
 
     <div class="form-group">
+      <label>Phone Number</label>
+      <input type="tel" id="phone" placeholder="(555) 555-5555" autocomplete="tel" />
+    </div>
+
+    <div class="form-group">
       <label>Chapter</label>
       <input type="text" id="chapter" placeholder="e.g. Alpha Phi" />
     </div>
@@ -529,6 +534,7 @@
       const payload = {
         ambassador_name: name,
         instagram_handle: handle.startsWith('@') ? handle : '@' + handle,
+        phone: document.getElementById('phone').value.trim() || null,
         chapter,
         college: college || null,
         platform: platformChecks.join(', '),
@@ -575,6 +581,7 @@
     document.getElementById('ambassador_name').value = '';
     document.getElementById('instagram_handle').value = '';
     document.getElementById('chapter').value = '';
+    document.getElementById('phone').value = '';
     document.getElementById('college').value = '';
     document.querySelectorAll('input[name="platform"]').forEach(c => c.checked = false);
     captionEl.value = '';
