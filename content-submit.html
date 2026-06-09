@@ -506,16 +506,24 @@
     let image_url = null;
     if (selectedFile) {
       try {
-        const ext = selectedFile.name.split('.').pop();
+        // Detect MIME type — iOS Safari sometimes returns empty string
+        const mimeType = selectedFile.type || 'image/jpeg';
+        const extMap = {'image/jpeg':'jpg','image/png':'png','image/gif':'gif','image/webp':'webp','video/mp4':'mp4','video/quicktime':'mov'};
+        const ext = extMap[mimeType] || selectedFile.name.split('.').pop() || 'jpg';
         const fileName = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+
+        // Convert to blob with explicit type to fix iOS Safari blank MIME
+        const blob = new Blob([await selectedFile.arrayBuffer()], { type: mimeType });
+
         const uploadRes = await fetch(`${SUPABASE_URL}/storage/v1/object/content-submissions/${fileName}`, {
           method: 'POST',
           headers: {
             'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-            'Content-Type': selectedFile.type,
-            'x-upsert': 'false'
+            'apikey': SUPABASE_ANON_KEY,
+            'Content-Type': mimeType,
+            'x-upsert': 'true'
           },
-          body: selectedFile
+          body: blob
         });
         if (uploadRes.ok) {
           image_url = `${SUPABASE_URL}/storage/v1/object/public/content-submissions/${fileName}`;
