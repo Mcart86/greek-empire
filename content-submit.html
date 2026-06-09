@@ -498,8 +498,6 @@
   // Submit
   document.getElementById('submit-btn').addEventListener('click', async () => {
     const name = document.getElementById('ambassador_name').value.trim();
-    const handle = document.getElementById('instagram_handle').value.trim();
-    const chapter = document.getElementById('chapter').value.trim();
     const platformChecks = [...document.querySelectorAll('input[name="platform"]:checked')].map(c => c.value);
     const caption = captionEl.value.trim();
     const notes = document.getElementById('notes').value.trim();
@@ -611,8 +609,6 @@
     document.getElementById('form-wrap').style.display = 'block';
     document.getElementById('success-screen').style.display = 'none';
     document.getElementById('ambassador_name').value = '';
-    document.getElementById('instagram_handle').value = '';
-    document.getElementById('chapter').value = '';
     document.getElementById('phone').value = '';
     document.getElementById('college').value = '';
     document.querySelectorAll('input[name="platform"]').forEach(c => c.checked = false);
