@@ -109,6 +109,53 @@
     }
     select option { background: var(--card); }
 
+    /* ── Platform checkboxes ── */
+    .platform-checks {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .check-opt {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px 14px;
+      cursor: pointer;
+      transition: border-color 0.2s;
+      user-select: none;
+    }
+    .check-opt:hover { border-color: var(--gold); }
+    .check-opt input[type="checkbox"] {
+      display: none;
+      width: auto; height: auto; padding: 0;
+      background: none; border: none;
+    }
+    .check-box {
+      width: 18px; height: 18px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .check-opt input:checked ~ .check-box {
+      background: var(--gold);
+      border-color: var(--gold);
+    }
+    .check-opt input:checked ~ .check-box::after {
+      content: '';
+      display: block;
+      width: 5px; height: 9px;
+      border: 2px solid #000;
+      border-top: none; border-left: none;
+      transform: rotate(45deg) translateY(-1px);
+    }
+    .check-opt input:checked ~ .check-label { color: var(--cream); }
+    .check-label { font-size: 13px; color: var(--text); }
+
     /* ── Image upload ── */
     .upload-zone {
       border: 1px dashed var(--border);
@@ -298,21 +345,41 @@
 
     <div class="form-group">
       <label>Chapter</label>
-      <input type="text" id="chapter" placeholder="e.g. Alpha Phi — Penn State" />
+      <input type="text" id="chapter" placeholder="e.g. Alpha Phi" />
+    </div>
+
+    <div class="form-group">
+      <label>College / University</label>
+      <input type="text" id="college" placeholder="e.g. Penn State" />
     </div>
 
     <hr class="divider" />
     <div class="section-label">Content</div>
 
     <div class="form-group">
-      <label>Platform</label>
-      <select id="platform">
-        <option value="">Select platform</option>
-        <option value="instagram_feed">Instagram — Feed Post</option>
-        <option value="instagram_reel">Instagram — Reel</option>
-        <option value="instagram_story">Instagram — Story</option>
-        <option value="tiktok">TikTok</option>
-      </select>
+      <label>Platform <span style="color:var(--muted);font-size:10px;text-transform:none;letter-spacing:0;">(select all that apply)</span></label>
+      <div class="platform-checks">
+        <label class="check-opt">
+          <input type="checkbox" name="platform" value="instagram_feed" />
+          <span class="check-box"></span>
+          <span class="check-label">Instagram — Feed Post</span>
+        </label>
+        <label class="check-opt">
+          <input type="checkbox" name="platform" value="instagram_reel" />
+          <span class="check-box"></span>
+          <span class="check-label">Instagram — Reel</span>
+        </label>
+        <label class="check-opt">
+          <input type="checkbox" name="platform" value="instagram_story" />
+          <span class="check-box"></span>
+          <span class="check-label">Instagram — Story</span>
+        </label>
+        <label class="check-opt">
+          <input type="checkbox" name="platform" value="tiktok" />
+          <span class="check-box"></span>
+          <span class="check-label">TikTok</span>
+        </label>
+      </div>
     </div>
 
     <div class="form-group">
@@ -416,12 +483,12 @@
     const name = document.getElementById('ambassador_name').value.trim();
     const handle = document.getElementById('instagram_handle').value.trim();
     const chapter = document.getElementById('chapter').value.trim();
-    const platform = document.getElementById('platform').value;
+    const platformChecks = [...document.querySelectorAll('input[name="platform"]:checked')].map(c => c.value);
     const caption = captionEl.value.trim();
     const notes = document.getElementById('notes').value.trim();
 
-    if (!name || !handle || !platform || !caption) {
-      showStatus('Please fill in your name, handle, platform, and caption.', 'error');
+    if (!name || !handle || platformChecks.length === 0 || !caption) {
+      showStatus('Please fill in your name, handle, at least one platform, and caption.', 'error');
       return;
     }
 
@@ -454,11 +521,13 @@
       }
 
       // Insert record into content_submissions table
+      const college = document.getElementById('college').value.trim();
       const payload = {
         ambassador_name: name,
         instagram_handle: handle.startsWith('@') ? handle : '@' + handle,
         chapter,
-        platform,
+        college: college || null,
+        platform: platformChecks.join(', '),
         caption,
         notes: notes || null,
         image_url,
@@ -501,7 +570,8 @@
     document.getElementById('ambassador_name').value = '';
     document.getElementById('instagram_handle').value = '';
     document.getElementById('chapter').value = '';
-    document.getElementById('platform').value = '';
+    document.getElementById('college').value = '';
+    document.querySelectorAll('input[name="platform"]').forEach(c => c.checked = false);
     captionEl.value = '';
     document.getElementById('notes').value = '';
     selectedFile = null;
