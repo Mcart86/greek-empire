@@ -2,5 +2,9 @@
   "name": "greek-empire",
   "version": "1.0.0",
   "description": "Greek Empire Pitch Trainer",
-  "private": true
+  "private": true,
+  "dependencies": {
+    "sharp": "^0.33.4",
+    "heic-convert": "^2.1.0"
+  }
 }
