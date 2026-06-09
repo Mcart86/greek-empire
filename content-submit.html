@@ -349,11 +349,6 @@
     </div>
 
     <div class="form-group">
-      <label>Chapter</label>
-      <input type="text" id="chapter" placeholder="e.g. Alpha Phi" />
-    </div>
-
-    <div class="form-group">
       <label>College / University</label>
       <input type="text" id="college" placeholder="e.g. Penn State" />
     </div>
@@ -514,8 +509,8 @@
     const caption = captionEl.value.trim();
     const notes = document.getElementById('notes').value.trim();
 
-    if (!name || !handle || platformChecks.length === 0 || !caption) {
-      showStatus('Please fill in your name, handle, at least one platform, and caption.', 'error');
+    if (!name || platformChecks.length === 0 || !caption) {
+      showStatus('Please fill in your name, at least one platform, and caption.', 'error');
       return;
     }
 
@@ -575,9 +570,9 @@
       const college = document.getElementById('college').value.trim();
       const payload = {
         ambassador_name: name,
-        instagram_handle: handle.startsWith('@') ? handle : '@' + handle,
+        instagram_handle: null,
         phone: document.getElementById('phone').value.trim() || null,
-        chapter,
+        chapter: null,
         college: college || null,
         platform: platformChecks.join(', '),
         caption,
