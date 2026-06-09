@@ -21,6 +21,8 @@
     }
   ],
   "rewrites": [
-    { "source": "/trainer", "destination": "/trainer/index.html" }
+    { "source": "/trainer",        "destination": "/trainer/index.html" },
+    { "source": "/content-submit", "destination": "/content-submit.html" },
+    { "source": "/content-review", "destination": "/content-review.html" }
   ]
 }

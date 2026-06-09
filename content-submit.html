@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Submit Content — Greek Empire</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black:   #0D0D0D;
+      --dark:    #141414;
+      --card:    #1A1A1A;
+      --border:  #2A2A2A;
+      --gold:    #C9A84C;
+      --gold-lt: #E8B830;
+      --cream:   #F0E8D0;
+      --muted:   #666;
+      --text:    #E8E8E8;
+    }
+
+    body {
+      background: var(--black);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* ── Header ── */
+    header {
+      border-bottom: 1px solid var(--border);
+      padding: 20px 32px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    header img { height: 36px; }
+    header .pipe {
+      width: 1px; height: 28px;
+      background: var(--border);
+    }
+    header span {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 18px;
+      letter-spacing: 2px;
+      color: var(--gold);
+    }
+
+    /* ── Layout ── */
+    main {
+      max-width: 580px;
+      margin: 0 auto;
+      padding: 56px 24px 80px;
+    }
+
+    .page-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 42px;
+      letter-spacing: 3px;
+      color: var(--cream);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .page-sub {
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 40px;
+    }
+
+    /* ── Form ── */
+    .form-group {
+      margin-bottom: 24px;
+    }
+    label {
+      display: block;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 8px;
+    }
+    input, select, textarea {
+      width: 100%;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      padding: 12px 16px;
+      transition: border-color 0.2s;
+      appearance: none;
+    }
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: var(--gold);
+    }
+    textarea { resize: vertical; min-height: 120px; }
+    select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23666' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 40px;
+    }
+    select option { background: var(--card); }
+
+    /* ── Image upload ── */
+    .upload-zone {
+      border: 1px dashed var(--border);
+      border-radius: 6px;
+      padding: 32px 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      position: relative;
+    }
+    .upload-zone:hover, .upload-zone.drag-over {
+      border-color: var(--gold);
+      background: rgba(201,168,76,0.04);
+    }
+    .upload-zone input[type="file"] {
+      position: absolute; inset: 0;
+      opacity: 0; cursor: pointer;
+      width: 100%; height: 100%;
+      padding: 0;
+    }
+    .upload-icon {
+      font-size: 28px;
+      margin-bottom: 10px;
+      display: block;
+    }
+    .upload-label {
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .upload-label strong { color: var(--gold); }
+
+    #preview-wrap {
+      display: none;
+      margin-top: 12px;
+      position: relative;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    #preview-wrap img {
+      width: 100%;
+      max-height: 280px;
+      object-fit: cover;
+      display: block;
+    }
+    #preview-wrap .remove-img {
+      position: absolute;
+      top: 10px; right: 10px;
+      background: rgba(0,0,0,0.7);
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      color: var(--text);
+      width: 28px; height: 28px;
+      cursor: pointer;
+      font-size: 14px;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    /* ── Char counter ── */
+    .caption-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    .char-count {
+      font-size: 11px;
+      color: var(--muted);
+    }
+    .char-count.warn { color: var(--gold); }
+    .char-count.over { color: #e05252; }
+
+    /* ── Submit button ── */
+    .btn-submit {
+      width: 100%;
+      background: var(--gold);
+      color: var(--black);
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 18px;
+      letter-spacing: 2px;
+      border: none;
+      border-radius: 6px;
+      padding: 16px;
+      cursor: pointer;
+      margin-top: 8px;
+      transition: background 0.2s, transform 0.1s;
+    }
+    .btn-submit:hover { background: var(--gold-lt); }
+    .btn-submit:active { transform: scale(0.99); }
+    .btn-submit:disabled {
+      background: var(--border);
+      color: var(--muted);
+      cursor: not-allowed;
+    }
+
+    /* ── States ── */
+    .status-bar {
+      border-radius: 6px;
+      padding: 14px 16px;
+      font-size: 14px;
+      margin-top: 20px;
+      display: none;
+    }
+    .status-bar.error {
+      background: rgba(224,82,82,0.1);
+      border: 1px solid rgba(224,82,82,0.3);
+      color: #e08080;
+      display: block;
+    }
+    .status-bar.success {
+      background: rgba(201,168,76,0.1);
+      border: 1px solid rgba(201,168,76,0.3);
+      color: var(--gold-lt);
+      display: block;
+    }
+
+    /* ── Success screen ── */
+    #success-screen {
+      display: none;
+      text-align: center;
+      padding: 60px 0;
+    }
+    #success-screen .check {
+      font-size: 52px;
+      margin-bottom: 20px;
+    }
+    #success-screen h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 36px;
+      letter-spacing: 3px;
+      color: var(--cream);
+      margin-bottom: 10px;
+    }
+    #success-screen p {
+      color: var(--muted);
+      font-size: 14px;
+      max-width: 340px;
+      margin: 0 auto 28px;
+    }
+    #success-screen a {
+      font-size: 13px;
+      color: var(--gold);
+      text-decoration: none;
+    }
+
+    /* ── Divider ── */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 32px 0;
+    }
+
+    .section-label {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 14px;
+      letter-spacing: 2px;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <img src="greek-empire-wordmark.png" alt="Greek Empire" />
+  <div class="pipe"></div>
+  <span>Content Submit</span>
+</header>
+
+<main>
+
+  <!-- Form -->
+  <div id="form-wrap">
+    <h1 class="page-title">Submit a Post</h1>
+    <p class="page-sub">Upload your draft and we'll review before you go live.</p>
+
+    <div class="section-label">Your Info</div>
+
+    <div class="form-group">
+      <label>Your Name</label>
+      <input type="text" id="ambassador_name" placeholder="First Last" autocomplete="name" />
+    </div>
+
+    <div class="form-group">
+      <label>Instagram Handle</label>
+      <input type="text" id="instagram_handle" placeholder="@yourhandle" />
+    </div>
+
+    <div class="form-group">
+      <label>Chapter</label>
+      <input type="text" id="chapter" placeholder="e.g. Alpha Phi — Penn State" />
+    </div>
+
+    <hr class="divider" />
+    <div class="section-label">Content</div>
+
+    <div class="form-group">
+      <label>Platform</label>
+      <select id="platform">
+        <option value="">Select platform</option>
+        <option value="instagram_feed">Instagram — Feed Post</option>
+        <option value="instagram_reel">Instagram — Reel</option>
+        <option value="instagram_story">Instagram — Story</option>
+        <option value="tiktok">TikTok</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <div class="caption-meta">
+        <label style="margin-bottom:0">Draft Caption</label>
+        <span class="char-count" id="char-count">0 / 2200</span>
+      </div>
+      <textarea id="caption" placeholder="Paste your draft caption here, including hashtags..."></textarea>
+    </div>
+
+    <div class="form-group">
+      <label>Image or Video Thumbnail</label>
+      <div class="upload-zone" id="upload-zone">
+        <input type="file" id="file-input" accept="image/*,video/*" />
+        <span class="upload-icon">🖼</span>
+        <div class="upload-label">
+          <strong>Click to upload</strong> or drag and drop<br />
+          JPG, PNG, or MP4 — max 20MB
+        </div>
+      </div>
+      <div id="preview-wrap">
+        <img id="preview-img" src="" alt="Preview" />
+        <button class="remove-img" id="remove-img" type="button">✕</button>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Notes for the Team <span style="color:var(--muted);font-size:10px;text-transform:none;letter-spacing:0;">(optional)</span></label>
+      <textarea id="notes" placeholder="Anything we should know — timing, collab tag, event it's tied to..." style="min-height:80px;"></textarea>
+    </div>
+
+    <button class="btn-submit" id="submit-btn" type="button">Submit for Review</button>
+    <div class="status-bar" id="status-bar"></div>
+  </div>
+
+  <!-- Success -->
+  <div id="success-screen">
+    <div class="check">✦</div>
+    <h2>Submitted</h2>
+    <p>We'll review and get back to you within 24 hours. Don't post until you hear from us.</p>
+    <a href="#" id="submit-another">Submit another post →</a>
+  </div>
+
+</main>
+
+<script>
+  const SUPABASE_URL = 'https://gxglrktbvumrpzhlogno.supabase.co';
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd4Z2xya3Ridm11cnB6aGxvZ25vIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDUyNTc3NTksImV4cCI6MjA2MDgzMzc1OX0.HiWhMnZXAMhNzXkgwZTdL1BjNVOJMwFbhCE5xDpjkoc';
+
+  // Caption char counter
+  const captionEl = document.getElementById('caption');
+  const charCount = document.getElementById('char-count');
+  captionEl.addEventListener('input', () => {
+    const len = captionEl.value.length;
+    charCount.textContent = `${len} / 2200`;
+    charCount.className = 'char-count' + (len > 2200 ? ' over' : len > 1800 ? ' warn' : '');
+  });
+
+  // File preview
+  let selectedFile = null;
+  const fileInput = document.getElementById('file-input');
+  const uploadZone = document.getElementById('upload-zone');
+  const previewWrap = document.getElementById('preview-wrap');
+  const previewImg = document.getElementById('preview-img');
+  const removeBtn = document.getElementById('remove-img');
+
+  fileInput.addEventListener('change', handleFile);
+
+  uploadZone.addEventListener('dragover', e => { e.preventDefault(); uploadZone.classList.add('drag-over'); });
+  uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('drag-over'));
+  uploadZone.addEventListener('drop', e => {
+    e.preventDefault();
+    uploadZone.classList.remove('drag-over');
+    if (e.dataTransfer.files[0]) { fileInput.files = e.dataTransfer.files; handleFile(); }
+  });
+
+  function handleFile() {
+    const file = fileInput.files[0];
+    if (!file) return;
+    if (file.size > 20 * 1024 * 1024) { showStatus('File must be under 20MB.', 'error'); return; }
+    selectedFile = file;
+    if (file.type.startsWith('image/')) {
+      const reader = new FileReader();
+      reader.onload = e => { previewImg.src = e.target.result; previewWrap.style.display = 'block'; };
+      reader.readAsDataURL(file);
+    } else {
+      previewImg.src = '';
+      previewImg.alt = '🎬 ' + file.name;
+      previewWrap.style.display = 'block';
+    }
+  }
+
+  removeBtn.addEventListener('click', () => {
+    selectedFile = null;
+    fileInput.value = '';
+    previewWrap.style.display = 'none';
+  });
+
+  // Submit
+  document.getElementById('submit-btn').addEventListener('click', async () => {
+    const name = document.getElementById('ambassador_name').value.trim();
+    const handle = document.getElementById('instagram_handle').value.trim();
+    const chapter = document.getElementById('chapter').value.trim();
+    const platform = document.getElementById('platform').value;
+    const caption = captionEl.value.trim();
+    const notes = document.getElementById('notes').value.trim();
+
+    if (!name || !handle || !platform || !caption) {
+      showStatus('Please fill in your name, handle, platform, and caption.', 'error');
+      return;
+    }
+
+    const btn = document.getElementById('submit-btn');
+    btn.disabled = true;
+    btn.textContent = 'Submitting…';
+    clearStatus();
+
+    try {
+      let image_url = null;
+
+      // Upload file to Supabase Storage if one was selected
+      if (selectedFile) {
+        const ext = selectedFile.name.split('.').pop();
+        const fileName = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+        const uploadRes = await fetch(`${SUPABASE_URL}/storage/v1/object/content-submissions/${fileName}`, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+            'Content-Type': selectedFile.type,
+            'x-upsert': 'false'
+          },
+          body: selectedFile
+        });
+
+        if (uploadRes.ok) {
+          image_url = `${SUPABASE_URL}/storage/v1/object/public/content-submissions/${fileName}`;
+        }
+        // If upload fails, we still submit the form — just without image
+      }
+
+      // Insert record into content_submissions table
+      const payload = {
+        ambassador_name: name,
+        instagram_handle: handle.startsWith('@') ? handle : '@' + handle,
+        chapter,
+        platform,
+        caption,
+        notes: notes || null,
+        image_url,
+        status: 'pending',
+        submitted_at: new Date().toISOString()
+      };
+
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/content_submissions`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': SUPABASE_ANON_KEY,
+          'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+          'Prefer': 'return=minimal'
+        },
+        body: JSON.stringify(payload)
+      });
+
+      if (!res.ok) {
+        const err = await res.text();
+        throw new Error(err);
+      }
+
+      // Show success
+      document.getElementById('form-wrap').style.display = 'none';
+      document.getElementById('success-screen').style.display = 'block';
+
+    } catch (err) {
+      console.error(err);
+      showStatus('Something went wrong. Try again or DM us directly.', 'error');
+      btn.disabled = false;
+      btn.textContent = 'Submit for Review';
+    }
+  });
+
+  document.getElementById('submit-another').addEventListener('click', e => {
+    e.preventDefault();
+    document.getElementById('form-wrap').style.display = 'block';
+    document.getElementById('success-screen').style.display = 'none';
+    document.getElementById('ambassador_name').value = '';
+    document.getElementById('instagram_handle').value = '';
+    document.getElementById('chapter').value = '';
+    document.getElementById('platform').value = '';
+    captionEl.value = '';
+    document.getElementById('notes').value = '';
+    selectedFile = null;
+    fileInput.value = '';
+    previewWrap.style.display = 'none';
+    charCount.textContent = '0 / 2200';
+  });
+
+  function showStatus(msg, type) {
+    const bar = document.getElementById('status-bar');
+    bar.textContent = msg;
+    bar.className = 'status-bar ' + type;
+  }
+  function clearStatus() {
+    const bar = document.getElementById('status-bar');
+    bar.className = 'status-bar';
+    bar.textContent = '';
+  }
+</script>
+</body>
+</html>
