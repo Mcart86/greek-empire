@@ -506,27 +506,16 @@
     let image_url = null;
     if (selectedFile) {
       try {
-        // Detect MIME type — iOS Safari sometimes returns empty string
+        // Upload via server-side route (avoids auth issues with direct storage access)
         const mimeType = selectedFile.type || 'image/jpeg';
-        const extMap = {'image/jpeg':'jpg','image/png':'png','image/gif':'gif','image/webp':'webp','video/mp4':'mp4','video/quicktime':'mov'};
-        const ext = extMap[mimeType] || selectedFile.name.split('.').pop() || 'jpg';
-        const fileName = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
-
-        // Convert to blob with explicit type to fix iOS Safari blank MIME
-        const blob = new Blob([await selectedFile.arrayBuffer()], { type: mimeType });
-
-        const uploadRes = await fetch(`${SUPABASE_URL}/storage/v1/object/content-submissions/${fileName}`, {
+        const uploadRes = await fetch('/api/upload-image', {
           method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-            'apikey': SUPABASE_ANON_KEY,
-            'Content-Type': mimeType,
-            'x-upsert': 'true'
-          },
-          body: blob
+          headers: { 'Content-Type': mimeType },
+          body: selectedFile
         });
         if (uploadRes.ok) {
-          image_url = `${SUPABASE_URL}/storage/v1/object/public/content-submissions/${fileName}`;
+          const uploadData = await uploadRes.json();
+          image_url = uploadData.url;
         } else {
           const uploadErr = await uploadRes.text();
           console.warn('Image upload failed (non-blocking):', uploadRes.status, uploadErr);
