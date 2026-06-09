@@ -497,11 +497,10 @@
     btn.textContent = 'Submitting…';
     clearStatus();
 
-    try {
-      let image_url = null;
-
-      // Upload file to Supabase Storage if one was selected
-      if (selectedFile) {
+    // Upload image — wrapped separately so it never blocks the DB insert
+    let image_url = null;
+    if (selectedFile) {
+      try {
         const ext = selectedFile.name.split('.').pop();
         const fileName = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
         const uploadRes = await fetch(`${SUPABASE_URL}/storage/v1/object/content-submissions/${fileName}`, {
@@ -513,13 +512,18 @@
           },
           body: selectedFile
         });
-
         if (uploadRes.ok) {
           image_url = `${SUPABASE_URL}/storage/v1/object/public/content-submissions/${fileName}`;
+        } else {
+          const uploadErr = await uploadRes.text();
+          console.warn('Image upload failed (non-blocking):', uploadRes.status, uploadErr);
         }
-        // If upload fails, we still submit the form — just without image
+      } catch (uploadErr) {
+        console.warn('Image upload threw (non-blocking):', uploadErr);
       }
+    }
 
+    try {
       // Insert record into content_submissions table
       const college = document.getElementById('college').value.trim();
       const payload = {
@@ -547,8 +551,9 @@
       });
 
       if (!res.ok) {
-        const err = await res.text();
-        throw new Error(err);
+        const errText = await res.text();
+        console.error('DB insert failed:', res.status, errText);
+        throw new Error(errText);
       }
 
       // Show success
@@ -556,8 +561,8 @@
       document.getElementById('success-screen').style.display = 'block';
 
     } catch (err) {
-      console.error(err);
-      showStatus('Something went wrong. Try again or DM us directly.', 'error');
+      console.error('Submit error:', err);
+      showStatus('Something went wrong: ' + err.message, 'error');
       btn.disabled = false;
       btn.textContent = 'Submit for Review';
     }
