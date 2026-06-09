@@ -434,6 +434,28 @@
   const SUPABASE_URL = 'https://wwsjkiubkfcmpbjiqazj.supabase.co';
   const SUPABASE_ANON_KEY = 'sb_publishable_fceq-qik0OOMdAYzHU9nIQ_0FxOILuN';
 
+  // Convert any image (incl HEIC) to JPEG blob via canvas
+  function convertToJpeg(file) {
+    return new Promise((resolve, reject) => {
+      const url = URL.createObjectURL(file);
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        canvas.width  = img.naturalWidth;
+        canvas.height = img.naturalHeight;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0);
+        URL.revokeObjectURL(url);
+        canvas.toBlob(blob => {
+          if (blob) resolve(blob);
+          else reject(new Error('Canvas toBlob failed'));
+        }, 'image/jpeg', 0.92);
+      };
+      img.onerror = () => { URL.revokeObjectURL(url); reject(new Error('Image load failed')); };
+      img.src = url;
+    });
+  }
+
   // Caption char counter
   const captionEl = document.getElementById('caption');
   const charCount = document.getElementById('char-count');
@@ -506,12 +528,26 @@
     let image_url = null;
     if (selectedFile) {
       try {
-        // Upload via server-side route (avoids auth issues with direct storage access)
-        const mimeType = selectedFile.type || 'image/jpeg';
+        // Convert image to JPEG via canvas (fixes HEIC/HEIF from iOS)
+        let uploadBlob = selectedFile;
+        let uploadMime = selectedFile.type || 'image/jpeg';
+
+        const needsConvert = !['image/jpeg','image/png','image/webp','image/gif'].includes(uploadMime);
+        if (needsConvert || uploadMime === '') {
+          try {
+            uploadBlob = await convertToJpeg(selectedFile);
+            uploadMime = 'image/jpeg';
+          } catch(e) {
+            console.warn('Canvas convert failed, uploading raw:', e);
+            uploadBlob = selectedFile;
+            uploadMime = 'image/jpeg';
+          }
+        }
+
         const uploadRes = await fetch('/api/upload-image', {
           method: 'POST',
-          headers: { 'Content-Type': mimeType },
-          body: selectedFile
+          headers: { 'Content-Type': uploadMime },
+          body: uploadBlob
         });
         if (uploadRes.ok) {
           const uploadData = await uploadRes.json();
