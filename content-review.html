@@ -326,6 +326,28 @@
       color: var(--muted);
       font-size: 26px;
     }
+    .video-thumb {
+      width: 100%;
+      height: 180px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: var(--dark);
+    }
+    .video-thumb span { font-size: 32px; }
+    .video-thumb a {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--gold);
+      text-decoration: none;
+      border: 1px solid var(--gold);
+      border-radius: 4px;
+      padding: 5px 12px;
+      letter-spacing: 0.5px;
+    }
+    .video-thumb a:hover { background: rgba(201,168,76,0.1); }
 
     .card-content {
       padding: 20px;
@@ -591,6 +613,12 @@
   // Auto-load on open
   loadSubmissions();
 
+  // ── Helpers (defined early) ──
+  function isVideo(url) {
+    if (!url) return false;
+    return /\.(mp4|mov|avi|webm|mkv)(\?|$)/i.test(url);
+  }
+
   // ── State ──
   let allSubmissions = [];
   let currentFilter = 'pending';
@@ -715,7 +743,13 @@
       <div class="card-body ${hasImg ? 'has-image' : ''}">
         ${hasImg ? `
         <div class="card-image">
+          ${isVideo(s.image_url) ? `
+          <div class="video-thumb">
+            <span>🎬</span>
+            <a href="${esc(s.image_url)}" target="_blank" download>Download Video</a>
+          </div>` : `
           <img src="${esc(s.image_url)}" alt="Submitted content" loading="lazy" />
+          `}
         </div>` : ''}
         <div class="card-content">
           <div class="caption-label">Draft Caption</div>
