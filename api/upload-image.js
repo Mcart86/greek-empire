@@ -19,7 +19,12 @@ export default async function handler(req, res) {
     const buffer = Buffer.concat(chunks);
 
     const contentType = req.headers['content-type'] || 'image/jpeg';
-    const ext = contentType.split('/')[1]?.split(';')[0] || 'jpg';
+    const mimeToExt = {
+      'image/jpeg': 'jpg', 'image/png': 'png', 'image/webp': 'webp', 'image/gif': 'gif',
+      'video/mp4': 'mp4', 'video/quicktime': 'mov', 'video/x-msvideo': 'avi',
+      'video/webm': 'webm', 'video/x-m4v': 'm4v'
+    };
+    const ext = mimeToExt[contentType] || contentType.split('/')[1]?.split(';')[0] || 'jpg';
     const fileName = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
 
     const uploadRes = await fetch(

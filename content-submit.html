@@ -528,20 +528,29 @@
     let image_url = null;
     if (selectedFile) {
       try {
-        // Convert image to JPEG via canvas (fixes HEIC/HEIF from iOS)
-        let uploadBlob = selectedFile;
-        let uploadMime = selectedFile.type || 'image/jpeg';
+        // Detect if file is video — skip canvas conversion entirely
+        const rawMime = selectedFile.type || '';
+        const isVideoFile = rawMime.startsWith('video/') ||
+          /\.(mp4|mov|avi|webm|mkv|m4v)$/i.test(selectedFile.name);
 
-        const needsConvert = !['image/jpeg','image/png','image/webp','image/gif'].includes(uploadMime);
-        if (needsConvert || uploadMime === '') {
-          try {
-            uploadBlob = await convertToJpeg(selectedFile);
-            uploadMime = 'image/jpeg';
-          } catch(e) {
-            console.warn('Canvas convert failed, uploading raw:', e);
-            uploadBlob = selectedFile;
-            uploadMime = 'image/jpeg';
+        let uploadBlob = selectedFile;
+        let uploadMime = rawMime || 'image/jpeg';
+
+        if (!isVideoFile) {
+          // Convert images (incl HEIC) to JPEG via canvas
+          const needsConvert = !['image/jpeg','image/png','image/webp','image/gif'].includes(uploadMime);
+          if (needsConvert || uploadMime === '') {
+            try {
+              uploadBlob = await convertToJpeg(selectedFile);
+              uploadMime = 'image/jpeg';
+            } catch(e) {
+              console.warn('Canvas convert failed, uploading raw:', e);
+              uploadMime = 'image/jpeg';
+            }
           }
+        } else {
+          // Video — use raw file, force correct mime
+          uploadMime = rawMime || 'video/mp4';
         }
 
         const uploadRes = await fetch('/api/upload-image', {
