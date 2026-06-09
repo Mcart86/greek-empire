@@ -529,20 +529,8 @@
 </head>
 <body>
 
-<!-- Login Gate -->
-<div id="login-gate">
-  <div class="login-box">
-    <img src="greek-empire-wordmark.png" alt="Greek Empire" />
-    <h2>Admin Access</h2>
-    <p>Content review queue</p>
-    <input type="password" id="pass-input" placeholder="••••••••" autocomplete="current-password" />
-    <button id="pass-btn">Enter</button>
-    <div class="login-error" id="login-error">Incorrect password.</div>
-  </div>
-</div>
-
 <!-- App -->
-<div id="app">
+<div id="app" style="display:block;">
 
   <header>
     <div class="header-left">
@@ -600,25 +588,8 @@
 <script>
   const SUPABASE_URL = 'https://wwsjkiubkfcmpbjiqazj.supabase.co';
   const SUPABASE_ANON_KEY = 'sb_publishable_fceq-qik0OOMdAYzHU9nIQ_0FxOILuN';
-  const ADMIN_PASSWORD = 'Greek2026!';
-
-  // ── Auth ──
-  const passInput = document.getElementById('pass-input');
-  const passBtn   = document.getElementById('pass-btn');
-  const loginErr  = document.getElementById('login-error');
-
-  function tryLogin() {
-    if (passInput.value === ADMIN_PASSWORD) {
-      document.getElementById('login-gate').style.display = 'none';
-      document.getElementById('app').style.display = 'block';
-      loadSubmissions();
-    } else {
-      loginErr.style.display = 'block';
-      passInput.value = '';
-    }
-  }
-  passBtn.addEventListener('click', tryLogin);
-  passInput.addEventListener('keydown', e => { if (e.key === 'Enter') tryLogin(); });
+  // Auto-load on open
+  loadSubmissions();
 
   // ── State ──
   let allSubmissions = [];
