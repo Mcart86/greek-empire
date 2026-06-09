@@ -15,14 +15,19 @@ export default async function handler(req, res) {
   const BUCKET       = 'content-submissions';
 
   try {
-    // Read raw body
+    // Read raw body — collect all chunks into a single buffer
     const chunks = [];
-    for await (const chunk of req) chunks.push(chunk);
+    await new Promise((resolve, reject) => {
+      req.on('data', chunk => chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk)));
+      req.on('end', resolve);
+      req.on('error', reject);
+    });
     let buffer = Buffer.concat(chunks);
+
+    console.log('Received buffer size:', buffer.length, 'bytes');
 
     const contentType = req.headers['content-type'] || 'image/jpeg';
     const isVideo = contentType.startsWith('video/');
-    const isHeic  = contentType === 'image/heic' || contentType === 'image/heif';
 
     let finalBuffer  = buffer;
     let finalMime    = contentType;
@@ -36,17 +41,24 @@ export default async function handler(req, res) {
       };
       finalExt  = mimeToExt[contentType] || 'mov';
       finalMime = contentType;
+      console.log('Video upload, ext:', finalExt, 'size:', buffer.length);
     } else {
       // Convert all images (especially HEIC) to JPEG via sharp
       try {
-        finalBuffer = await sharp(buffer).rotate().jpeg({ quality: 90 }).toBuffer();
+        console.log('Converting image with sharp, input size:', buffer.length);
+        finalBuffer = await sharp(buffer, { failOnError: false })
+          .rotate()
+          .jpeg({ quality: 88 })
+          .toBuffer();
         finalMime   = 'image/jpeg';
         finalExt    = 'jpg';
+        console.log('Sharp output size:', finalBuffer.length);
       } catch (convertErr) {
-        console.warn('Sharp conversion failed, uploading raw:', convertErr.message);
+        console.error('Sharp conversion failed:', convertErr.message);
+        // Upload raw as fallback
         finalBuffer = buffer;
-        finalMime   = 'image/jpeg';
-        finalExt    = 'jpg';
+        finalMime   = contentType;
+        finalExt    = contentType.split('/')[1] || 'jpg';
       }
     }
 
