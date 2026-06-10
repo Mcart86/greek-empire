@@ -633,43 +633,42 @@
     btn.textContent = 'Uploading…';
     clearStatus();
 
-    // Upload via Supabase Edge Function — handles images + videos, no size limits
+    // Upload all files in parallel via Supabase Edge Function
     let image_url = null;
-    if (selectedFile) {
-      try {
-        const rawMime = selectedFile.type || 'image/jpeg';
-        const isVid = rawMime.startsWith('video/');
-
-        let uploadBlob = selectedFile;
-        let uploadMime = rawMime;
-
-        if (!isVid) {
-          // Compress images client-side before upload
-          try {
-            btn.textContent = 'Processing image…';
-            uploadBlob = await compressImage(selectedFile, 3.5 * 1024 * 1024);
-            uploadMime = 'image/jpeg';
-          } catch(e) {
-            console.warn('Compression failed, uploading raw');
-          }
-          btn.textContent = 'Submitting…';
-        }
-
-        const uploadRes = await fetch('https://wwsjkiubkfcmpbjiqazj.supabase.co/functions/v1/upload-media', {
-          method: 'POST',
-          headers: { 'Content-Type': uploadMime },
-          body: uploadBlob
-        });
-
-        if (uploadRes.ok) {
-          const data = await uploadRes.json();
-          image_url = data.url;
-        } else {
-          console.warn('Upload failed:', await uploadRes.text());
-        }
-      } catch(e) {
-        console.warn('Upload error:', e);
+    if (selectedFiles.length > 0) {
+      const hasVideo = selectedFiles.some(f => (f.type || '').startsWith('video/'));
+      btn.textContent = selectedFiles.length > 1 ? `Uploading ${selectedFiles.length} files…` : 'Uploading…';
+      if (hasVideo) {
+        document.getElementById('upload-progress-wrap').style.display = 'block';
+        startProgressSimulation();
       }
+
+      const uploadPromises = selectedFiles.map(async (file) => {
+        const rawMime = file.type || 'image/jpeg';
+        const isVid = rawMime.startsWith('video/');
+        try {
+          let uploadBlob = file;
+          let uploadMime = rawMime;
+          if (!isVid) {
+            try {
+              uploadBlob = await compressImage(file, 3.5 * 1024 * 1024);
+              uploadMime = 'image/jpeg';
+            } catch(e) { console.warn('Compression failed'); }
+          }
+          const res = await fetch('https://wwsjkiubkfcmpbjiqazj.supabase.co/functions/v1/upload-media', {
+            method: 'POST',
+            headers: { 'Content-Type': uploadMime },
+            body: uploadBlob
+          });
+          if (res.ok) { const d = await res.json(); return d.url; }
+          return null;
+        } catch(e) { return null; }
+      });
+
+      const results = await Promise.all(uploadPromises);
+      if (hasVideo) stopProgressSimulation(true);
+      image_url = results.filter(Boolean).join(',');
+      btn.textContent = 'Saving…';
     }
 
     try {
