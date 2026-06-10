@@ -525,6 +525,68 @@
       cursor: pointer;
     }
 
+    /* ── Approved Gallery ── */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 14px;
+    }
+    .gallery-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .gallery-thumb {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      display: block;
+      background: var(--dark);
+    }
+    .gallery-thumb-video {
+      width: 100%;
+      height: 160px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--dark);
+      font-size: 28px;
+    }
+    .gallery-info {
+      padding: 10px 12px;
+    }
+    .gallery-name {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--cream);
+      margin-bottom: 2px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .gallery-caption {
+      font-size: 11px;
+      color: var(--muted);
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+    .gallery-actions {
+      padding: 8px 12px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .gallery-dl {
+      font-size: 11px;
+      color: var(--gold);
+      text-decoration: none;
+    }
+    .gallery-dl:hover { text-decoration: underline; }
+
     /* ── Toast ── */
     #toast {
       position: fixed;
@@ -568,7 +630,7 @@
 
   <header>
     <div class="header-left">
-      <img src="greek-empire-wordmark.png" alt="Greek Empire" />
+      <img src="/greek-empire-wordmark.png" alt="Greek Empire" />
       <div class="pipe"></div>
       <span>Content Review</span>
     </div>
@@ -700,6 +762,15 @@
       return;
     }
 
+    // Approved tab shows gallery grid
+    if (currentFilter === 'approved') {
+      el.innerHTML = `<div class="gallery-grid">${list.map(s => galleryCardHTML(s)).join('')}</div>`;
+      el.querySelectorAll('.btn-delete').forEach(btn => {
+        btn.addEventListener('click', () => deleteSubmission(btn.dataset.id));
+      });
+      return;
+    }
+
     el.innerHTML = list.map(s => cardHTML(s)).join('');
 
     // Expand/collapse captions
@@ -794,6 +865,27 @@
         ${s.status !== 'approved' ? `<button class="btn btn-approve" data-id="${s.id}">✓ Approve</button>` : ''}
         ${s.status !== 'revision' ? `<button class="btn btn-revision" data-id="${s.id}">Request Revision</button>` : ''}
         <button class="btn-delete" data-id="${s.id}" title="Delete">🗑</button>
+      </div>
+    </div>`;
+  }
+
+  // ── Gallery card (approved view) ──
+  function galleryCardHTML(s) {
+    const hasImg = !!s.image_url;
+    const vid = hasImg && isVideo(s.image_url);
+    return `
+    <div class="gallery-card">
+      ${hasImg ? (vid
+        ? `<div class="gallery-thumb-video">🎬</div>`
+        : `<img class="gallery-thumb" src="${esc(s.image_url)}" loading="lazy" />`
+      ) : `<div class="gallery-thumb-video" style="font-size:18px;color:var(--muted)">No file</div>`}
+      <div class="gallery-info">
+        <div class="gallery-name">${esc(s.ambassador_name || 'Unknown')}</div>
+        <div class="gallery-caption">${esc(s.caption || '—')}</div>
+      </div>
+      <div class="gallery-actions">
+        ${hasImg ? `<a class="gallery-dl" href="${esc(s.image_url)}" target="_blank">↓ Download</a>` : ''}
+        <button class="btn-delete" data-id="${s.id}" style="margin-left:auto" title="Delete">🗑</button>
       </div>
     </div>`;
   }
