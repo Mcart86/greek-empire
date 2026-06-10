@@ -183,27 +183,54 @@
     #preview-wrap {
       display: none;
       margin-top: 12px;
+    }
+    .preview-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+      gap: 8px;
+    }
+    .preview-item {
       position: relative;
       border-radius: 6px;
       overflow: hidden;
+      aspect-ratio: 1;
+      background: var(--dark);
     }
-    #preview-wrap img {
-      width: 100%;
-      max-height: 280px;
+    .preview-item img {
+      width: 100%; height: 100%;
       object-fit: cover;
       display: block;
     }
-    #preview-wrap .remove-img {
+    .preview-item .video-label {
+      width: 100%; height: 100%;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      font-size: 22px; gap: 4px;
+      color: var(--muted);
+    }
+    .preview-item .video-label span {
+      font-size: 10px; color: var(--muted);
+      text-align: center; padding: 0 4px;
+      white-space: nowrap; overflow: hidden;
+      text-overflow: ellipsis; width: 100%;
+    }
+    .preview-item .remove-file {
       position: absolute;
-      top: 10px; right: 10px;
-      background: rgba(0,0,0,0.7);
-      border: 1px solid var(--border);
+      top: 4px; right: 4px;
+      background: rgba(0,0,0,0.75);
+      border: none;
       border-radius: 50%;
-      color: var(--text);
-      width: 28px; height: 28px;
+      color: #fff;
+      width: 22px; height: 22px;
       cursor: pointer;
-      font-size: 14px;
+      font-size: 11px;
       display: flex; align-items: center; justify-content: center;
+      line-height: 1;
+    }
+    .preview-count {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 8px;
     }
 
     /* ── Char counter ── */
@@ -357,16 +384,16 @@
     <div class="form-group">
       <label>Image or Video Thumbnail</label>
       <div class="upload-zone" id="upload-zone">
-        <input type="file" id="file-input" accept="image/*,video/*" />
+        <input type="file" id="file-input" accept="image/*,video/*" multiple />
         <span class="upload-icon">🖼</span>
         <div class="upload-label">
           <strong>Click to upload</strong> or drag and drop<br />
-          JPG, PNG, MP4 or MOV — max 50MB
+          JPG, PNG, MP4 or MOV — max 50MB each
         </div>
       </div>
       <div id="preview-wrap">
-        <img id="preview-img" src="" alt="Preview" />
-        <button class="remove-img" id="remove-img" type="button">✕</button>
+        <div class="preview-grid" id="preview-grid"></div>
+        <div class="preview-count" id="preview-count"></div>
       </div>
     </div>
 
@@ -505,45 +532,74 @@
     charCount.className = 'char-count' + (len > 2200 ? ' over' : len > 1800 ? ' warn' : '');
   });
 
-  // File preview
-  let selectedFile = null;
+  // Multi-file handling
+  let selectedFiles = [];
   const fileInput = document.getElementById('file-input');
   const uploadZone = document.getElementById('upload-zone');
   const previewWrap = document.getElementById('preview-wrap');
-  const previewImg = document.getElementById('preview-img');
-  const removeBtn = document.getElementById('remove-img');
+  const previewGrid = document.getElementById('preview-grid');
+  const previewCount = document.getElementById('preview-count');
 
-  fileInput.addEventListener('change', handleFile);
+  fileInput.addEventListener('change', () => handleFiles(fileInput.files));
 
   uploadZone.addEventListener('dragover', e => { e.preventDefault(); uploadZone.classList.add('drag-over'); });
   uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('drag-over'));
   uploadZone.addEventListener('drop', e => {
     e.preventDefault();
     uploadZone.classList.remove('drag-over');
-    if (e.dataTransfer.files[0]) { fileInput.files = e.dataTransfer.files; handleFile(); }
+    if (e.dataTransfer.files.length) handleFiles(e.dataTransfer.files);
   });
 
-  function handleFile() {
-    const file = fileInput.files[0];
-    if (!file) return;
-    if (file.size > 50 * 1024 * 1024) { showStatus('File is too large (max 50MB). Trim your video and try again.', 'error'); selectedFile = null; fileInput.value = ''; return; }
-    selectedFile = file;
-    if (file.type.startsWith('image/')) {
-      const reader = new FileReader();
-      reader.onload = e => { previewImg.src = e.target.result; previewWrap.style.display = 'block'; };
-      reader.readAsDataURL(file);
-    } else {
-      previewImg.src = '';
-      previewImg.alt = '🎬 ' + file.name;
-      previewWrap.style.display = 'block';
-    }
+  function handleFiles(files) {
+    const newFiles = Array.from(files);
+    let hasError = false;
+    newFiles.forEach(f => {
+      if (f.size > 50 * 1024 * 1024) {
+        showStatus(`"${f.name}" is too large (max 50MB). Trim your video and try again.`, 'error');
+        hasError = true;
+        return;
+      }
+      // Avoid duplicates by name+size
+      const exists = selectedFiles.find(x => x.name === f.name && x.size === f.size);
+      if (!exists) selectedFiles.push(f);
+    });
+    if (!hasError) clearStatus();
+    renderPreviews();
   }
 
-  removeBtn.addEventListener('click', () => {
-    selectedFile = null;
-    fileInput.value = '';
-    previewWrap.style.display = 'none';
-  });
+  function renderPreviews() {
+    if (selectedFiles.length === 0) {
+      previewWrap.style.display = 'none';
+      previewGrid.innerHTML = '';
+      previewCount.textContent = '';
+      return;
+    }
+    previewWrap.style.display = 'block';
+    previewGrid.innerHTML = '';
+    selectedFiles.forEach((file, idx) => {
+      const item = document.createElement('div');
+      item.className = 'preview-item';
+      if (file.type.startsWith('image/')) {
+        const reader = new FileReader();
+        reader.onload = e => {
+          item.innerHTML = `<img src="${e.target.result}" /><button class="remove-file" data-idx="${idx}">✕</button>`;
+          item.querySelector('.remove-file').addEventListener('click', () => removeFile(idx));
+        };
+        reader.readAsDataURL(file);
+      } else {
+        const name = file.name.length > 15 ? file.name.slice(0,12) + '…' : file.name;
+        item.innerHTML = `<div class="video-label">🎬<span>${name}</span></div><button class="remove-file" data-idx="${idx}">✕</button>`;
+        item.querySelector('.remove-file').addEventListener('click', () => removeFile(idx));
+      }
+      previewGrid.appendChild(item);
+    });
+    previewCount.textContent = `${selectedFiles.length} file${selectedFiles.length > 1 ? 's' : ''} selected`;
+  }
+
+  function removeFile(idx) {
+    selectedFiles.splice(idx, 1);
+    renderPreviews();
+  }
 
   // Submit
   document.getElementById('submit-btn').addEventListener('click', async () => {
@@ -563,7 +619,7 @@
       document.getElementById('caption').classList.add('field-error');
       valid = false;
     }
-    if (!selectedFile) {
+    if (selectedFiles.length === 0) {
       document.getElementById('upload-zone').classList.add('field-error');
       valid = false;
     }
@@ -671,9 +727,9 @@
     document.getElementById('college').value = '';
     captionEl.value = '';
     document.getElementById('notes').value = '';
-    selectedFile = null;
+    selectedFiles = [];
     fileInput.value = '';
-    previewWrap.style.display = 'none';
+    renderPreviews();
     charCount.textContent = '0 / 2200';
     const btn = document.getElementById('submit-btn');
     btn.disabled = false;
