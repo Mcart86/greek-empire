@@ -656,11 +656,14 @@
     } catch (err) {
       console.error(err);
       document.getElementById('submissions-list').innerHTML =
-        '<div class="empty-state"><div class="icon">⚠️</div><p>Could not load submissions.<br/>Check Supabase table setup.</p></div>';
+        '<div class="empty-state"><div class="icon">⚠️</div><p>Could not connect to the server.<br/>Check your internet connection and try refreshing.<br/><br/><small style="color:var(--muted)">If this keeps happening, Supabase may be down.</small></p></div>';
     }
   }
 
   document.getElementById('refresh-btn').addEventListener('click', loadSubmissions);
+
+  // Auto-refresh every 30 seconds
+  setInterval(loadSubmissions, 30000);
 
   // ── Badges ──
   function updateBadges() {
@@ -834,6 +837,10 @@
   // ── Delete submission ──
   async function deleteSubmission(id) {
     try {
+      // Get the image_url before deleting so we can clean up storage
+      const submission = allSubmissions.find(s => s.id === id);
+
+      // Delete DB record
       const res = await fetch(
         `${SUPABASE_URL}/rest/v1/content_submissions?id=eq.${id}`,
         {
@@ -845,6 +852,25 @@
         }
       );
       if (!res.ok) throw new Error(await res.text());
+
+      // Delete file from storage if exists
+      if (submission?.image_url) {
+        try {
+          const filePath = submission.image_url.split('/public/content-submissions/')[1];
+          if (filePath) {
+            await fetch(`${SUPABASE_URL}/storage/v1/object/content-submissions/${filePath}`, {
+              method: 'DELETE',
+              headers: {
+                'apikey': SUPABASE_ANON_KEY,
+                'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+              }
+            });
+          }
+        } catch(e) {
+          console.warn('Storage delete failed (non-blocking):', e);
+        }
+      }
+
       allSubmissions = allSubmissions.filter(s => s.id !== id);
       updateBadges();
       renderList();
