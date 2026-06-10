@@ -725,10 +725,7 @@
 
     // Delete buttons
     el.querySelectorAll('.btn-delete').forEach(btn => {
-      btn.addEventListener('click', () => {
-        if (!confirm('Delete this submission?')) return;
-        deleteSubmission(btn.dataset.id);
-      });
+      btn.addEventListener('click', () => deleteSubmission(btn.dataset.id));
     });
   }
 
