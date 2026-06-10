@@ -387,16 +387,23 @@ document.getElementById('submit-btn').addEventListener('click', async function()
   var btn = document.getElementById('submit-btn');
   btn.textContent = 'Sending...';
   btn.disabled = true;
+  var nameParts = name.split(' ');
+  var name_first = nameParts[0] || name;
+  var name_last = nameParts.slice(1).join(' ') || '';
+  var schoolParts = school.split('—').map(function(s){ return s.trim(); });
+  var school_text = schoolParts[0] || school;
+  var chapter_text = schoolParts[1] || '';
   try {
     await fetch('https://gxglrktbvumrpzhlogno.supabase.co/functions/v1/apply', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        name: name,
+        name_first: name_first,
+        name_last: name_last,
         email: email,
-        school: school,
-        recommendation: rec.title,
-        answers: answers,
+        school_text: school_text,
+        chapter_text: chapter_text,
+        company: rec.title,
         source: 'merch-quiz',
         recruited_by_text: ''
       })
