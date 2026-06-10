@@ -604,6 +604,11 @@
     fileInput.value = '';
     previewWrap.style.display = 'none';
     charCount.textContent = '0 / 2200';
+    const btn = document.getElementById('submit-btn');
+    btn.disabled = false;
+    btn.textContent = 'Submit for Review';
+    clearStatus();
+    document.querySelectorAll('.field-error').forEach(el => el.classList.remove('field-error'));
   });
 
   function showStatus(msg, type) {
