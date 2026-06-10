@@ -108,6 +108,10 @@
     input.field-error:focus, textarea.field-error:focus {
       border-color: #e05252 !important;
     }
+    .upload-zone.field-error {
+      border-color: #e05252 !important;
+      background: rgba(224,82,82,0.05);
+    }
     textarea { resize: vertical; min-height: 120px; }
     select {
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23666' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
@@ -331,7 +335,7 @@
         <span class="upload-icon">🖼</span>
         <div class="upload-label">
           <strong>Click to upload</strong> or drag and drop<br />
-          JPG, PNG, MP4 or MOV — max 200MB
+          JPG, PNG, MP4 or MOV — max 50MB
         </div>
       </div>
       <div id="preview-wrap">
@@ -456,7 +460,7 @@
   function handleFile() {
     const file = fileInput.files[0];
     if (!file) return;
-    if (file.size > 200 * 1024 * 1024) { showStatus('File must be under 200MB.', 'error'); return; }
+    if (file.size > 50 * 1024 * 1024) { showStatus('File is too large (max 50MB). Trim your video and try again.', 'error'); selectedFile = null; fileInput.value = ''; return; }
     selectedFile = file;
     if (file.type.startsWith('image/')) {
       const reader = new FileReader();
@@ -493,14 +497,18 @@
       document.getElementById('caption').classList.add('field-error');
       valid = false;
     }
+    if (!selectedFile) {
+      document.getElementById('upload-zone').classList.add('field-error');
+      valid = false;
+    }
     if (!valid) {
-      showStatus('Please fill in all required fields.', 'error');
+      showStatus('Please fill in all required fields and attach your photo or video.', 'error');
       return;
     }
 
     const btn = document.getElementById('submit-btn');
     btn.disabled = true;
-    btn.textContent = 'Submitting…';
+    btn.textContent = 'Uploading…';
     clearStatus();
 
     // Upload via Supabase Edge Function — handles images + videos, no size limits
