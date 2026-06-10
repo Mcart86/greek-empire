@@ -394,20 +394,20 @@ document.getElementById('submit-btn').addEventListener('click', async function()
   var school_text = schoolParts[0] || school;
   var chapter_text = schoolParts[1] || '';
   try {
-    await fetch('/api/submit', {
+    await fetch('https://gxglrktbvumrpzhlogno.supabase.co/functions/v1/apply', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        name_first: name_first,
-        name_last: name_last,
-        email: email,
-        phone: '',
-        school_text: school_text,
-        chapter_text: chapter_text,
-        instagram_handle: '',
-        referred_by: '',
-        company: rec.title,
-        source: 'merch-quiz'
+        name_first:        name_first,
+        name_last:         name_last,
+        email:             email,
+        phone:             '',
+        school_text:       school_text,
+        chapter_text:      chapter_text,
+        instagram_handle:  '',
+        recruited_by_text: '',
+        company:           rec.title,
+        source:            'merch-quiz'
       })
     });
   } catch(e) {}
