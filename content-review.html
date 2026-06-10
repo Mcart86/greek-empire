@@ -447,6 +447,18 @@
       letter-spacing: 0;
     }
     .btn-revision:hover { border-color: var(--red); color: var(--red); opacity: 1; }
+    .btn-delete {
+      background: transparent;
+      border: none;
+      color: var(--muted);
+      font-size: 16px;
+      cursor: pointer;
+      padding: 7px 8px;
+      border-radius: 5px;
+      transition: color 0.15s;
+      line-height: 1;
+    }
+    .btn-delete:hover { color: var(--red); }
 
     /* ── Revision modal ── */
     #modal-overlay {
@@ -773,6 +785,7 @@
         ${phone ? `<a class="btn-text" href="sms:${phone}">💬 Text</a>` : ''}
         ${s.status !== 'approved' ? `<button class="btn btn-approve" data-id="${s.id}">✓ Approve</button>` : ''}
         ${s.status !== 'revision' ? `<button class="btn btn-revision" data-id="${s.id}">Request Revision</button>` : ''}
+        <button class="btn-delete" data-id="${s.id}" title="Delete">🗑</button>
       </div>
     </div>`;
   }
@@ -810,6 +823,30 @@
     } catch (err) {
       console.error(err);
       toast('Error updating status — try again');
+    }
+  }
+
+  // ── Delete submission ──
+  async function deleteSubmission(id) {
+    try {
+      const res = await fetch(
+        `${SUPABASE_URL}/rest/v1/content_submissions?id=eq.${id}`,
+        {
+          method: 'DELETE',
+          headers: {
+            'apikey': SUPABASE_ANON_KEY,
+            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+          }
+        }
+      );
+      if (!res.ok) throw new Error(await res.text());
+      allSubmissions = allSubmissions.filter(s => s.id !== id);
+      updateBadges();
+      renderList();
+      toast('Deleted');
+    } catch (err) {
+      console.error(err);
+      toast('Error deleting');
     }
   }
 
