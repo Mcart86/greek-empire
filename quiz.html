@@ -4,160 +4,151 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-<meta http-equiv="Pragma" content="no-cache" />
-<meta http-equiv="Expires" content="0" />
 <title>Greek Empire — Find Your Chapter's Merch</title>
 <meta name="description" content="Answer 5 questions. Get a custom merch recommendation built for your chapter." />
 <meta property="og:title" content="Greek Empire — Find Your Chapter's Merch" />
 <meta property="og:description" content="Answer 5 questions. Get a custom merch recommendation built for your chapter." />
 <meta property="og:image" content="https://greek-empire.vercel.app/Untitled_design_png.png" />
-<meta property="og:url" content="https://greek-empire.vercel.app/quiz" />
-<meta property="og:type" content="website" />
-<meta name="twitter:card" content="summary_large_image" />
 <link rel="icon" type="image/png" href="Untitled_design_png.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet" />
 <style>
-@font-face {
-  font-family: 'LostInSouth';
-  src: url('LostInSouth.ttf') format('truetype');
-  font-weight: normal; font-style: normal;
-}
-@font-face {
-  font-family: 'KaushanScript';
-  src: url('KaushanScript.ttf') format('truetype');
-  font-weight: normal; font-style: normal;
-}
+@font-face { font-family:'LostInSouth'; src:url('LostInSouth.ttf') format('truetype'); }
+@font-face { font-family:'KaushanScript'; src:url('KaushanScript.ttf') format('truetype'); }
 :root {
-  --gold:        #C9A84C;
-  --gold-bright: #F0C96A;
-  --gold-dim:    rgba(201,168,76,0.35);
-  --gold-glow:   rgba(201,168,76,0.08);
-  --black:       #ffffff;
-  --white:       #111111;
-  --off-white:   #1a1a1a;
-  --muted:       rgba(20,20,20,0.55);
-  --faint:       rgba(20,20,20,0.15);
-  --font-display: 'Bebas Neue', 'Impact', sans-serif;
-  --font-script:  'Cormorant Garamond', Georgia, serif;
-  --font-sans:    'Barlow', sans-serif;
+  --gold:#C9A84C; --gold-bright:#F0C96A; --gold-dim:rgba(201,168,76,0.35);
+  --font-display:'Bebas Neue',sans-serif;
+  --font-script:'Cormorant Garamond',Georgia,serif;
+  --font-sans:'Barlow',sans-serif;
 }
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
-body {
-  background: #ffffff;
-  color: #111111;
-  font-family: var(--font-sans);
-  overflow-x: hidden;
-  min-height: 100vh;
-}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:#0a0a0a;color:#fff;font-family:var(--font-sans);overflow-x:hidden;min-height:100vh;}
 
-/* CURSOR */
-.cursor { width: 8px; height: 8px; background: var(--gold); border-radius: 50%; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); mix-blend-mode: difference; }
-.cursor-ring { width: 30px; height: 30px; border: 1px solid var(--gold-dim); border-radius: 50%; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9998; transform: translate(-50%,-50%); transition: all 0.15s ease; }
-
-/* NOISE */
-body::before { content: ''; position: fixed; inset: 0; z-index: 1; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E"); pointer-events: none; opacity: 0.5; }
+/* HERO BG */
+.hero-bg{position:fixed;inset:0;z-index:0;}
+.hero-bg img{width:100%;height:100%;object-fit:cover;object-position:center top;}
+.hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,0,0,0.88) 0%,rgba(0,0,0,0.75) 50%,rgba(0,0,0,0.88) 100%);}
 
 /* NAV */
-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 500; display: flex; align-items: center; justify-content: space-between; padding: 1.5rem 3.5rem; transition: background 0.4s, padding 0.4s; background: rgba(255,255,255,0.97); border-bottom: 1px solid rgba(201,168,76,0.25); backdrop-filter: blur(12px); }
-nav.scrolled { background: rgba(5,5,5,0.96); backdrop-filter: blur(20px); padding: 0.9rem 3.5rem; border-bottom: 1px solid rgba(201,168,76,0.1); }
-.nav-logo img { height: 36px; width: auto; display: block; }
-.nav-center { display: flex; gap: 2.5rem; }
-.nav-center a { font-size: 0.63rem; letter-spacing: 0.22em; text-transform: uppercase; font-weight: 500; color: #000000; text-decoration: none; transition: color 0.2s; }
-.nav-center a:hover { color: var(--gold); }
-.nav-right { display: flex; align-items: center; gap: 1.5rem; }
-.nav-est { font-family: var(--font-display); font-size: 0.75rem; letter-spacing: 0.2em; color: #555; text-transform: uppercase; }
-.nav-cta { font-family: var(--font-display); font-size: 0.9rem; letter-spacing: 0.2em; background: linear-gradient(90deg, #8B6914 0%, #D4A43A 25%, #F0C040 50%, #D4A43A 75%, #8B6914 100%); color: #fff; padding: 0.5rem 1.4rem; text-decoration: none; transition: opacity 0.2s, transform 0.2s; }
-.nav-cta:hover { opacity: 0.85; transform: translateY(-1px); }
+nav{position:fixed;top:0;left:0;right:0;z-index:500;display:flex;align-items:center;justify-content:space-between;padding:1.5rem 3.5rem;background:rgba(0,0,0,0.5);backdrop-filter:blur(16px);border-bottom:1px solid rgba(201,168,76,0.12);}
+.nav-logo img{height:32px;width:auto;display:block;}
+.nav-center{display:flex;gap:2.5rem;}
+.nav-center a{font-size:0.63rem;letter-spacing:0.22em;text-transform:uppercase;font-weight:500;color:rgba(255,255,255,0.6);text-decoration:none;transition:color 0.2s;}
+.nav-center a:hover{color:var(--gold);}
+.nav-right{display:flex;align-items:center;gap:1.5rem;}
+.nav-est{font-family:var(--font-display);font-size:0.75rem;letter-spacing:0.2em;color:rgba(255,255,255,0.3);}
+.nav-cta{font-family:var(--font-display);font-size:0.9rem;letter-spacing:0.2em;background:linear-gradient(90deg,#8B6914 0%,#D4A43A 25%,#F0C040 50%,#D4A43A 75%,#8B6914 100%);color:#111;padding:0.5rem 1.4rem;text-decoration:none;transition:opacity 0.2s;}
+.nav-cta:hover{opacity:0.85;}
+@media(max-width:768px){nav{padding:1rem 1.5rem;}.nav-center{display:none;}.nav-est{display:none;}}
 
-/* NAV HAMBURGER */
-.nav-hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
-.nav-hamburger span { width: 22px; height: 1.5px; background: #111; display: block; transition: all 0.3s; }
-@media (max-width: 768px) {
-  nav { padding: 1rem 1.5rem; }
-  .nav-center { display: none; }
-  .nav-hamburger { display: flex; }
-  .nav-est { display: none; }
-}
+/* PAGE */
+.quiz-page{position:relative;z-index:2;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:7rem 1.5rem 4rem;}
 
-/* QUIZ WRAPPER */
-.quiz-page { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 8rem 1.5rem 4rem; position: relative; z-index: 2; }
-.quiz-card { width: 100%; max-width: 600px; background: #fff; border: 1px solid rgba(201,168,76,0.2); padding: 3rem 3.5rem; position: relative; }
-@media (max-width: 600px) { .quiz-card { padding: 2rem 1.5rem; } }
+/* CARD */
+.quiz-card{width:100%;max-width:680px;background:rgba(8,8,8,0.82);backdrop-filter:blur(24px);border:1px solid rgba(201,168,76,0.18);overflow:hidden;}
 
-/* EYEBROW */
-.quiz-eyebrow { font-size: 0.6rem; letter-spacing: 0.45em; text-transform: uppercase; font-weight: 500; color: var(--gold); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.75rem; }
-.quiz-eyebrow::after { content: ''; flex: 1; height: 1px; background: var(--gold-dim); }
+/* CARD HEADER IMAGE */
+.card-header-img{width:100%;height:220px;position:relative;overflow:hidden;}
+.card-header-img img{width:100%;height:100%;object-fit:cover;transition:opacity 0.5s;}
+.card-header-img::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,0.1) 0%,rgba(8,8,8,0.9) 100%);}
+.card-header-text{position:absolute;bottom:0;left:0;right:0;z-index:1;padding:1.5rem 2rem 1rem;}
+.quiz-eyebrow{font-size:0.58rem;letter-spacing:0.45em;text-transform:uppercase;color:var(--gold);margin-bottom:0.4rem;}
+.card-headline{font-family:var(--font-display);font-size:clamp(1.6rem,4vw,2.4rem);letter-spacing:0.06em;text-transform:uppercase;color:#fff;line-height:1;}
 
 /* PROGRESS */
-.progress-wrap { display: flex; gap: 6px; margin: 1.5rem 0 2rem; }
-.pip { flex: 1; height: 2px; background: rgba(201,168,76,0.2); transition: background 0.4s; }
-.pip.active { background: var(--gold); }
+.progress-track{height:3px;background:rgba(255,255,255,0.08);position:relative;}
+.progress-fill{height:100%;background:linear-gradient(90deg,#8B6914,#F0C040,#8B6914);transition:width 0.4s ease;width:0%;}
+
+/* BODY PAD */
+.card-body{padding:2rem 2.5rem 2.5rem;}
+@media(max-width:540px){.card-body{padding:1.5rem;}}
 
 /* QUESTION */
-.q-counter { font-size: 0.6rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.75rem; }
-.q-text { font-family: var(--font-display); font-size: clamp(1.4rem, 4vw, 2rem); letter-spacing: 0.04em; text-transform: uppercase; color: #111; line-height: 1.1; margin-bottom: 2rem; }
+.q-counter{font-size:0.58rem;letter-spacing:0.35em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:0.6rem;}
+.q-text{font-family:var(--font-display);font-size:clamp(1.3rem,3.5vw,1.9rem);letter-spacing:0.04em;text-transform:uppercase;color:#fff;line-height:1.1;margin-bottom:1.75rem;}
 
-/* OPTIONS */
-.options { display: flex; flex-direction: column; gap: 10px; }
-.opt { display: flex; align-items: center; gap: 1rem; padding: 1rem 1.25rem; border: 1px solid rgba(201,168,76,0.18); cursor: pointer; transition: border-color 0.15s, background 0.15s; background: #fff; position: relative; }
-.opt:hover { border-color: var(--gold-dim); background: rgba(201,168,76,0.04); }
-.opt.selected { border-color: var(--gold); background: rgba(201,168,76,0.06); }
-.opt.selected::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--gold); }
-.opt-icon { font-size: 1.1rem; width: 28px; text-align: center; flex-shrink: 0; }
-.opt-text { font-size: 0.82rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 500; color: #111; }
+/* OPTION CARDS WITH PHOTOS */
+.options{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+@media(max-width:480px){.options{grid-template-columns:1fr;}}
+.opt{position:relative;height:100px;overflow:hidden;cursor:pointer;border:1.5px solid rgba(255,255,255,0.08);transition:border-color 0.2s,transform 0.15s;}
+.opt:hover{border-color:rgba(201,168,76,0.5);transform:translateY(-1px);}
+.opt.selected{border-color:var(--gold);}
+.opt.selected::after{content:'';position:absolute;inset:0;background:rgba(201,168,76,0.12);}
+.opt-photo{width:100%;height:100%;object-fit:cover;transition:transform 0.4s,opacity 0.3s;}
+.opt:hover .opt-photo{transform:scale(1.04);}
+.opt-overlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,0,0,0.65) 0%,rgba(0,0,0,0.4) 100%);}
+.opt-label{position:absolute;bottom:0;left:0;right:0;padding:0.6rem 0.75rem;display:flex;align-items:center;gap:0.5rem;}
+.opt-icon{font-size:1rem;flex-shrink:0;}
+.opt-text{font-size:0.72rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#fff;line-height:1.2;}
+.opt-check{position:absolute;top:8px;right:8px;width:20px;height:20px;border:1.5px solid rgba(255,255,255,0.3);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;color:transparent;transition:all 0.2s;}
+.opt.selected .opt-check{background:var(--gold);border-color:var(--gold);color:#111;}
 
 /* NEXT BTN */
-.next-btn { margin-top: 2rem; display: block; width: 100%; font-family: var(--font-display); font-size: 1rem; letter-spacing: 0.25em; text-transform: uppercase; padding: 1rem; background: #111; color: var(--gold); border: none; cursor: pointer; transition: opacity 0.2s, transform 0.2s; }
-.next-btn:disabled { opacity: 0.25; cursor: default; transform: none; }
-.next-btn:not(:disabled):hover { opacity: 0.85; transform: translateY(-1px); }
+.next-btn{margin-top:1.5rem;display:block;width:100%;font-family:var(--font-display);font-size:1rem;letter-spacing:0.25em;text-transform:uppercase;padding:1rem;background:linear-gradient(90deg,#8B6914 0%,#D4A43A 25%,#F0C040 50%,#D4A43A 75%,#8B6914 100%);color:#111;border:none;cursor:pointer;transition:opacity 0.2s,transform 0.15s;}
+.next-btn:disabled{opacity:0.2;cursor:default;background:#333;color:#666;}
+.next-btn:not(:disabled):hover{opacity:0.88;transform:translateY(-1px);}
 
-/* RESULT SECTION */
-#result-section { display: none; }
-.result-tag { display: inline-block; font-size: 0.58rem; letter-spacing: 0.4em; text-transform: uppercase; font-weight: 500; color: #1A1A1A; background: var(--gold); padding: 4px 12px; margin-bottom: 1rem; }
-.result-title { font-family: var(--font-display); font-size: clamp(2rem, 6vw, 3rem); letter-spacing: 0.04em; text-transform: uppercase; color: #111; line-height: 1; margin-bottom: 0.75rem; }
-.result-sub { font-size: 0.85rem; line-height: 1.7; color: var(--muted); margin-bottom: 2rem; letter-spacing: 0.02em; }
+/* SLIDE TRANSITION */
+.slide-out-left{animation:slideOutLeft 0.25s ease forwards;}
+.slide-in-right{animation:slideInRight 0.25s ease forwards;}
+@keyframes slideOutLeft{from{opacity:1;transform:translateX(0);}to{opacity:0;transform:translateX(-32px);}}
+@keyframes slideInRight{from{opacity:0;transform:translateX(32px);}to{opacity:1;transform:translateX(0);}}
 
-/* PRODUCT CARDS */
-.product-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 2rem; }
-@media (max-width: 480px) { .product-grid { grid-template-columns: 1fr; } }
-.product-card { border: 1px solid rgba(201,168,76,0.2); padding: 1rem; background: rgba(201,168,76,0.03); }
-.product-card-icon { font-size: 1.4rem; margin-bottom: 0.5rem; }
-.product-card-name { font-family: var(--font-display); font-size: 0.9rem; letter-spacing: 0.12em; text-transform: uppercase; color: #111; margin-bottom: 0.25rem; }
-.product-card-why { font-size: 0.72rem; letter-spacing: 0.06em; color: var(--muted); line-height: 1.4; }
+/* ── RESULT ── */
+#result-section{display:none;}
+.result-hero{width:100%;height:260px;position:relative;overflow:hidden;}
+.result-hero img{width:100%;height:100%;object-fit:cover;}
+.result-hero::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,0.2) 0%,rgba(8,8,8,0.95) 100%);}
+.result-hero-text{position:absolute;bottom:0;left:0;right:0;z-index:1;padding:1.5rem 2rem 0.5rem;}
+.result-tag{display:inline-block;font-size:0.56rem;letter-spacing:0.4em;text-transform:uppercase;font-weight:500;color:#111;background:var(--gold);padding:3px 10px;margin-bottom:0.6rem;}
+.result-title{font-family:var(--font-display);font-size:clamp(2rem,6vw,3.2rem);letter-spacing:0.04em;text-transform:uppercase;color:#fff;line-height:1;}
+.result-body{padding:1.5rem 2rem 2rem;}
+.result-sub{font-size:0.85rem;line-height:1.7;color:rgba(255,255,255,0.55);margin-bottom:1.75rem;letter-spacing:0.02em;}
 
-/* DIVIDER */
-.gold-divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(201,168,76,0.35), transparent); margin: 2rem 0; }
+/* PRODUCT PHOTO GRID */
+.product-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:1.75rem;}
+@media(max-width:480px){.product-grid{grid-template-columns:1fr;}}
+.product-card{position:relative;height:130px;overflow:hidden;border:1px solid rgba(201,168,76,0.2);}
+.product-card img{width:100%;height:100%;object-fit:cover;transition:transform 0.4s;}
+.product-card:hover img{transform:scale(1.05);}
+.product-card::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.75) 0%,rgba(0,0,0,0.1) 60%);}
+.product-card-label{position:absolute;bottom:0;left:0;right:0;z-index:1;padding:0.5rem 0.6rem;}
+.product-card-name{font-family:var(--font-display);font-size:0.82rem;letter-spacing:0.1em;text-transform:uppercase;color:#fff;}
+.product-card-why{font-size:0.65rem;letter-spacing:0.05em;color:rgba(255,255,255,0.5);margin-top:1px;}
 
 /* CAPTURE FORM */
-.capture-label { font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 500; color: var(--muted); margin-bottom: 1.25rem; }
-.field-group { display: flex; flex-direction: column; gap: 10px; margin-bottom: 1.25rem; }
-.field-group input { font-family: var(--font-sans); font-size: 0.85rem; padding: 0.85rem 1rem; border: 1px solid rgba(201,168,76,0.25); background: #fff; color: #111; outline: none; transition: border-color 0.2s; letter-spacing: 0.04em; }
-.field-group input::placeholder { color: rgba(20,20,20,0.35); }
-.field-group input:focus { border-color: var(--gold); }
-.submit-btn { width: 100%; font-family: var(--font-display); font-size: 1rem; letter-spacing: 0.25em; text-transform: uppercase; padding: 1rem; background: linear-gradient(90deg, #8B6914 0%, #D4A43A 25%, #F0C040 50%, #D4A43A 75%, #8B6914 100%); color: #111; border: none; cursor: pointer; transition: opacity 0.2s, transform 0.2s; }
-.submit-btn:hover { opacity: 0.85; transform: translateY(-1px); }
-.submit-btn:disabled { opacity: 0.4; cursor: default; transform: none; }
+.gold-divider{height:1px;background:linear-gradient(90deg,transparent,rgba(201,168,76,0.3),transparent);margin:0 0 1.5rem;}
+.capture-label{font-size:0.68rem;letter-spacing:0.18em;text-transform:uppercase;font-weight:500;color:rgba(255,255,255,0.35);margin-bottom:1rem;}
+.field-group{display:flex;flex-direction:column;gap:8px;margin-bottom:1rem;}
+.field-group input{font-family:var(--font-sans);font-size:0.85rem;padding:0.85rem 1rem;border:1px solid rgba(201,168,76,0.2);background:rgba(255,255,255,0.04);color:#fff;outline:none;transition:border-color 0.2s;letter-spacing:0.03em;}
+.field-group input::placeholder{color:rgba(255,255,255,0.25);}
+.field-group input:focus{border-color:var(--gold);}
+.submit-btn{width:100%;font-family:var(--font-display);font-size:1rem;letter-spacing:0.25em;text-transform:uppercase;padding:1rem;background:linear-gradient(90deg,#8B6914 0%,#D4A43A 25%,#F0C040 50%,#D4A43A 75%,#8B6914 100%);color:#111;border:none;cursor:pointer;transition:opacity 0.2s,transform 0.15s;}
+.submit-btn:hover{opacity:0.85;transform:translateY(-1px);}
+.submit-btn:disabled{opacity:0.35;cursor:default;transform:none;}
 
 /* THANKS */
-#thanks-section { display: none; text-align: center; padding: 3rem 1rem; }
-.thanks-mark { font-family: var(--font-display); font-size: 3rem; letter-spacing: 0.1em; color: var(--gold); margin-bottom: 1rem; }
-.thanks-title { font-family: var(--font-display); font-size: 2rem; letter-spacing: 0.08em; text-transform: uppercase; color: #111; margin-bottom: 0.75rem; }
-.thanks-sub { font-size: 0.85rem; color: var(--muted); line-height: 1.7; letter-spacing: 0.04em; }
+#thanks-section{display:none;text-align:center;padding:4rem 2rem;}
+.thanks-icon{font-size:2.5rem;margin-bottom:1rem;}
+.thanks-title{font-family:var(--font-display);font-size:2.5rem;letter-spacing:0.08em;text-transform:uppercase;color:#fff;margin-bottom:0.75rem;}
+.thanks-sub{font-size:0.85rem;color:rgba(255,255,255,0.4);line-height:1.8;letter-spacing:0.04em;}
+.thanks-gold{color:var(--gold);}
 
 /* FOOTER */
-footer { position: relative; z-index: 2; border-top: 1px solid rgba(201,168,76,0.15); padding: 2rem 3.5rem; display: flex; align-items: center; justify-content: space-between; background: #fff; }
-.footer-brand { font-family: var(--font-display); font-size: 0.75rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--muted); }
-.footer-tagline { font-family: var(--font-script); font-style: italic; font-size: 0.85rem; color: var(--gold); }
-@media (max-width: 600px) { footer { flex-direction: column; gap: 0.5rem; padding: 1.5rem; text-align: center; } }
+footer{position:relative;z-index:2;border-top:1px solid rgba(201,168,76,0.1);padding:2rem 3.5rem;display:flex;align-items:center;justify-content:space-between;background:rgba(0,0,0,0.6);backdrop-filter:blur(10px);}
+.footer-brand{font-family:var(--font-display);font-size:0.75rem;letter-spacing:0.3em;text-transform:uppercase;color:rgba(255,255,255,0.2);}
+.footer-tagline{font-family:var(--font-script);font-style:italic;font-size:0.85rem;color:var(--gold);}
+@media(max-width:600px){footer{flex-direction:column;gap:0.5rem;padding:1.5rem;text-align:center;}}
 </style>
 </head>
 <body>
 
-<div class="cursor" id="cursor"></div>
-<div class="cursor-ring" id="cursorRing"></div>
+<!-- HERO BG -->
+<div class="hero-bg">
+  <img src="hero-party.jpg" alt="" aria-hidden="true" />
+</div>
 
 <nav id="nav">
   <a href="/" class="nav-logo"><img src="logo-text.png" alt="Greek Empire" /></a>
@@ -169,9 +160,6 @@ footer { position: relative; z-index: 2; border-top: 1px solid rgba(201,168,76,0
   <div class="nav-right">
     <span class="nav-est">Est. 334 BC</span>
     <a href="/ambassador#apply" class="nav-cta">Apply</a>
-    <div class="nav-hamburger" id="hamburger">
-      <span></span><span></span><span></span>
-    </div>
   </div>
 </nav>
 
@@ -180,41 +168,50 @@ footer { position: relative; z-index: 2; border-top: 1px solid rgba(201,168,76,0
 
     <!-- QUIZ BODY -->
     <div id="quiz-body">
-      <div class="quiz-eyebrow">Greek Empire</div>
-      <div class="progress-wrap" id="progress">
-        <div class="pip" id="p0"></div>
-        <div class="pip" id="p1"></div>
-        <div class="pip" id="p2"></div>
-        <div class="pip" id="p3"></div>
-        <div class="pip" id="p4"></div>
+      <div class="card-header-img" id="header-img-wrap">
+        <img id="header-img" src="product-shirts.jpg" alt="" />
+        <div class="card-header-text">
+          <div class="quiz-eyebrow">Greek Empire — Chapter Quiz</div>
+          <div class="card-headline" id="card-headline">Find Your Chapter's Look</div>
+        </div>
       </div>
-      <div class="q-counter" id="q-counter">Question 1 of 5</div>
-      <div class="q-text" id="q-text"></div>
-      <div class="options" id="options"></div>
-      <button class="next-btn" id="next-btn" disabled>Next</button>
+      <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+      <div class="card-body" id="quiz-inner">
+        <div class="q-counter" id="q-counter">Question 1 of 5</div>
+        <div class="q-text" id="q-text"></div>
+        <div class="options" id="options"></div>
+        <button class="next-btn" id="next-btn" disabled>Next</button>
+      </div>
     </div>
 
-    <!-- RESULT SECTION -->
+    <!-- RESULT -->
     <div id="result-section">
-      <div class="result-tag">Your recommendation</div>
-      <div class="result-title" id="result-title"></div>
-      <div class="result-sub" id="result-sub"></div>
-      <div class="product-grid" id="product-grid"></div>
-      <div class="gold-divider"></div>
-      <div class="capture-label">Get your full recommendation + pricing sent to you</div>
-      <div class="field-group">
-        <input type="text" id="cap-name" placeholder="Your name" autocomplete="name" />
-        <input type="text" id="cap-school" placeholder="School + chapter (e.g. Alabama — Sigma Chi)" />
-        <input type="email" id="cap-email" placeholder="Email address" autocomplete="email" />
+      <div class="result-hero">
+        <img id="result-img" src="product-shirts.jpg" alt="" />
+        <div class="result-hero-text">
+          <div class="result-tag">Your recommendation</div>
+          <div class="result-title" id="result-title"></div>
+        </div>
       </div>
-      <button class="submit-btn" id="submit-btn">Send my recommendation</button>
+      <div class="result-body">
+        <div class="result-sub" id="result-sub"></div>
+        <div class="product-grid" id="product-grid"></div>
+        <div class="gold-divider"></div>
+        <div class="capture-label">Get your full recommendation + pricing sent to you</div>
+        <div class="field-group">
+          <input type="text" id="cap-name" placeholder="Your name" autocomplete="name" />
+          <input type="text" id="cap-school" placeholder="School + chapter (e.g. Alabama — Sigma Chi)" />
+          <input type="email" id="cap-email" placeholder="Email address" autocomplete="email" />
+        </div>
+        <button class="submit-btn" id="submit-btn">Send my recommendation</button>
+      </div>
     </div>
 
-    <!-- THANKS SECTION -->
+    <!-- THANKS -->
     <div id="thanks-section">
-      <div class="thanks-mark">&#10003;</div>
-      <div class="thanks-title">You're in.</div>
-      <div class="thanks-sub">We'll send your full merch recommendation and pricing within 24 hours.<br><br>— Greek Empire</div>
+      <div class="thanks-icon">✦</div>
+      <div class="thanks-title">You're <span class="thanks-gold">In.</span></div>
+      <div class="thanks-sub">Full merch recommendation + pricing<br>hits your inbox within 24 hours.<br><br>— Greek Empire</div>
     </div>
 
   </div>
@@ -226,89 +223,104 @@ footer { position: relative; z-index: 2; border-top: 1px solid rgba(201,168,76,0
 </footer>
 
 <script>
+// Each option maps to a product image
 const questions = [
   {
     text: "What's coming up for your chapter?",
+    headerImg: "product-shirts.jpg",
+    headline: "Let's Build Your Drop",
     options: [
-      { icon: "🏛️", text: "Rush / recruitment season" },
-      { icon: "🎉", text: "Bid day or initiation" },
-      { icon: "🎊", text: "Social or date night" },
-      { icon: "🏈", text: "Tailgate or gameday" }
+      { icon:"🏛️", text:"Rush / recruitment season",  img:"product-shirts.jpg" },
+      { icon:"🎉", text:"Bid day or initiation",       img:"product-sweatshirt.jpg" },
+      { icon:"🎊", text:"Social or date night",        img:"product-tanktops.jpg" },
+      { icon:"🏈", text:"Tailgate or gameday",         img:"product-hats.jpg" }
     ]
   },
   {
-    text: "How does your chapter usually show up?",
+    text: "How does your chapter show up?",
+    headerImg: "product-sweatshirt.jpg",
+    headline: "Define the Aesthetic",
     options: [
-      { icon: "🖤", text: "Clean, minimal, all-black everything" },
-      { icon: "🏆", text: "Bold — letters front and center" },
-      { icon: "🎨", text: "Creative — something nobody else has" },
-      { icon: "✨", text: "Premium feel, built to last" }
+      { icon:"🖤", text:"Clean, minimal, all-black",   img:"product-shirts.jpg" },
+      { icon:"🏆", text:"Bold — letters front + center", img:"product-sweatshirt.jpg" },
+      { icon:"🎨", text:"Creative — nothing like it",  img:"product-tanktops.jpg" },
+      { icon:"✨", text:"Premium feel, built to last", img:"product-hats.jpg" }
     ]
   },
   {
     text: "What's your typical order size?",
+    headerImg: "product-hats.jpg",
+    headline: "Size Up the Order",
     options: [
-      { icon: "👥", text: "Under 30 pieces" },
-      { icon: "🏠", text: "30–75 pieces" },
-      { icon: "📦", text: "75–150 pieces" },
-      { icon: "🚀", text: "150+ pieces" }
+      { icon:"👥", text:"Under 30 pieces",   img:"product-shirts.jpg" },
+      { icon:"🏠", text:"30–75 pieces",      img:"product-sweatshirt.jpg" },
+      { icon:"📦", text:"75–150 pieces",     img:"product-hats.jpg" },
+      { icon:"🚀", text:"150+ pieces",       img:"product-bags.jpg" }
     ]
   },
   {
-    text: "What matters most to your chapter right now?",
+    text: "What matters most right now?",
+    headerImg: "product-tanktops.jpg",
+    headline: "Set the Priority",
     options: [
-      { icon: "👁️", text: "Looking sharp during rush" },
-      { icon: "🤝", text: "Brotherhood / sisterhood unity" },
-      { icon: "📸", text: "Something photo-worthy for socials" },
-      { icon: "💛", text: "Building chapter identity long-term" }
+      { icon:"👁️", text:"Looking sharp during rush",       img:"product-shirts.jpg" },
+      { icon:"🤝", text:"Brotherhood / sisterhood unity",  img:"product-sweatshirt.jpg" },
+      { icon:"📸", text:"Photo-worthy for socials",        img:"product-tanktops.jpg" },
+      { icon:"💛", text:"Building chapter identity",       img:"product-hats.jpg" }
     ]
   },
   {
     text: "How do you want members wearing this?",
+    headerImg: "product-bags.jpg",
+    headline: "Pick the Wear",
     options: [
-      { icon: "🎽", text: "Event-specific — worn once, remembered forever" },
-      { icon: "☀️", text: "Everyday campus wear" },
-      { icon: "🌙", text: "Night out" },
-      { icon: "🏡", text: "Around the house or chapter" }
+      { icon:"🎽", text:"Event-specific — worn once, remembered", img:"product-tanktops.jpg" },
+      { icon:"☀️", text:"Everyday campus wear",                    img:"product-shirts.jpg" },
+      { icon:"🌙", text:"Night out",                               img:"product-sweatshirt.jpg" },
+      { icon:"🏡", text:"Around the house / chapter",             img:"product-hats.jpg" }
     ]
   }
 ];
 
 const recommendations = [
   {
-    title: "The Rush Kit",
-    sub: "High-visibility, consistent, and built to make a strong first impression. Rush season is your window — own it.",
-    products: [
-      { icon: "👕", name: "Rush tee", why: "Clean logo, 2-color" },
-      { icon: "🧢", name: "5-panel hat", why: "Everyday carry-over" },
-      { icon: "🛍️", name: "Tote bag", why: "Functional giveaway" }
+    title:"The Rush Kit",
+    img:"product-shirts.jpg",
+    sub:"High-visibility, consistent, built to make a strong first impression. Rush season is your window — own it.",
+    products:[
+      { img:"product-shirts.jpg",     name:"Rush Tee",    why:"Clean logo, 2-color" },
+      { img:"product-hats.jpg",       name:"5-Panel Hat", why:"Everyday carry-over" },
+      { img:"product-bags.jpg",       name:"Tote Bag",    why:"Functional giveaway" }
     ]
   },
   {
-    title: "The Statement Pack",
-    sub: "You want pieces that hit — bold graphics, chapter identity, the kind of merch people actually ask about.",
-    products: [
-      { icon: "🧥", name: "Heavyweight hoodie", why: "Oversized, premium blank" },
-      { icon: "👕", name: "Vintage-wash tee", why: "Lived-in feel" },
-      { icon: "🎽", name: "Crewneck", why: "Letters large, no apology" }
+    title:"The Statement Pack",
+    img:"product-sweatshirt.jpg",
+    sub:"You want pieces that hit — bold graphics, chapter identity, the kind of merch people actually ask about.",
+    products:[
+      { img:"product-sweatshirt.jpg", name:"Heavyweight Hoodie", why:"Oversized, premium blank" },
+      { img:"product-shirts.jpg",     name:"Vintage-Wash Tee",   why:"Lived-in feel" },
+      { img:"product-tanktops.jpg",   name:"Crewneck",           why:"Letters large, no apology" }
     ]
   },
   {
-    title: "The Event Pack",
-    sub: "Made for a moment. The pieces that live in photos for years — date nights, socials, bid day, all of it.",
-    products: [
-      { icon: "👕", name: "Event tee", why: "Custom date + graphic" },
-      { icon: "🥤", name: "Drinkware", why: "Keeps the night going" },
-      { icon: "🎒", name: "Drawstring bag", why: "Easy giveaway piece" }
+    title:"The Event Pack",
+    img:"product-tanktops.jpg",
+    sub:"Made for a moment. Pieces that live in photos for years — date nights, socials, bid day, all of it.",
+    products:[
+      { img:"product-tanktops.jpg",   name:"Event Tee",       why:"Custom date + graphic" },
+      { img:"product-drinkware.jpg",  name:"Drinkware",       why:"Keeps the night going" },
+      { img:"product-bags.jpg",       name:"Drawstring Bag",  why:"Easy giveaway piece" }
     ]
   },
   {
-    title: "The Lifestyle Drop",
-    sub: "This isn't merch — it's a collection. Pieces that build your chapter's identity on and off campus.",
-    products: [
-      { icon: "🧥", name: "Piece-dye fleece", why: "Standout texture, premium" },
-      { icon: "👖", name: "Denim tote", why: "Everyday carry" },
-      { icon: "🧢", name: "Structured cap", why: "Clean letter mark" }
+    title:"The Lifestyle Drop",
+    img:"product-hats.jpg",
+    sub:"This isn't merch — it's a collection. Pieces that build your chapter's identity on and off campus.",
+    products:[
+      { img:"product-sweatshirt.jpg", name:"Piece-Dye Fleece", why:"Standout texture, premium" },
+      { img:"product-bags.jpg",       name:"Denim Tote",       why:"Everyday carry" },
+      { img:"product-hats.jpg",       name:"Structured Cap",   why:"Clean letter mark" }
     ]
   }
 ];
@@ -317,58 +329,96 @@ let current = 0;
 let answers = [];
 
 function getRecommendation() {
-  const a0 = answers[0], a1 = answers[1], a3 = answers[3];
-  if (a0 === 0) return recommendations[0];
-  if (a1 === 2 || a3 === 2) return recommendations[2];
-  if (a1 === 3 || a3 === 3) return recommendations[3];
+  const a0=answers[0], a1=answers[1], a3=answers[3];
+  if(a0===0) return recommendations[0];
+  if(a1===2||a3===2) return recommendations[2];
+  if(a1===3||a3===3) return recommendations[3];
   return recommendations[1];
 }
 
-function renderQuestion() {
+function updateProgress() {
+  const pct = ((current) / questions.length) * 100;
+  document.getElementById('progress-fill').style.width = pct + '%';
+}
+
+function renderQuestion(animate) {
+  const inner = document.getElementById('quiz-inner');
   const q = questions[current];
-  document.getElementById('q-counter').textContent = 'Question ' + (current + 1) + ' of 5';
-  document.getElementById('q-text').textContent = q.text;
-  const opts = document.getElementById('options');
-  opts.innerHTML = '';
-  q.options.forEach(function(opt, i) {
-    const el = document.createElement('div');
-    el.className = 'opt';
-    el.innerHTML = '<span class="opt-icon">' + opt.icon + '</span><span class="opt-text">' + opt.text + '</span>';
-    el.addEventListener('click', function() {
-      document.querySelectorAll('.opt').forEach(function(o) { o.classList.remove('selected'); });
-      el.classList.add('selected');
-      answers[current] = i;
-      document.getElementById('next-btn').disabled = false;
+
+  // Update header image
+  document.getElementById('header-img').src = q.headerImg;
+  document.getElementById('card-headline').textContent = q.headline;
+  updateProgress();
+
+  function doRender() {
+    document.getElementById('q-counter').textContent = 'Question '+(current+1)+' of 5';
+    document.getElementById('q-text').textContent = q.text;
+    const opts = document.getElementById('options');
+    opts.innerHTML = '';
+    q.options.forEach(function(opt, i) {
+      const el = document.createElement('div');
+      el.className = 'opt';
+      el.innerHTML =
+        '<img class="opt-photo" src="'+opt.img+'" alt="" />' +
+        '<div class="opt-overlay"></div>' +
+        '<div class="opt-label"><span class="opt-icon">'+opt.icon+'</span><span class="opt-text">'+opt.text+'</span></div>' +
+        '<div class="opt-check">✓</div>';
+      el.addEventListener('click', function() {
+        document.querySelectorAll('.opt').forEach(function(o){o.classList.remove('selected');});
+        el.classList.add('selected');
+        answers[current] = i;
+        document.getElementById('next-btn').disabled = false;
+      });
+      opts.appendChild(el);
     });
-    opts.appendChild(el);
-  });
-  for (var i = 0; i < 5; i++) {
-    var pip = document.getElementById('p' + i);
-    pip.className = 'pip' + (i <= current ? ' active' : '');
+    document.getElementById('next-btn').textContent = current===4 ? 'See My Recommendation' : 'Next';
+    document.getElementById('next-btn').disabled = true;
+    if(animate) {
+      inner.classList.remove('slide-out-left');
+      inner.classList.add('slide-in-right');
+      inner.addEventListener('animationend', function handler(){
+        inner.classList.remove('slide-in-right');
+        inner.removeEventListener('animationend', handler);
+      });
+    }
   }
-  var btn = document.getElementById('next-btn');
-  btn.textContent = current === 4 ? 'See my recommendation' : 'Next';
-  btn.disabled = true;
+
+  if(animate) {
+    inner.classList.add('slide-out-left');
+    inner.addEventListener('animationend', function handler(){
+      inner.classList.remove('slide-out-left');
+      inner.removeEventListener('animationend', handler);
+      doRender();
+    },{once:true});
+  } else {
+    doRender();
+  }
 }
 
 document.getElementById('next-btn').addEventListener('click', function() {
-  if (current < 4) {
+  if(current < 4) {
     current++;
-    renderQuestion();
+    renderQuestion(true);
   } else {
-    for (var i = 0; i < 5; i++) {
-      document.getElementById('p' + i).className = 'pip active';
-    }
+    // Fill progress
+    document.getElementById('progress-fill').style.width = '100%';
+    // Show result
     document.getElementById('quiz-body').style.display = 'none';
-    var rec = getRecommendation();
+    const rec = getRecommendation();
+    document.getElementById('result-img').src = rec.img;
     document.getElementById('result-title').textContent = rec.title;
     document.getElementById('result-sub').textContent = rec.sub;
-    var grid = document.getElementById('product-grid');
+    const grid = document.getElementById('product-grid');
     grid.innerHTML = '';
     rec.products.forEach(function(p) {
-      var d = document.createElement('div');
+      const d = document.createElement('div');
       d.className = 'product-card';
-      d.innerHTML = '<div class="product-card-icon">' + p.icon + '</div><div class="product-card-name">' + p.name + '</div><div class="product-card-why">' + p.why + '</div>';
+      d.innerHTML =
+        '<img src="'+p.img+'" alt="'+p.name+'" />' +
+        '<div class="product-card-label">' +
+          '<div class="product-card-name">'+p.name+'</div>' +
+          '<div class="product-card-why">'+p.why+'</div>' +
+        '</div>';
       grid.appendChild(d);
     });
     document.getElementById('result-section').style.display = 'block';
@@ -376,27 +426,24 @@ document.getElementById('next-btn').addEventListener('click', function() {
 });
 
 document.getElementById('submit-btn').addEventListener('click', async function() {
-  var name = document.getElementById('cap-name').value.trim();
-  var school = document.getElementById('cap-school').value.trim();
-  var email = document.getElementById('cap-email').value.trim();
-  if (!name || !school || !email) {
-    alert('Please fill in all fields.');
-    return;
-  }
-  var rec = getRecommendation();
-  var btn = document.getElementById('submit-btn');
+  const name  = document.getElementById('cap-name').value.trim();
+  const school= document.getElementById('cap-school').value.trim();
+  const email = document.getElementById('cap-email').value.trim();
+  if(!name||!school||!email){ alert('Please fill in all fields.'); return; }
+  const rec = getRecommendation();
+  const btn = document.getElementById('submit-btn');
   btn.textContent = 'Sending...';
   btn.disabled = true;
-  var nameParts = name.split(' ');
-  var name_first = nameParts[0] || name;
-  var name_last = nameParts.slice(1).join(' ') || '';
-  var schoolParts = school.split('—').map(function(s){ return s.trim(); });
-  var school_text = schoolParts[0] || school;
-  var chapter_text = schoolParts[1] || '';
+  const nameParts = name.split(' ');
+  const name_first = nameParts[0]||name;
+  const name_last  = nameParts.slice(1).join(' ')||'';
+  const schoolParts= school.split('—').map(function(s){return s.trim();});
+  const school_text  = schoolParts[0]||school;
+  const chapter_text = schoolParts[1]||'';
   try {
     await fetch('https://gxglrktbvumrpzhlogno.supabase.co/functions/v1/apply', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
       body: JSON.stringify({
         name_first:        name_first,
         name_last:         name_last,
@@ -410,27 +457,12 @@ document.getElementById('submit-btn').addEventListener('click', async function()
         source:            'merch-quiz'
       })
     });
-  } catch(e) {}
+  } catch(e){}
   document.getElementById('result-section').style.display = 'none';
   document.getElementById('thanks-section').style.display = 'block';
 });
 
-/* NAV SCROLL */
-window.addEventListener('scroll', function() {
-  var nav = document.getElementById('nav');
-  if (window.scrollY > 40) nav.classList.add('scrolled');
-  else nav.classList.remove('scrolled');
-});
-
-/* CURSOR */
-document.addEventListener('mousemove', function(e) {
-  var c = document.getElementById('cursor');
-  var r = document.getElementById('cursorRing');
-  if (c) { c.style.left = e.clientX + 'px'; c.style.top = e.clientY + 'px'; }
-  if (r) { r.style.left = e.clientX + 'px'; r.style.top = e.clientY + 'px'; }
-});
-
-renderQuestion();
+renderQuestion(false);
 </script>
 </body>
 </html>
