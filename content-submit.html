@@ -331,7 +331,7 @@
         <span class="upload-icon">🖼</span>
         <div class="upload-label">
           <strong>Click to upload</strong> or drag and drop<br />
-          JPG, PNG, or MP4 — max 20MB
+          JPG, PNG, MP4 or MOV — max 200MB
         </div>
       </div>
       <div id="preview-wrap">
@@ -456,7 +456,7 @@
   function handleFile() {
     const file = fileInput.files[0];
     if (!file) return;
-    if (file.size > 20 * 1024 * 1024) { showStatus('File must be under 20MB.', 'error'); return; }
+    if (file.size > 200 * 1024 * 1024) { showStatus('File must be under 200MB.', 'error'); return; }
     selectedFile = file;
     if (file.type.startsWith('image/')) {
       const reader = new FileReader();
