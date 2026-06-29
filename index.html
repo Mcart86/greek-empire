@@ -24,13 +24,13 @@ src="https://www.facebook.com/tr?id=1566028055129817&ev=PageView&noscript=1"
 <meta name="description" content="Greek Empire is the culture brand of Greek life. Custom apparel for fraternities and sororities nationwide." />
 <meta property="og:title" content="Greek Empire — Apparel for the Best Years of Your Life" />
 <meta property="og:description" content="We're not selling into Greek life. We're part of it. Custom apparel for fraternities and sororities nationwide." />
-<meta property="og:image" content="https://greek-empire-git-main-michael-carters-projects-102102ca.vercel.app/Untitled_design_png.png" />
-<meta property="og:url" content="https://greek-empire-git-main-michael-carters-projects-102102ca.vercel.app/" />
+<meta property="og:image" content="https://greek-empire.vercel.app/Untitled_design_png.png" />
+<meta property="og:url" content="https://greek-empire.vercel.app/" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="Greek Empire — Apparel for the Best Years of Your Life" />
 <meta name="twitter:description" content="We're not selling into Greek life. We're part of it." />
-<meta name="twitter:image" content="https://greek-empire-git-main-michael-carters-projects-102102ca.vercel.app/Untitled_design_png.png" />
+<meta name="twitter:image" content="https://greek-empire.vercel.app/Untitled_design_png.png" />
 <link rel="icon" type="image/png" href="Untitled_design_png.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -373,6 +373,9 @@ nav.scrolled { background: rgba(5,5,5,0.96); backdrop-filter: blur(20px); paddin
   /* Bottom CTA */
   .bottom-cta { padding: 3rem 1.25rem; }
 
+  /* Benefits grid */
+  .benefits-section .benefit-grid-inner { grid-template-columns: 1fr !important; }
+
   /* Footer */
   footer { padding: 1.5rem 1.25rem 1rem; }
 
@@ -639,7 +642,7 @@ nav.scrolled { background: rgba(5,5,5,0.96); backdrop-filter: blur(20px); paddin
 <section class="benefits-section reveal" style="background:#fff; padding:6rem 4rem; border-bottom:1px solid rgba(0,0,0,0.06);">
   <div style="max-width:1100px; margin:0 auto;">
     <h2 class="section-heading" style="margin-bottom:2.5rem; text-align:center;">What We <em style="font-size:1em;">Provide</em></h2>
-    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:rgba(0,0,0,0.06); border:1px solid rgba(0,0,0,0.06); border-radius:8px; overflow:hidden; margin-top:3.5rem;">
+    <div class="benefit-grid-inner" style="display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:rgba(0,0,0,0.06); border:1px solid rgba(0,0,0,0.06); border-radius:8px; overflow:hidden; margin-top:3.5rem;">
       <div class="benefit-card">
         <div class="benefit-num">01</div>
         <h3>Triple Earning Potential</h3>
@@ -673,8 +676,6 @@ nav.scrolled { background: rgba(5,5,5,0.96); backdrop-filter: blur(20px); paddin
     </div>
   </div>
 </section>
-</section>
-
 
 
 <!-- AMBASSADOR PROFILES -->
@@ -686,7 +687,7 @@ nav.scrolled { background: rgba(5,5,5,0.96); backdrop-filter: blur(20px); paddin
     <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:2rem; width:100%;" class="reveal">
 
       <!-- Ambassador 1 -->
-      <div style="text-align:center; width:280px; flex-shrink:0;">
+      <div style="text-align:center; width:clamp(140px,40vw,280px); flex-shrink:0;">
         <div class="amb-circle">
           <img src="ambassador-1.png" class="amb-img" style="object-position:center center;" />
         </div>
@@ -696,7 +697,7 @@ nav.scrolled { background: rgba(5,5,5,0.96); backdrop-filter: blur(20px); paddin
       </div>
 
       <!-- Ambassador 2 -->
-      <div style="text-align:center; width:280px; flex-shrink:0;">
+      <div style="text-align:center; width:clamp(140px,40vw,280px); flex-shrink:0;">
         <div class="amb-circle">
           <img src="ambassador-2.png" class="amb-img" style="object-position:center center;" />
         </div>
@@ -706,7 +707,7 @@ nav.scrolled { background: rgba(5,5,5,0.96); backdrop-filter: blur(20px); paddin
       </div>
 
       <!-- Ambassador 3 -->
-      <div style="text-align:center; width:280px; flex-shrink:0;">
+      <div style="text-align:center; width:clamp(140px,40vw,280px); flex-shrink:0;">
         <div class="amb-circle">
           <img src="ambassador-3.png" class="amb-img" style="object-position:center center;" />
         </div>
@@ -716,7 +717,7 @@ nav.scrolled { background: rgba(5,5,5,0.96); backdrop-filter: blur(20px); paddin
       </div>
 
       <!-- Ambassador 4 -->
-      <div style="text-align:center; width:280px; flex-shrink:0;">
+      <div style="text-align:center; width:clamp(140px,40vw,280px); flex-shrink:0;">
         <div class="amb-circle">
           <img src="ambassador-4.png" class="amb-img" style="object-position:center center;" />
         </div>
