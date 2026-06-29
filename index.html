@@ -148,7 +148,7 @@ nav.scrolled { background: rgba(5,5,5,0.96); backdrop-filter: blur(20px); paddin
 .section-tag::before { content: ''; display: block; width: 28px; height: 1px; background: var(--gold); }
 .section-heading { font-family: var(--font-display); font-size: clamp(2.4rem, 5vw, 4.2rem); line-height: 0.95; letter-spacing: 0.02em; text-transform: uppercase; color: var(--white); }
 .section-heading em { font-family: var(--font-script); font-style: italic; font-size: 1em; letter-spacing: 0.04em; display: inline; line-height: 1.2; text-transform: none; background: linear-gradient(90deg, #A07010 0%, #C9921A 20%, #E8B830 40%, #F5D060 50%, #E8B830 60%, #C9921A 80%, #A07010 100%); background-size: 300% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; animation: goldShimmer 9s linear infinite; }
-.section-body { font-family: var(--font-display); font-size: 1.1rem; letter-spacing: 0.1em; text-transform: uppercase; line-height: 1.85; color: #000000; font-weight: 400; }
+.section-body { font-family: var(--font-display); font-size: 1.1rem; letter-spacing: 0.1em; text-transform: uppercase; line-height: 1.85; color: rgba(255,255,255,0.55); font-weight: 400; }
 
 /* ABOUT */
 .about { padding: 7rem 3.5rem; max-width: 1300px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: auto; gap: 0 7rem; align-items: start; }
@@ -233,16 +233,16 @@ nav.scrolled { background: rgba(5,5,5,0.96); backdrop-filter: blur(20px); paddin
 .perk-text { font-family: var(--font-display); font-size: 1.03rem; font-style: normal; letter-spacing: 0.1em; text-transform: uppercase; color: #ffffff; line-height: 1.7; }
 
 /* APPLY */
-.apply-section { background: #f5f5f5; border-top: 1px solid rgba(0,0,0,0.06); padding: 7rem 3.5rem; }
+.apply-section { background: #050505; border-top: 1px solid rgba(201,168,76,0.1); padding: 7rem 3.5rem; }
 .apply-inner { max-width: 680px; margin: 0 auto; text-align: center; }
 .apply-inner .section-heading { margin-bottom: 0.75rem; }
 .apply-inner .section-body { margin-bottom: 3rem; }
 .apply-form-grid { display: grid; gap: 0.75rem; text-align: left; }
 .apply-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
-.apply-input { background: transparent; border: none; border-bottom: 1px solid rgba(201,168,76,0.3); outline: none; padding: 0.95rem 0.25rem; font-family: var(--font-sans); font-size: 0.82rem; letter-spacing: 0.04em; color: #000000; width: 100%; transition: border-color 0.25s; border-radius: 0; }
+.apply-input { background: transparent; border: none; border-bottom: 1px solid rgba(201,168,76,0.3); outline: none; padding: 0.95rem 0.25rem; font-family: var(--font-sans); font-size: 0.82rem; letter-spacing: 0.04em; color: rgba(255,255,255,0.85); width: 100%; transition: border-color 0.25s; border-radius: 0; }
 .apply-input:focus { border-bottom-color: var(--gold); }
 .apply-input:focus { border-color: var(--gold); }
-.apply-input::placeholder { color: rgba(0,0,0,0.7); }
+.apply-input::placeholder { color: rgba(255,255,255,0.45); }
 .apply-select { background: var(--black); border: 1px solid rgba(245,240,232,0.1); outline: none; padding: 0.95rem 1.2rem; font-family: var(--font-sans); font-size: 0.82rem; color: rgba(245,240,232,0.28); width: 100%; cursor: pointer; appearance: none; transition: border-color 0.25s; }
 .apply-select:focus { border-color: var(--gold); }
 .apply-submit { font-family: var(--font-display); font-size: 1.1rem; letter-spacing: 0.25em; background: linear-gradient(90deg, #8B6914 0%, #D4A43A 25%, #F0C040 50%, #D4A43A 75%, #8B6914 100%); color: var(--black); border: none; padding: 1.1rem 2rem; cursor: pointer; width: 100%; margin-top: 0.4rem; transition: opacity 0.2s, transform 0.2s; }
@@ -749,10 +749,10 @@ nav.scrolled { background: rgba(5,5,5,0.96); backdrop-filter: blur(20px); paddin
   <div class="apply-inner">
     <p class="section-tag" style="justify-content:center;">
       <span style="width:28px;height:1px;background:var(--gold);display:block;"></span>
-      Contact Us
+      Ambassador Program
       <span style="width:28px;height:1px;background:var(--gold);display:block;"></span>
     </p>
-    <h2 class="section-heading" style="margin-bottom:0.75rem;">Get in <em style="display:inline;font-size:1em;">Touch</em></h2>
+    <h2 class="section-heading" style="margin-bottom:0.75rem; color:#fff;">Represent the<br /><em style="display:block; font-size:1em; background:linear-gradient(90deg,#C9921A 0%,#E8B830 20%,#F5D060 35%,#FFF0A0 50%,#F5D060 65%,#E8B830 80%,#C9921A 100%); background-size:300% auto; -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; animation:goldShimmer 9s linear infinite;">Greek Empire</em>on your campus.</h2>
     <p class="section-body">Questions about orders, the ambassador program, or anything else — we're here.</p>
     <div class="apply-form-grid" id="apply-form">
       <div class="apply-row-2">
@@ -764,7 +764,7 @@ nav.scrolled { background: rgba(5,5,5,0.96); backdrop-filter: blur(20px); paddin
       <input class="apply-input" type="text" placeholder="University / College" id="a-school" />
       <input class="apply-input" type="text" placeholder="Chapter Name (e.g. Sigma Chi)" id="a-chapter" />
       <input class="apply-input" type="text" placeholder="Instagram Handle (optional)" id="a-ig" />
-      <select class="apply-input" id="a-ambassador" style="cursor:pointer; color:rgba(0,0,0,0.7); appearance:none; -webkit-appearance:none; background-image:url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%228%22 viewBox=%220 0 12 8%22><path d=%22M1 1l5 5 5-5%22 stroke=%22%23C9A84C%22 stroke-width=%221.5%22 fill=%22none%22/></svg>'); background-repeat:no-repeat; background-position:right 0.5rem center;">
+      <select class="apply-input" id="a-ambassador" style="cursor:pointer; color:rgba(255,255,255,0.45); appearance:none; -webkit-appearance:none; background-image:url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%228%22 viewBox=%220 0 12 8%22><path d=%22M1 1l5 5 5-5%22 stroke=%22%23C9A84C%22 stroke-width=%221.5%22 fill=%22none%22/></svg>'); background-repeat:no-repeat; background-position:right 0.5rem center;">
         <option value="" disabled selected>Referred by</option>
         <option value="Alexa">Alexa</option>
         <option value="Avry">Avry</option>
@@ -773,7 +773,7 @@ nav.scrolled { background: rgba(5,5,5,0.96); backdrop-filter: blur(20px); paddin
         <option value="Advertisement-TikTok">Advertisement-TikTok</option>
         <option value="Advertisement-Facebook">Advertisement-Facebook</option>
       </select>
-      <textarea class="apply-input" placeholder="Message" id="a-message" rows="4" style="resize:vertical; font-family:var(--font-sans); font-size:0.82rem; letter-spacing:0.04em; color:#000; padding:0.95rem 0.25rem; border:none; border-bottom:1px solid rgba(201,168,76,0.3); background:transparent; outline:none; width:100%; transition:border-color 0.25s;"></textarea>
+      <textarea class="apply-input" placeholder="Message" id="a-message" rows="4" style="resize:vertical; font-family:var(--font-sans); font-size:0.82rem; letter-spacing:0.04em; color:rgba(255,255,255,0.85); padding:0.95rem 0.25rem; border:none; border-bottom:1px solid rgba(201,168,76,0.3); background:transparent; outline:none; width:100%; transition:border-color 0.25s;"></textarea>
       <input type="text" id="a-company" name="company" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;" />
       <button class="apply-submit" onclick="submitApp()">Send Message</button>
       <p style="font-family:var(--font-sans); font-size:0.8rem; color:rgba(0,0,0,0.45); text-align:center; margin-top:1rem; letter-spacing:0.02em;">We'll get back to you within 24–48 hours.</p>
