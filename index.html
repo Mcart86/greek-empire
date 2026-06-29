@@ -148,6 +148,19 @@ nav.scrolled { background: rgba(5,5,5,0.96); backdrop-filter: blur(20px); paddin
 .section-tag::before { content: ''; display: block; width: 28px; height: 1px; background: var(--gold); }
 .section-heading { font-family: var(--font-display); font-size: clamp(2.4rem, 5vw, 4.2rem); line-height: 0.95; letter-spacing: 0.02em; text-transform: uppercase; color: var(--white); }
 .section-heading em { font-family: var(--font-script); font-style: italic; font-size: 1em; letter-spacing: 0.04em; display: inline; line-height: 1.2; text-transform: none; background: linear-gradient(90deg, #A07010 0%, #C9921A 20%, #E8B830 40%, #F5D060 50%, #E8B830 60%, #C9921A 80%, #A07010 100%); background-size: 300% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; animation: goldShimmer 9s linear infinite; }
+.earn-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; margin-top: 2rem; }
+.earn-card { background: #0e0e0c; border: 1px solid rgba(201,168,76,0.2); border-radius: 8px; padding: 2rem 1.75rem; position: relative; overflow: hidden; transition: border-color 0.2s, transform 0.2s; }
+.earn-card:hover { border-color: rgba(201,168,76,0.4); transform: translateY(-3px); }
+.earn-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--gold); opacity: 0; transition: opacity 0.2s; }
+.earn-card:hover::before { opacity: 1; }
+.earn-card-num { font-family: var(--font-display); font-size: 32px; letter-spacing: 0.05em; background: linear-gradient(90deg, #C9A84C 0%, #E8C95A 25%, #FFE078 50%, #E8C95A 75%, #C9A84C 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 0.75rem; line-height: 1; }
+.earn-card h3 { font-family: var(--font-display); font-size: 1.25rem; letter-spacing: 0.12em; text-transform: uppercase; background: linear-gradient(90deg, #C9A84C 0%, #E8C95A 25%, #FFE078 50%, #E8C95A 75%, #C9A84C 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 0.75rem; }
+.earn-card p { font-family: var(--font-display); font-size: 0.95rem; letter-spacing: 0.08em; text-transform: uppercase; color: #ffffff; line-height: 1.7; }
+.example-earnings { margin-top: 2.5rem; background: linear-gradient(90deg, #C9A84C 0%, #E8C95A 25%, #FFE078 50%, #E8C95A 75%, #C9A84C 100%); border: none; border-radius: 8px; padding: 1.25rem 1.75rem; display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 1.5rem; text-align: center; }
+.example-earnings .eg-label { font-size: 14px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #3a2800; }
+.example-earnings .eg-items { display: flex; flex-wrap: wrap; gap: 1.5rem; justify-content: center; }
+.example-earnings .eg { font-size: 17px; color: #3a2800; }
+.example-earnings .eg strong { color: #0e0e0c; font-weight: 700; font-size: 20px; }
 .section-body { font-family: var(--font-display); font-size: 1.1rem; letter-spacing: 0.1em; text-transform: uppercase; line-height: 1.85; color: #000000; font-weight: 400; }
 
 /* ABOUT */
@@ -526,34 +539,34 @@ nav.scrolled { background: rgba(5,5,5,0.96); backdrop-filter: blur(20px); paddin
 </section>
 
 <!-- 3 WAYS TO EARN -->
-<section class="signing-up-section" style="background:#fff; padding:5rem 4rem; border-bottom:1px solid rgba(0,0,0,0.06);">
+<!-- 3 WAYS TO EARN -->
+<section class="signing-up-section reveal" id="earn" style="background:#fff; padding:5rem 4rem; border-bottom:1px solid rgba(0,0,0,0.06);">
   <div style="max-width:1100px; margin:0 auto;">
-    <div class="reveal" style="margin-bottom:3rem;">
-      <p class="section-tag">3 Ways to Earn</p>
-    </div>
-    <div class="reveal" style="display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; margin-bottom:1.5rem;">
-      <div style="background:#0a0a0a; border-radius:10px; padding:2.5rem 2rem;">
-        <div style="font-family:var(--font-display); font-size:2.5rem; color:#C9921A; line-height:1; margin-bottom:1.25rem;">01</div>
-        <p style="font-family:var(--font-display); font-size:0.75rem; letter-spacing:0.15em; text-transform:uppercase; color:#C9921A; margin-bottom:0.85rem;">Commission on Orders</p>
-        <p style="font-family:var(--font-display); font-size:0.75rem; letter-spacing:0.05em; text-transform:uppercase; color:rgba(255,255,255,0.7); line-height:1.8;">Earn 10% on every order placed using your referral code. No cap. Every chapter you refer also earns 2.5%–5% back on qualifying orders.</p>
+    <p class="section-tag">3 Ways to Earn</p>
+    <div class="earn-cards">
+      <div class="earn-card">
+        <div class="earn-card-num">01</div>
+        <h3>Commission on orders</h3>
+        <p>Earn 10% on every order placed using your referral code. No cap. Every chapter you refer also earns 2.5%–5% back on qualifying orders.</p>
       </div>
-      <div style="background:#0a0a0a; border-radius:10px; padding:2.5rem 2rem;">
-        <div style="font-family:var(--font-display); font-size:2.5rem; color:#C9921A; line-height:1; margin-bottom:1.25rem;">02</div>
-        <p style="font-family:var(--font-display); font-size:0.75rem; letter-spacing:0.15em; text-transform:uppercase; color:#C9921A; margin-bottom:0.85rem;">Social Media Incentive (SIP)</p>
-        <p style="font-family:var(--font-display); font-size:0.75rem; letter-spacing:0.05em; text-transform:uppercase; color:rgba(255,255,255,0.7); line-height:1.8;">Earn bonuses by creating approved content on TikTok and Instagram. Submit through the Greek Empire content portal before posting.</p>
+      <div class="earn-card">
+        <div class="earn-card-num">02</div>
+        <h3>Social Media Incentive (SIP)</h3>
+        <p>Earn bonuses by creating approved content on TikTok and Instagram. Submit through the Greek Empire content portal before posting.</p>
       </div>
-      <div style="background:#0a0a0a; border-radius:10px; padding:2.5rem 2rem;">
-        <div style="font-family:var(--font-display); font-size:2.5rem; color:#C9921A; line-height:1; margin-bottom:1.25rem;">03</div>
-        <p style="font-family:var(--font-display); font-size:0.75rem; letter-spacing:0.15em; text-transform:uppercase; color:#C9921A; margin-bottom:0.85rem;">Ambassador Referrals</p>
-        <p style="font-family:var(--font-display); font-size:0.75rem; letter-spacing:0.05em; text-transform:uppercase; color:rgba(255,255,255,0.7); line-height:1.8;">Earn 2.5% commission when qualified students you refer join the Campus Ambassador sign up form.</p>
+      <div class="earn-card">
+        <div class="earn-card-num">03</div>
+        <h3>Ambassador referrals</h3>
+        <p>Earn 2.5% commission when qualified students you refer join the Campus Ambassador Sign Up Form.</p>
       </div>
     </div>
-    <!-- Example earnings bar -->
-    <div class="reveal" style="background:linear-gradient(90deg,#b8960c,#e8c84a,#b8960c); border-radius:8px; padding:1.1rem 2.5rem; display:flex; align-items:center; gap:3rem; flex-wrap:wrap;">
-      <span style="font-family:var(--font-display); font-size:0.7rem; letter-spacing:0.2em; text-transform:uppercase; color:#1a1a1a; white-space:nowrap;">Example Earnings</span>
-      <span style="font-family:var(--font-sans); font-size:0.9rem; color:#1a1a1a;">$1,000 order = <strong style="font-size:1.1rem;">$100</strong></span>
-      <span style="font-family:var(--font-sans); font-size:0.9rem; color:#1a1a1a;">$3,000 order = <strong style="font-size:1.1rem;">$300</strong></span>
-      <span style="font-family:var(--font-sans); font-size:0.9rem; color:#1a1a1a;">(5) $3,000 orders = <strong style="font-size:1.1rem;">$1,500</strong></span>
+    <div class="example-earnings">
+      <span class="eg-label">Example earnings</span>
+      <div class="eg-items">
+        <span class="eg">$1,000 order = <strong>$100</strong></span>
+        <span class="eg">$3,000 order = <strong>$300</strong></span>
+        <span class="eg">(5) $3,000 orders = <strong>$1,500</strong></span>
+      </div>
     </div>
   </div>
 </section>
