@@ -683,42 +683,8 @@ nav.scrolled { background: rgba(5,5,5,0.96); backdrop-filter: blur(20px); paddin
 
 
 
-<!-- MANIFESTO -->
-<section style="background:#f9f9f9; padding:5rem 3rem; border-top:1px solid rgba(0,0,0,0.06); border-bottom:1px solid rgba(0,0,0,0.06); position:relative; overflow:hidden;">
-  <div style="position:absolute; inset:0; pointer-events:none; z-index:0; overflow:hidden; opacity:0.04; user-select:none; font-family:serif; font-size:clamp(4rem,9vw,8rem); font-weight:700; color:#000; line-height:1.1; white-space:nowrap; display:flex; flex-direction:column; justify-content:space-around;">
-    <div>ΑΒΓΔΕΖΗΨΙΚΛΜΝΞΧΠΡΣΤΥΦΟΘΩΑΒΓΔΕΖΗΨΙΚΛΜΝΞΧΠΡΣΤΥΦΟΘΩΑΒΓΔΕΖΗΨΙΚΛΜΝΞΧΠΡΣΤΥΦΟΘΩ</div>
-    <div>ΞΧΠΡΣΤΥΦΟΘΩΑΒΓΔΕΖΗΨΙΚΛΜΝΞΧΠΡΣΤΥΦΟΘΩΑΒΓΔΕΖΗΨΙΚΛΜΝΞΧΠΡΣΤΥΦΟΘΩΑΒΓΔΕΖΗΨΙΚΛΜΝ</div>
-    <div>ΑΒΓΔΕΖΗΨΙΚΛΜΝΞΧΠΡΣΤΥΦΟΘΩΑΒΓΔΕΖΗΨΙΚΛΜΝΞΧΠΡΣΤΥΦΟΘΩΑΒΓΔΕΖΗΨΙΚΛΜΝΞΧΠΡΣΤΥΦΟΘΩ</div>
-  </div>
-  <div class="manifesto-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:4rem; align-items:center; max-width:1300px; margin:0 auto; position:relative; z-index:1;">
-    <!-- Left: copy -->
-    <div style="text-align:left; padding:0; max-width:none;">
-      <p class="manifesto-quote reveal">The tailgates. The bid days. The formals. The philanthropy events. The rush shirts. The bid day drops. The apparel you wear long after graduation. The bonds built inside chapter houses and outside of them.</p>
-      <p class="reveal" style="font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:700; font-size:clamp(1.6rem,3.5vw,3rem); letter-spacing:0.02em; background:linear-gradient(90deg,#8B6914 0%,#D4A43A 25%,#F0C040 50%,#D4A43A 75%,#8B6914 100%,#D4A43A 125%,#8B6914 150%); background-size:200% auto; -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; margin-top:1.5rem; margin-bottom:0; display:inline-block; width:100%; animation:goldShimmer 9s linear infinite; text-align:left;">This is what the best years look like.</p>
-      <p class="manifesto-attr reveal reveal-delay-2" style="text-align:left;">Greek Empire &nbsp;·&nbsp; Est. 334 BC</p>
-    </div>
-    <!-- Right: video -->
-    <div class="reveal reveal-delay-2" style="position:relative;">
-      <video id="sizzle-video" autoplay muted playsinline style="width:100%; display:block; box-shadow:0 8px 40px rgba(0,0,0,0.12);">
-        <source src="sizzle.mp4" type="video/mp4">
-      </video>
-      <div style="position:absolute; bottom:0.75rem; right:0.75rem; display:flex; gap:0.5rem; z-index:10;">
-        <button onclick="togglePlay()" id="play-btn" style="background:rgba(0,0,0,0.75); border:1px solid rgba(201,168,76,0.7); color:#F0C040; font-family:var(--font-display); font-size:0.58rem; letter-spacing:0.15em; padding:0.4rem 0.85rem; cursor:pointer; backdrop-filter:blur(4px);">⏸ PAUSE</button>
-        <button onclick="toggleMute()" id="mute-btn" style="background:rgba(0,0,0,0.75); border:1px solid rgba(201,168,76,0.7); color:#F0C040; font-family:var(--font-display); font-size:0.58rem; letter-spacing:0.15em; padding:0.4rem 0.85rem; cursor:pointer; backdrop-filter:blur(4px);">🔇 UNMUTE</button>
-      </div>
-      <script>
-        function togglePlay() { const v=document.getElementById('sizzle-video'),b=document.getElementById('play-btn'); if(v.paused){v.play();b.textContent='⏸ PAUSE';}else{v.pause();b.textContent='▶ PLAY';} }
-        function toggleMute() { const v=document.getElementById('sizzle-video'),b=document.getElementById('mute-btn'); v.muted=!v.muted; b.textContent=v.muted?'🔇 UNMUTE':'🔊 MUTE'; }
-      </script>
-    </div>
-  </div>
-</section>
 
-<!-- PHOTO BREAK -->
-<div style="width:100%; height: clamp(300px, 55vw, 620px); overflow:hidden; position:relative;">
-  <img src="photo-break.jpg" alt="Greek Life" style="width:100%; height:100%; object-fit:cover; object-position:center top; display:block;" />
-  <div style="position:absolute; inset:0; background: linear-gradient(to bottom, rgba(5,5,5,0.55) 0%, rgba(5,5,5,0.35) 50%, rgba(5,5,5,0.65) 100%);"></div>
-</div>
+
 
 <!-- APPLY -->
 <section class="apply-section" id="apply">
@@ -760,6 +726,43 @@ nav.scrolled { background: rgba(5,5,5,0.96); backdrop-filter: blur(20px); paddin
     </div>
   </div>
 </section>
+
+<!-- MANIFESTO -->
+<section style="background:#f9f9f9; padding:5rem 3rem; border-top:1px solid rgba(0,0,0,0.06); border-bottom:1px solid rgba(0,0,0,0.06); position:relative; overflow:hidden;">
+  <div style="position:absolute; inset:0; pointer-events:none; z-index:0; overflow:hidden; opacity:0.04; user-select:none; font-family:serif; font-size:clamp(4rem,9vw,8rem); font-weight:700; color:#000; line-height:1.1; white-space:nowrap; display:flex; flex-direction:column; justify-content:space-around;">
+    <div>ΑΒΓΔΕΖΗΨΙΚΛΜΝΞΧΠΡΣΤΥΦΟΘΩΑΒΓΔΕΖΗΨΙΚΛΜΝΞΧΠΡΣΤΥΦΟΘΩΑΒΓΔΕΖΗΨΙΚΛΜΝΞΧΠΡΣΤΥΦΟΘΩ</div>
+    <div>ΞΧΠΡΣΤΥΦΟΘΩΑΒΓΔΕΖΗΨΙΚΛΜΝΞΧΠΡΣΤΥΦΟΘΩΑΒΓΔΕΖΗΨΙΚΛΜΝΞΧΠΡΣΤΥΦΟΘΩΑΒΓΔΕΖΗΨΙΚΛΜΝ</div>
+    <div>ΑΒΓΔΕΖΗΨΙΚΛΜΝΞΧΠΡΣΤΥΦΟΘΩΑΒΓΔΕΖΗΨΙΚΛΜΝΞΧΠΡΣΤΥΦΟΘΩΑΒΓΔΕΖΗΨΙΚΛΜΝΞΧΠΡΣΤΥΦΟΘΩ</div>
+  </div>
+  <div class="manifesto-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:4rem; align-items:center; max-width:1300px; margin:0 auto; position:relative; z-index:1;">
+    <!-- Left: copy -->
+    <div style="text-align:left; padding:0; max-width:none;">
+      <p class="manifesto-quote reveal">The tailgates. The bid days. The formals. The philanthropy events. The rush shirts. The bid day drops. The apparel you wear long after graduation. The bonds built inside chapter houses and outside of them.</p>
+      <p class="reveal" style="font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:700; font-size:clamp(1.6rem,3.5vw,3rem); letter-spacing:0.02em; background:linear-gradient(90deg,#8B6914 0%,#D4A43A 25%,#F0C040 50%,#D4A43A 75%,#8B6914 100%,#D4A43A 125%,#8B6914 150%); background-size:200% auto; -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; margin-top:1.5rem; margin-bottom:0; display:inline-block; width:100%; animation:goldShimmer 9s linear infinite; text-align:left;">This is what the best years look like.</p>
+      <p class="manifesto-attr reveal reveal-delay-2" style="text-align:left;">Greek Empire  ·  Est. 334 BC</p>
+    </div>
+    <!-- Right: video -->
+    <div class="reveal reveal-delay-2" style="position:relative;">
+      <video id="sizzle-video" autoplay muted playsinline style="width:100%; display:block; box-shadow:0 8px 40px rgba(0,0,0,0.12);">
+        <source src="sizzle.mp4" type="video/mp4">
+      </video>
+      <div style="position:absolute; bottom:0.75rem; right:0.75rem; display:flex; gap:0.5rem; z-index:10;">
+        <button onclick="togglePlay()" id="play-btn" style="background:rgba(0,0,0,0.75); border:1px solid rgba(201,168,76,0.7); color:#F0C040; font-family:var(--font-display); font-size:0.58rem; letter-spacing:0.15em; padding:0.4rem 0.85rem; cursor:pointer; backdrop-filter:blur(4px);">&#9208; PAUSE</button>
+        <button onclick="toggleMute()" id="mute-btn" style="background:rgba(0,0,0,0.75); border:1px solid rgba(201,168,76,0.7); color:#F0C040; font-family:var(--font-display); font-size:0.58rem; letter-spacing:0.15em; padding:0.4rem 0.85rem; cursor:pointer; backdrop-filter:blur(4px);">&#128263; UNMUTE</button>
+      </div>
+      <script>
+        function togglePlay() { const v=document.getElementById('sizzle-video'),b=document.getElementById('play-btn'); if(v.paused){v.play();b.textContent='&#9208; PAUSE';}else{v.pause();b.textContent='&#9654; PLAY';} }
+        function toggleMute() { const v=document.getElementById('sizzle-video'),b=document.getElementById('mute-btn'); v.muted=!v.muted; b.textContent=v.muted?'&#128263; UNMUTE':'&#128266; MUTE'; }
+      </script>
+    </div>
+  </div>
+</section>
+
+<!-- PHOTO BREAK -->
+<div style="width:100%; height: clamp(300px, 55vw, 620px); overflow:hidden; position:relative;">
+  <img src="photo-break.jpg" alt="Greek Life" style="width:100%; height:100%; object-fit:cover; object-position:center top; display:block;" />
+  <div style="position:absolute; inset:0; background: linear-gradient(to bottom, rgba(5,5,5,0.55) 0%, rgba(5,5,5,0.35) 50%, rgba(5,5,5,0.65) 100%);"></div>
+</div>
 
 <!-- BOTTOM CTA -->
 <section class="bottom-cta" style="padding-bottom:3rem;">
