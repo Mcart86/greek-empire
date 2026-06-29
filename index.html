@@ -347,7 +347,16 @@ nav.scrolled { background: rgba(5,5,5,0.96); backdrop-filter: blur(20px); paddin
   /* Signing up for - stack role cards to 2 cols */
   .signing-up-grid { grid-template-columns: 1fr 1fr !important; gap: 2px !important; }
   .signing-up-grid > div { padding: 1.5rem 1rem !important; }
-  .signing-up-section { padding: 3rem 0.5rem !important; }
+  .signing-up-section { padding: 3rem 1.25rem !important; }
+
+  /* Earn cards + benefit cards - stack to 1 col on mobile */
+  .earn-cards { grid-template-columns: 1fr !important; gap: 1rem !important; }
+  .earn-card { padding: 1.5rem 1.25rem !important; }
+  .example-earnings { flex-direction: column; gap: 0.5rem; padding: 1rem 1.25rem; }
+  .example-earnings .eg-items { flex-direction: column; gap: 0.3rem; align-items: center; }
+  .benefits-section { padding: 3rem 1.25rem !important; }
+  .benefits-section > div > div[style*="grid"] { grid-template-columns: 1fr !important; }
+  .benefit-card { padding: 1.5rem 1.25rem !important; }
 
   /* Ambassador perks */
   .ambassador { padding: 3rem 1.25rem; }
