@@ -891,7 +891,7 @@ function submitApp() {
     email:            document.getElementById('a-email').value.trim(),
     phone:            document.getElementById('a-phone').value.trim(),
     school_text:      document.getElementById('a-school').value.trim(),
-    chapter_text:     document.getElementById('a-chapter').value.trim(),
+    chapter_text:     (document.getElementById('a-chapter') || {value:''}).value.trim(),
     instagram_handle: document.getElementById('a-ig').value.trim(),
     referred_by:      document.getElementById('a-ambassador').value,
     message:          document.getElementById('a-message').value.trim(),
