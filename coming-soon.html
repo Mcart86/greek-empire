@@ -349,8 +349,19 @@ body{
       <input class="form-input" type="text" placeholder="University / College" id="cs-school" />
       
       <input class="form-input" type="text" placeholder="Instagram Handle (optional)" id="cs-ig" />
+      <select class="form-input" id="cs-referred" style="cursor:pointer;color:rgba(0,0,0,0.5);appearance:none;-webkit-appearance:none;background-image:url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%228%22 viewBox=%220 0 12 8%22><path d=%22M1 1l5 5 5-5%22 stroke=%22%23C9A84C%22 stroke-width=%221.5%22 fill=%22none%22/></svg>');background-repeat:no-repeat;background-position:right 0.5rem center;">
+        <option value="" disabled selected>Referred by</option>
+        <option>Alexa</option>
+        <option>Avry</option>
+        <option>Elijah</option>
+        <option>Jackson</option>
+        <option>Advertisement — Instagram</option>
+        <option>Advertisement — TikTok</option>
+        <option>Advertisement — Facebook</option>
+      </select>
+      <textarea class="form-input" id="cs-message" placeholder="Tell us about yourself and your campus life. Are you a member of any Greek organizations, clubs or sports? Why do you want to be a college ambassador?" rows="4" style="resize:vertical;"></textarea>
       <input type="text" id="cs-company" name="company" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;" />
-      <button class="form-submit" onclick="submitForm()">Keep Me Posted</button>
+      <button class="form-submit" onclick="submitForm()">Send Message</button>
       <p style="font-family:'Barlow',sans-serif;font-size:0.78rem;color:rgba(0,0,0,0.35);text-align:center;margin-top:0.75rem;letter-spacing:0.02em;">We'll be in touch before launch. No spam.</p>
       <div style="display:flex;justify-content:center;gap:1.25rem;flex-wrap:wrap;margin-top:1.5rem;padding-top:1.25rem;border-top:1px solid rgba(0,0,0,0.08);">
         <p style="font-family:'Barlow',sans-serif;font-size:0.95rem;font-weight:600;color:#111;letter-spacing:0.02em;text-align:center;width:100%;margin-bottom:0.75rem;">Follow us on social.</p>
