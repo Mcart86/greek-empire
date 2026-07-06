@@ -5,6 +5,9 @@
       "maxDuration": 60
     }
   },
+  "redirects": [
+    { "source": "/ambassador", "destination": "https://greek-empire-ambassador-sign-up.vercel.app/", "permanent": false }
+  ],
   "headers": [
     {
       "source": "/(.*).html",
@@ -14,12 +17,6 @@
     },
     {
       "source": "/",
-      "headers": [
-        { "key": "Cache-Control", "value": "no-cache, no-store, must-revalidate" }
-      ]
-    },
-    {
-      "source": "/ambassador",
       "headers": [
         { "key": "Cache-Control", "value": "no-cache, no-store, must-revalidate" }
       ]
