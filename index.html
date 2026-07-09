@@ -143,6 +143,14 @@ nav.scrolled { background: rgba(5,5,5,0.96); backdrop-filter: blur(20px); paddin
 .marquee-item::after { content: '—'; font-size: 0.5rem; color: rgba(0,0,0,0.35); }
 @keyframes marqueeScroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
+.photo-strip { overflow: hidden; position: relative; z-index: 9; background: #000; line-height: 0; }
+.photo-strip-track { display: flex; animation: photoScroll 40s linear infinite; width: max-content; }
+.photo-strip-track:hover { animation-play-state: paused; }
+.photo-strip-img { width: 380px; height: 280px; object-fit: cover; object-position: center; flex-shrink: 0; display: block; opacity: 0.92; transition: opacity 0.3s ease; }
+.photo-strip-img:hover { opacity: 1; }
+@keyframes photoScroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@media (max-width: 768px) { .photo-strip-img { width: 260px; height: 200px; } }
+
 /* SECTION UTILS */
 .section-tag { font-size: 0.84rem; letter-spacing: 0.25em; text-transform: uppercase; font-weight: 700; background:linear-gradient(90deg,#C9A84C 0%,#E8C95A 25%,#FFE078 50%,#E8C95A 75%,#C9A84C 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; margin-bottom: 1.25rem; display: flex; align-items: center; gap: 1rem; }
 .section-tag::before { content: ''; display: block; width: 28px; height: 1px; background: var(--gold); }
@@ -498,6 +506,24 @@ nav.scrolled { background: rgba(5,5,5,0.96); backdrop-filter: blur(20px); paddin
 </section>
 
 
+
+<!-- PHOTO STRIP -->
+<div class="photo-strip">
+  <div class="photo-strip-track">
+    <img src="product-sweatshirt.png" alt="Sweatshirts" class="photo-strip-img" />
+    <img src="product-shirts.png" alt="Shirts" class="photo-strip-img" />
+    <img src="product-hats.png" alt="Hats" class="photo-strip-img" />
+    <img src="product-tanktops.png" alt="Tank Tops" class="photo-strip-img" />
+    <img src="product-bags.png" alt="Bags" class="photo-strip-img" />
+    <img src="product-drinkware.png" alt="Drinkware" class="photo-strip-img" />
+    <img src="product-sweatshirt.png" alt="Sweatshirts" class="photo-strip-img" />
+    <img src="product-shirts.png" alt="Shirts" class="photo-strip-img" />
+    <img src="product-hats.png" alt="Hats" class="photo-strip-img" />
+    <img src="product-tanktops.png" alt="Tank Tops" class="photo-strip-img" />
+    <img src="product-bags.png" alt="Bags" class="photo-strip-img" />
+    <img src="product-drinkware.png" alt="Drinkware" class="photo-strip-img" />
+  </div>
+</div>
 
 <!-- MARQUEE -->
 <div class="marquee-strip">
